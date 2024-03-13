@@ -2,7 +2,7 @@
 const quizData = [
   {
     "type": "OX",
-    "question": "주식 투자를 하면서 돈을 벌고 싶은가요?",
+    "question": "주식 투자는 수익을 목적으로 하는 활동인가요?",
     "options": ["O", "X"],
     "answer": "O",
     "explanation": "네..?"
@@ -46,7 +46,7 @@ const quizData = [
     "type": "multipleChoice",
     "question": "주식을 가지고 있는 사람을 뭐라고 할까?",
     "options": ["공모주", "신규상장주", "주주", "예금주"],
-    "answer": "지정가 주문",
+    "answer": "주주",
     "explanation": "공모주: 기업공개를 통해 신규 상장하는 주식을 의미해요."
   },
   {

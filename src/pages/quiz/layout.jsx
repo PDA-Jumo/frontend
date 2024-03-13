@@ -49,7 +49,7 @@ export default function QuizLayout() {
 
   const handleBack = () => {
     console.log("뒤로가기 버튼이 클릭되었습니다.");
-    window.location.href = "http://localhost:3000";
+    window.location.href = "http://localhost:3000"; //TODO 언젠간 결국 navigate를 활용해야 할 듯
   };
 
   return (
