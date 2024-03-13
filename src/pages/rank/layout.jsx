@@ -2,13 +2,18 @@ import React from 'react';
 import Rank from '../../assets/backgrounds/rank.png'
 export default function RankLayout() {
 
-return (
-<div style={{backgroundImage: `url(${Rank})`, backgroundSize: 'contain',
-  width: '100vw',
-  height: '100vh',
-  backgroundRepeat: 'no-repeat',
-  backgroundPosition:'center'}}>
-</div>
+  return (
+    <div class ='background-style'>
+          <img src={Rank} style={{ width: "100%", height: "100%" }} />
+          <div
+            style={{
+              position: "absolute",
+              top: 100,
+              left: 100,
+            }}
+          >
 
-);
-}
+          </div>
+        </div>
+    );
+    }
