@@ -1,7 +1,13 @@
 import React from "react";
 import "../../styles/stock.css";
+
+//assets
 import Background from "../../assets/backgrounds/Stock.png";
-import Folder from "../../assets/stock/folder.png"
+import Folder from "../../assets/stock/folder.png";
+
+//components
+import StockDetails from "../../components/stock/StockDetails";
+
 export default function StockLayout() {
   return (
     <div
@@ -16,21 +22,29 @@ export default function StockLayout() {
       <div
         style={{
           position: "absolute",
-          width:"86%",
+          width: "86%",
           top: 100,
           left: 100,
-          display:"flex",
-          justifyContent:"space-between"
         }}
       >
-        <input class="input-style" type="text" />
-        <div style={{display:"flex", gap:"5%", left:30}}>
-        <tab class="korea"><img src={Folder}/>국내주식</tab>
-        <tab class="korea"><img src={Folder}/>해외주식</tab>
-        <tab class="korea"><img src={Folder}/>내주식</tab>
-
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <input class="input-style" type="text" />
+          <div style={{ display: "flex", gap: "5%", left: 30 }}>
+            <tab class="korea">
+              <img src={Folder} />
+              국내주식
+            </tab>
+            <tab class="korea">
+              <img src={Folder} />
+              해외주식
+            </tab>
+            <tab class="korea">
+              <img src={Folder} />
+              내주식
+            </tab>
+          </div>
         </div>
-       
+        <StockDetails />
       </div>
     </div>
   );
