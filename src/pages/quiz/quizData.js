@@ -406,6 +406,13 @@ const quizData = [
     "answer": "4000원",
     "explanation": "배당 수익률은 배당금/주가이므로, 5%/200원 = 4000원이 됩니다."
   },
+ {
+    "type": "OX",
+    "question": "'기술적 분석'은 주식의 가치에 대한 분석을 중점적으로 진행하나요?. (O/X)",
+    "options": ["O", "X"],
+    "answer": "X",
+    "explanation": "주식 가격의 패턴과 트렌드를 분석하여 향후 가격을 예측하는 방법이에요."
+}
 ];
 
 export default quizData;
