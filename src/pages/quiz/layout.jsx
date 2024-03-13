@@ -23,8 +23,11 @@ export default function QuizLayout() {
 
     const randomIndex = Math.floor(Math.random() * quizData.length);
     const quiz = quizData[randomIndex];
-    const shuffledOptions = shuffleArray([...quiz.options]); // options 배열 복사본을 섞음
-    const shuffledQuiz = { ...quiz, options: shuffledOptions }; // 섞은 options을 포함한 새로운 quiz 객체 생성
+
+    const shuffledOptions =
+      quiz.type === "OX" ? [...quiz.options] : shuffleArray([...quiz.options]);
+
+    const shuffledQuiz = { ...quiz, options: shuffledOptions };
 
     setCurrentQuiz(shuffledQuiz);
     setIsCorrect(null);
@@ -83,7 +86,7 @@ export default function QuizLayout() {
                 onClick={() => checkAnswer(option)}
                 className={`quiz-button ${
                   selectedOption === option ? "quiz-button-selected" : ""
-                }`}
+                } ${currentQuiz.type === "OX" ? "ox-quiz-button" : ""}`}
               >
                 {option}
               </button>
