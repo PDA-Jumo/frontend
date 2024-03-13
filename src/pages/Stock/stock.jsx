@@ -1,13 +1,11 @@
 import React from 'react';
-import Stock from '../../assets/backgrounds/Stock.png'
+import '../../styles/stock.css'
 export default function StockLayout() {
 
 return (
-<div style={{backgroundImage: `url(${Stock})`, backgroundSize: 'contain',
-  width: '100vw',
-  height: '100vh',
-  backgroundRepeat: 'no-repeat',
-  backgroundPosition:'center'}}>
+<div class='background-style'>
+    <input class='input-style' type='text'></input>
+    <div class='korea'>국내주식</div>
 </div>
 
 );
