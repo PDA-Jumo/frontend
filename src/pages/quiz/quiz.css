@@ -1,0 +1,125 @@
+* {
+  font-family: "DNFBitBitv2", sans-serif;
+}
+
+.quiz-layout {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.quiz-question {
+  color: white;
+  font-size: 36px;
+  text-align: center;
+  word-wrap: break-word;
+  max-width: 65vw;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.quiz-options-container,
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  width: 100%;
+  align-items: center;
+}
+
+.flex-container {
+  flex-direction: row;
+  justify-content: center;
+}
+
+.quiz-button,
+.back-button {
+  width: 350px;
+  padding: 10px 20px;
+  font-size: 24px;
+  cursor: pointer;
+  background-color: lightgray;
+  border: none;
+  border-radius: 5px;
+  background: #ffffff;
+  border: 10px solid #ff98cc;
+  border-radius: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 5px;
+}
+
+.quiz-button:hover {
+  background-color: #ffccdd;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.quiz-button-selected {
+  background-color: gray;
+}
+
+.quiz-result {
+  margin-top: 20px;
+  font-size: 28px;
+  text-align: center;
+  color: white;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 500px;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.back-button {
+  width: 200px;
+  position: absolute;
+  left: 80%;
+  transform: translateX(-80%);
+  bottom: 20px;
+}
+
+.welcome-text {
+  font-size: 128px;
+  line-height: 186px;
+  background: linear-gradient(90deg, #6899fe 0%, #ffffff 49.5%, #ff98cc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-text-exp {
+  font-size: 24px;
+  line-height: 35px;
+  text-align: center;
+  color: #ffffff;
+  margin-top: 24px;
+  margin-bottom: 36px;
+}
+.ox-quiz-button {
+  background-color: transparent;
+  border: none;
+  color: black;
+  font-weight: bold;
+  font-size: 192px;
+  line-height: 1.2;
+  color: #ffffff;
+  -webkit-text-stroke: 1px #ff98cc;
+  padding: 0;
+  transition: none;
+}
+
+.ox-quiz-button:hover {
+  background-color: transparent;
+  box-shadow: none;
+}

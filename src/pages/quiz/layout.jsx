@@ -1,3 +1,5 @@
+//TODO 유저의 레벨이 확정되면, 레벨별로 출제되어야 할 문제 체크하도록.
+
 import React, { useState, useEffect } from "react";
 import quizBackground from "../../assets/backgrounds/quiz.png";
 import "./quiz.css";
@@ -9,11 +11,10 @@ export default function QuizLayout() {
   const [selectedOption, setSelectedOption] = useState("");
   const [isCorrect, setIsCorrect] = useState(null);
 
-  // 배열을 랜덤으로 섞는 함수
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]]; // ES6 구조 분해 할당을 사용한 요소 교환
+      [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
   };
@@ -35,6 +36,7 @@ export default function QuizLayout() {
   }, [showQuiz]);
 
   const checkAnswer = (selected) => {
+    //TODO 퀴즈를 맞췄을때 유저한테 돈을 지급하도록 UPDATE되어야 함
     if (isCorrect !== null) return;
 
     setSelectedOption(selected);
