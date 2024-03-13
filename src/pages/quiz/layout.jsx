@@ -9,11 +9,24 @@ export default function QuizLayout() {
   const [selectedOption, setSelectedOption] = useState("");
   const [isCorrect, setIsCorrect] = useState(null);
 
+  // 배열을 랜덤으로 섞는 함수
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; // ES6 구조 분해 할당을 사용한 요소 교환
+    }
+    return array;
+  };
+
   useEffect(() => {
     if (!showQuiz) return;
 
     const randomIndex = Math.floor(Math.random() * quizData.length);
-    setCurrentQuiz(quizData[randomIndex]);
+    const quiz = quizData[randomIndex];
+    const shuffledOptions = shuffleArray([...quiz.options]); // options 배열 복사본을 섞음
+    const shuffledQuiz = { ...quiz, options: shuffledOptions }; // 섞은 options을 포함한 새로운 quiz 객체 생성
+
+    setCurrentQuiz(shuffledQuiz);
     setIsCorrect(null);
     setSelectedOption("");
   }, [showQuiz]);
