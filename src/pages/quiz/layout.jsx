@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import quizBackground from "../../assets/backgrounds/quiz.png";
-import "./quiz.css"; // 스타일시트 임포트
+import "./quiz.css";
 import quizData from "./quizData";
 
 export default function QuizLayout() {
@@ -9,7 +9,6 @@ export default function QuizLayout() {
   const [isCorrect, setIsCorrect] = useState(null);
 
   useEffect(() => {
-    // 퀴즈 데이터에서 랜덤한 문제를 선택합니다.
     const randomIndex = Math.floor(Math.random() * quizData.length);
     setCurrentQuiz(quizData[randomIndex]);
     setIsCorrect(null);
@@ -17,6 +16,8 @@ export default function QuizLayout() {
   }, []);
 
   const checkAnswer = (selected) => {
+    if (isCorrect !== null) return;
+
     setSelectedOption(selected);
     if (selected === currentQuiz.answer) {
       setIsCorrect(true);
@@ -36,7 +37,11 @@ export default function QuizLayout() {
 
           <div
             className={`quiz-options-container ${
-              currentQuiz.type === "OX" ? "flex-container" : ""
+              currentQuiz.options.length === 4
+                ? "grid-container"
+                : currentQuiz.type === "OX"
+                ? "flex-container"
+                : ""
             }`}
           >
             {currentQuiz.options.map((option, index) => (
@@ -53,7 +58,14 @@ export default function QuizLayout() {
           </div>
           {isCorrect !== null && (
             <div className="quiz-result">
-              {isCorrect ? "정답입니다!" : "틀렸습니다. 다시 시도해보세요."}
+              {isCorrect
+                ? "정답입니다!"
+                : `틀렸습니다. 정답은: ${currentQuiz.answer}`}
+              {!isCorrect && (
+                <div className="quiz-explanation">
+                  {currentQuiz.explanation}
+                </div>
+              )}
             </div>
           )}
         </div>
