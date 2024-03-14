@@ -8,24 +8,28 @@ export default function TestLayout() {
   const navigate = useNavigate();
   const [startTest, setStartTest] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [score, setScore] = useState(0);
+
   const handleBack = () => {
     console.log("뒤로가기 버튼이 클릭되었습니다.");
     navigate("/");
   };
 
-  // 진행 상태를 계산하는 함수
   const calculateProgress = () => {
     return ((currentQuestionIndex + 1) / testData.length) * 100;
   };
 
-  const handleAnswerClick = () => {
+  const handleAnswerClick = (point) => {
+    const newScore = score + point;
     if (currentQuestionIndex < testData.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setScore(newScore);
     } else {
-      alert("테스트가 끝났습니다!");
+      alert(`테스트가 끝났습니다! 결과창으로 이동합니다.`);
       setStartTest(false);
       setCurrentQuestionIndex(0);
-      navigate("/test/result");
+      navigate("/test/result", { state: { score: newScore } });
+      setScore(0);
     }
   };
 
@@ -38,9 +42,9 @@ export default function TestLayout() {
           <button
             key={index}
             className="test-button"
-            onClick={handleAnswerClick}
+            onClick={() => handleAnswerClick(answer.point)}
           >
-            {answer}
+            {answer.text}
           </button>
         ))}
       </div>
@@ -53,7 +57,6 @@ export default function TestLayout() {
       <div className="test-content">
         <div className="test-title">투자 성향 테스트</div>
         <hr className="test-line" />
-        {/* 진행 상태바를 추가 */}
         {startTest && (
           <div className="progress-bar-background">
             <div
@@ -65,8 +68,7 @@ export default function TestLayout() {
         <div className="test-intro">
           {!startTest && (
             <div className="intro-text">
-              본인의 투자 성향을 알아볼 수 있는 간단한 테스트입니다.
-              <br />
+              본인의 투자 성향을 알아볼 수 있는 간단한 테스트입니다. <br />
               문항은 총 7문항, 예상 소요시간은 3~5분입니다.
             </div>
           )}

@@ -1,10 +1,13 @@
 import React from "react";
 import "./test.css";
 import character1 from "../../assets/backgrounds/character1.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom"; // useLocation 추가
 
 export default function TestResultLayout() {
   const navigate = useNavigate();
+  const location = useLocation(); // useLocation 사용
+  const score = location.state?.score; // 전달받은 점수를 안전하게 접근
+
   const handleBack = () => {
     console.log("홈으로 버튼이 클릭되었습니다.");
     navigate("/");
@@ -18,8 +21,11 @@ export default function TestResultLayout() {
         <hr className="test-line" />
 
         <div className="test-intro">
-          <div className="intro-text">테스트 종료</div>
+          <div className="intro-text">
+            테스트 종료 당신의 점수는 {score}점 입니다.
+          </div>
         </div>
+
         {/* '홈으로' 버튼 추가 */}
         <button className="home-button" onClick={handleBack}>
           홈으로
