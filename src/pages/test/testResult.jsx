@@ -25,8 +25,6 @@ export default function TestResultLayout() {
             테스트 종료 당신의 점수는 {score}점 입니다.
           </div>
         </div>
-
-        {/* '홈으로' 버튼 추가 */}
         <button className="home-button" onClick={handleBack}>
           홈으로
         </button>

@@ -3,7 +3,6 @@ import startPage from "../../assets/backgrounds/startPage.png";
 import hat from "../../assets/backgrounds/hat.png";
 
 export default function MainLayout() {
-  // 버튼 클릭 시 리다이렉트를 처리하는 함수
   const redirectToQuiz = () => {
     window.location.href = "http://localhost:3000/quiz";
   };
