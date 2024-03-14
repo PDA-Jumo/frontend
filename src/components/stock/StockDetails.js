@@ -7,10 +7,10 @@ import "../../styles/stockDetails.css";
 //assets
 import Flag from "../../assets/icons/flag.png";
 import Document from "../../assets/icons/Document.png";
+import shinhan_heart_chatbox from "../../assets/stock/shinhan_heart_chatbox.png";
+import shinhan_singing_chatbox from "../../assets/stock/shinhan_singing_chatbox.png";
 
 //library
-import Slider from "react-slick";
-import styled from "styled-components";
 import SliderComponent from "./SliderComponent";
 
 export default function StockDetails() {
@@ -28,7 +28,12 @@ export default function StockDetails() {
         <MainChartNumberComponent />
       </div>
 
-      <div style={{ marginTop: "42px" }}>
+      <div
+        style={{
+          marginTop: "42px",
+          height: "280px",
+        }}
+      >
         <div
           className="textShadow"
           style={{ display: "flex", alignItems: "center", fontSize: "24px" }}
@@ -46,9 +51,233 @@ export default function StockDetails() {
           <SliderComponent />
         </div>
       </div>
+      <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <div style={{ width: "45%" }}>
+          <div style={{ display: "flex" }}>
+            <img
+              src={Flag}
+              className="iconSmall"
+              style={{ marginRight: "8px" }}
+            />
+            <div
+              style={{
+                padding: "8px",
+                boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.2)",
+                borderTopLeftRadius: "16px",
+                borderTopRightRadius: "16px",
+              }}
+            >
+              나의 종목 시세
+            </div>
+            <div
+              style={{
+                padding: "8px",
+                boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.2)",
+                borderTopLeftRadius: "16px",
+                borderTopRightRadius: "16px",
+              }}
+            >
+              추천 종목
+            </div>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              border: "3px solid #FBD115",
+              borderRadius: "16px",
+              boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
+              padding: "8px",
+            }}
+          >
+            <div style={{ display: "flex" }}>
+              <div
+                style={{
+                  border: "2px solid #FBD115",
+                  borderRadius: "16px",
+                  padding: "4px 8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                최근종목
+              </div>
+              <div
+                style={{
+                  border: "2px solid #FBD115",
+                  borderRadius: "16px",
+                  padding: "4px 8px",
+                  marginInline: "16px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                보유종목
+              </div>
+              <div
+                style={{
+                  border: "2px solid #FBD115",
+                  borderRadius: "16px",
+                  padding: "4px 8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                관심종목
+              </div>
+            </div>
+            <div>
+              <div className="stockListView">
+                <StockList />
+              </div>
+              <div className="stockListView">
+                <StockList />
+              </div>
+              <div className="stockListView">
+                <StockList />
+              </div>
+              <div className="stockListView">
+                <StockList />
+              </div>
+              <div className="stockListView">
+                <StockList />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            width: "45%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+          }}
+        >
+          <img
+            src={shinhan_heart_chatbox}
+            style={{ width: "300px", height: "300px" }}
+          />
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          marginBlock: "32px",
+        }}
+      >
+        <div style={{ width: "45%" }}>
+          <div
+            className="textShadow"
+            style={{ display: "flex", fontSize: "24px", margin: "8px" }}
+          >
+            <img
+              src={Flag}
+              className="iconSmall"
+              style={{ marginRight: "8px" }}
+            />
+            실시간 종목 순위
+          </div>
+          <div
+            style={{
+              width: "100%",
+              border: "3px solid #FBD115",
+              borderRadius: "16px",
+              boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
+              padding: "8px",
+            }}
+          >
+            <div style={{ display: "flex" }}>
+              <div
+                style={{
+                  border: "2px solid #FBD115",
+                  borderRadius: "16px",
+                  padding: "4px 8px",
+                  width: "60px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                상승률
+              </div>
+              <div
+                style={{
+                  border: "2px solid #FBD115",
+                  borderRadius: "16px",
+                  padding: "4px 8px",
+                  marginInline: "16px",
+                  width: "60px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                인기
+              </div>
+            </div>
+            <div>
+              <div className="stockListView">
+                <StockList />
+              </div>
+              <div className="stockListView">
+                <StockList />
+              </div>
+              <div className="stockListView">
+                <StockList />
+              </div>
+              <div className="stockListView">
+                <StockList />
+              </div>
+              <div className="stockListView">
+                <StockList />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            width: "45%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+          }}
+        >
+          <img
+            src={shinhan_singing_chatbox}
+            style={{ width: "300px", height: "300px" }}
+          />
+        </div>
+      </div>
     </div>
   );
 }
+
+const StockList = () => {
+  return (
+    <div style={{ display: "flex", alignItems: "center", flex: 6 }}>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-around",
+        }}
+      >
+        <span>1</span>
+        <img src={Document} className="iconSmall" />
+      </div>
+
+      <span style={{ flex: 3 }}>씨씨에스</span>
+      <span style={{ flex: 1 }}>5,000원</span>
+      <span style={{ flex: 1 }}>+26.7%</span>
+    </div>
+  );
+};
 
 const MainChartNumberComponent = () => {
   return (
