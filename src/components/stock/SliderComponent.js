@@ -55,7 +55,7 @@ const MarketIssue = () => {
       style={{
         width: "500px",
         height: "150px",
-        border: "1px solid black",
+        border: "2px solid black",
         borderRadius: "16px",
         padding: "16px",
         display: "flex",
