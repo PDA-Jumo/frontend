@@ -1,5 +1,6 @@
 import React from "react";
 import SearchTab from "../../components/stock/SearchTab";
+import StockDetail from "../../components/stock/StockDetail";
 import WorldStockDetails from "../../components/stock/WorldStockDetails";
 
 import "../../styles/stock.css";
@@ -41,7 +42,8 @@ export default function StockPage() {
           padding: "8px",
         }}
       >
-        <WorldStockDetails />
+        {/* <WorldStockDetails /> */}
+        <StockDetail />
       </div>
       <div
         style={{

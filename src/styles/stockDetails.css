@@ -55,3 +55,28 @@
   align-items: center;
   box-shadow: 2px 2px 3px rgba(96, 130, 225, 0.5);
 }
+
+.stockDetailTradeButton {
+  border: 3px solid #0f3ab1;
+  border-radius: 16px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.stockDetailTradeButton:hover {
+  background-color: #0f3ab1;
+  color: white;
+}
+
+.stockDetailTab {
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.stockDetailTab:hover {
+  background-color: #0f3ab1;
+  color: white;
+}
