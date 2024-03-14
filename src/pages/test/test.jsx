@@ -4,6 +4,8 @@ import character1 from "../../assets/backgrounds/character1.png";
 import testData from "./testData";
 import { useNavigate } from "react-router-dom";
 
+//TODO 여기부터 user의 정보를 받아올 수 있어야 함 (quiz 와 동일)
+
 export default function TestLayout() {
   const navigate = useNavigate();
   const [startTest, setStartTest] = useState(false);

@@ -2,24 +2,26 @@ import React, { useEffect, useState } from "react";
 import "./test.css";
 import character1 from "../../assets/backgrounds/character1.png";
 import { useNavigate, useLocation } from "react-router-dom";
-import investType from "./investType.js"; // investType 불러오기
+import investType from "./investType.js";
 
 export default function TestResultLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const score = location.state?.score; // 전달받은 점수를 안전하게 접근
-  const [result, setResult] = useState({}); // 투자성향 결과를 상태로 관리
+  const score = location.state?.score;
+  const [result, setResult] = useState({});
 
   useEffect(() => {
     // 점수에 따른 투자성향 결정 로직
-    const index = Math.min(Math.floor(score / 7), investType.length - 1); // 점수를 7점 단위로 나누고, 배열 범위를 초과하지 않도록 처리
-    setResult(investType[index]); // 해당하는 투자성향 정보를 상태에 저장
+    const index = Math.min(Math.floor(score / 7), investType.length - 1);
+    setResult(investType[index]);
   }, [score]);
 
   const handleBack = () => {
     console.log("홈으로 버튼이 클릭되었습니다.");
     navigate("/");
   };
+
+  //TODO 이때 사용자의 투자성향을 user DB에 넣어줄 수 있어야 함. 칭호는 나중에 개발?
 
   return (
     <div className="test-layout">

@@ -1,4 +1,5 @@
-//TODO 유저의 레벨이 확정되면, 레벨별로 출제되어야 할 문제 체크하도록.
+//TODO 유저의 레벨이 확정되면, 유저의 레벨별로 보여지는 문제를 다르게 하는 알고리즘을 설정해야 함
+//TODO 여기부터 유저의 정보를 받아오고 있어야 함(persist를 통해 연동되는 로그인 기능)
 
 import React, { useState, useEffect } from "react";
 import quizBackground from "../../assets/backgrounds/quiz.png";
