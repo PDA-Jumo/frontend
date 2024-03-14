@@ -6,7 +6,8 @@ import Background from "../../assets/backgrounds/Stock.png";
 import Folder from "../../assets/stock/folder.png";
 
 //components
-import StockDetails from "../../components/stock/StockDetails";
+import WorldStockDetails from "../../components/stock/WorldStockDetails";
+import StockDetail from "../../components/stock/StockDetail";
 
 export default function StockLayout() {
   return (
@@ -44,11 +45,9 @@ export default function StockLayout() {
             </tab>
           </div>
         </div>
-        <StockDetails />
+        <WorldStockDetails />
+        {/* <StockDetail /> */}
       </div>
-  
-
-  
     </div>
   );
 }
