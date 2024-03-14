@@ -2,6 +2,8 @@ import React from "react";
 import SearchTab from "../../components/stock/SearchTab";
 import WorldStockDetails from "../../components/stock/WorldStockDetails";
 
+import "../../styles/stock.css";
+
 export default function StockPage() {
   return (
     <div

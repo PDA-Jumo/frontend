@@ -5,8 +5,7 @@ import RankLayout from "../pages/rank/layout";
 import QuizLayout from "../pages/quiz/layout";
 import CommunityLayout from "../pages/community/community";
 import BookLayout from "../pages/book/book";
-import StockLayout from "../pages/Stock/stock";
-import StockPage from "../pages/Stock/\bStock";
+import StockPage from "../pages/Stock/Stock";
 
 export const mainRouter = [
   {
