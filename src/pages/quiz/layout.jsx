@@ -4,8 +4,10 @@ import React, { useState, useEffect } from "react";
 import quizBackground from "../../assets/backgrounds/quiz.png";
 import "./quiz.css";
 import quizData from "./quizData";
+import { useNavigate } from "react-router-dom";
 
 export default function QuizLayout() {
+  const navigate = useNavigate();
   const [showQuiz, setShowQuiz] = useState(false);
   const [currentQuiz, setCurrentQuiz] = useState({});
   const [selectedOption, setSelectedOption] = useState("");
@@ -49,7 +51,7 @@ export default function QuizLayout() {
 
   const handleBack = () => {
     console.log("뒤로가기 버튼이 클릭되었습니다.");
-    window.location.href = "http://localhost:3000"; //TODO 언젠간 결국 navigate를 활용해야 할 듯
+    navigate("/");
   };
 
   return (

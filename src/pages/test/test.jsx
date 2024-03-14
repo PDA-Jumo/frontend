@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import "./test.css";
 import character1 from "../../assets/backgrounds/character1.png";
 import testData from "./testData";
+import { useNavigate } from "react-router-dom";
 
 export default function TestLayout() {
+  const navigate = useNavigate();
   const [startTest, setStartTest] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const handleBack = () => {
     console.log("뒤로가기 버튼이 클릭되었습니다.");
-    window.location.href = "http://localhost:3000"; //TODO 언젠간 결국 navigate를 활용해야 할 듯
+    navigate("/");
   };
 
   // 진행 상태를 계산하는 함수
@@ -23,7 +25,7 @@ export default function TestLayout() {
       alert("테스트가 끝났습니다!");
       setStartTest(false);
       setCurrentQuestionIndex(0);
-      window.location.href = "http://localhost:3000/test/result";
+      navigate("/test/result");
     }
   };
 

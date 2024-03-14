@@ -1,12 +1,13 @@
 import React from "react";
 import "./test.css";
 import character1 from "../../assets/backgrounds/character1.png";
+import { useNavigate } from "react-router-dom";
 
 export default function TestResultLayout() {
-  // '홈으로' 버튼 클릭 시 동작하는 함수
+  const navigate = useNavigate();
   const handleBack = () => {
     console.log("홈으로 버튼이 클릭되었습니다.");
-    window.location.href = "http://localhost:3000"; //TODO: 이 부분을 react-router의 navigate를 사용하는 것으로 변경하는 것을 고려해볼 수 있음
+    navigate("/");
   };
 
   return (
