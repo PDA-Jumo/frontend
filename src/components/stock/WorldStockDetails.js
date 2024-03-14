@@ -24,7 +24,8 @@ export default function StockDetails() {
         marginTop: "8px",
         // height: "66vh",
         height: "100%",
-        overflow: "scroll",
+        overflowY: "scroll",
+        overflowX: "hidden",
       }}
     >
       <MainChartComponent />
