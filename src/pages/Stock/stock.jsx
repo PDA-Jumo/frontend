@@ -1,11 +1,12 @@
 import React from "react";
 import "../../styles/stock.css";
+
+//assets
 import Background from "../../assets/backgrounds/Stock.png";
-import Folder from "../../assets/stock/folder.png"
-import MyStock from "../../components/stock/myStock";
-import MyKoreaStock from "../../components/stock/MyKoreaStock";
-import MyWorldStock from "../../components/stock/MyWorldStock";
-import MyLikeStock from "../../components/stock/MylikeStock";
+import Folder from "../../assets/stock/folder.png";
+
+//components
+import StockDetails from "../../components/stock/StockDetails";
 
 export default function StockLayout() {
   return (
@@ -21,21 +22,29 @@ export default function StockLayout() {
       <div
         style={{
           position: "absolute",
-          width:"86%",
+          width: "86%",
           top: 100,
           left: 100,
-          display:"flex",
-          justifyContent:"space-between"
         }}
       >
-        <input class="input-style" type="text" />
-        <div style={{display:"flex", gap:"5%", left:30}}>
-        <div class="korea"><img src={Folder}/>국내주식</div>
-        <div class="korea"><img src={Folder}/>해외주식</div>
-        <div class="korea"><img src={Folder}/>내주식</div>
-
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <input class="input-style" type="text" />
+          <div style={{ display: "flex", gap: "5%", left: 30 }}>
+            <tab class="korea">
+              <img src={Folder} />
+              국내주식
+            </tab>
+            <tab class="korea">
+              <img src={Folder} />
+              해외주식
+            </tab>
+            <tab class="korea">
+              <img src={Folder} />
+              내주식
+            </tab>
+          </div>
         </div>
-       <MyLikeStock/>
+        <StockDetails />
       </div>
   
 
