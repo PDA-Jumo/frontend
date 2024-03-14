@@ -7,6 +7,9 @@ export default function MainLayout() {
   const redirectToQuiz = () => {
     window.location.href = "http://localhost:3000/quiz";
   };
+  const redirectToTest = () => {
+    window.location.href = "http://localhost:3000/test";
+  };
 
   return (
     <div className="background-style">
@@ -25,20 +28,31 @@ export default function MainLayout() {
       >
         <img src={hat} alt="모자 이미지" style={{ width: "900px" }} />
       </div>
-      {/* 아직 main페이지 안나와서 테스트용으로 만들어뒀어요 충돌나면 허상진 불러주세요 */}
-      <button
-        onClick={redirectToQuiz}
-        style={{
-          position: "absolute",
-          right: "20px",
-          bottom: "20px",
-          padding: "10px 20px",
-          fontSize: "16px",
-          cursor: "pointer",
-        }}
-      >
-        퀴즈 시작하기
-      </button>
+
+      <div style={{ position: "absolute", bottom: "20px", right: "20px" }}>
+        <button
+          onClick={redirectToQuiz}
+          style={{
+            padding: "10px 20px",
+            fontSize: "16px",
+            marginRight: "10px",
+            cursor: "pointer",
+          }}
+        >
+          퀴즈 시작하기
+        </button>
+
+        <button
+          onClick={redirectToTest}
+          style={{
+            padding: "10px 20px",
+            fontSize: "16px",
+            cursor: "pointer",
+          }}
+        >
+          테스트 시작하기
+        </button>
+      </div>
     </div>
   );
 }

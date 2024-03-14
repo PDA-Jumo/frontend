@@ -6,6 +6,10 @@ import testData from "./testData";
 export default function TestLayout() {
   const [startTest, setStartTest] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const handleBack = () => {
+    console.log("뒤로가기 버튼이 클릭되었습니다.");
+    window.location.href = "http://localhost:3000"; //TODO 언젠간 결국 navigate를 활용해야 할 듯
+  };
 
   // 진행 상태를 계산하는 함수
   const calculateProgress = () => {
@@ -19,6 +23,7 @@ export default function TestLayout() {
       alert("테스트가 끝났습니다!");
       setStartTest(false);
       setCurrentQuestionIndex(0);
+      window.location.href = "http://localhost:3000/test/result";
     }
   };
 
@@ -74,6 +79,11 @@ export default function TestLayout() {
         </div>
         {startTest && <div className="test-questions">{renderOptions()}</div>}
       </div>
+      {!startTest && (
+        <button className="home-button" onClick={handleBack}>
+          홈으로
+        </button>
+      )}
     </div>
   );
 }
