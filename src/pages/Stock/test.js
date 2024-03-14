@@ -1,4 +1,5 @@
 import React from "react";
+import SearchTab from "../../components/stock/SearchTab";
 import WorldStockDetails from "../../components/stock/WorldStockDetails";
 
 export default function TestStockPage() {
@@ -28,13 +29,14 @@ export default function TestStockPage() {
           주린이의 모험
         </span>
       </div>
+      <SearchTab />
       <div
         style={{
           border: "4px solid black",
           width: "95%",
-          height: "80%",
+          height: "70%",
           marginBlock: "8px",
-          padding: "16px",
+          padding: "8px",
         }}
       >
         <WorldStockDetails />
