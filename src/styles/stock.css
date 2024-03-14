@@ -10,24 +10,40 @@
 }
 
 .input-style {
-  width: 425px;
-  height: 60px;
-  padding-right: 50px;
-  padding-left: 15px;
-  background-image: url("../assets/stock/searchbar.png");
-  background-size: cover;
+  /* width: 425px;
+  height: 60px; */
+  /* padding-right: 50px;
+  padding-left: 15px; */
+  /* background-image: url("../assets/stock/searchbar.png"); */
+  /* background-size: cover; */
   /* position: absolute; */
   /* left: 8vw;
   top: 100px; */
+  width: 83%;
+  height: 100%;
   font-size: 30px;
+  border-right: 3px solid black;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
   font-family: "DNFBitBitv2";
+  appearance: none;
+  outline: none;
+  background: none;
 }
 
 .searchbutton-style {
-  background-image: url("../assets/stock/searchbar.png");
-  height: 65px;
-  width: 60px;
-  background-position: right center;
+  /* background-image: url("../assets/stock/searchbar.png"); */
+  /* height: 60px;
+  width: 60px; */
+  width: 12%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1f409a;
+  color: white;
+  /* background-position: right center; */
 }
 
 .korea {

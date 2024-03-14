@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+
+//redux
+import { useDispatch, useSelector } from "react-redux";
+import { addsearch } from "../../store/reducers/recentsearch";
 
 //css
 import "../../styles/globalStyle.css";
@@ -13,6 +17,8 @@ import refresh from "../../assets/icons/refresh.png";
 import gold from "../../assets/stock/medal_gold.png";
 import silver from "../../assets/stock/medal_silver.png";
 import bronze from "../../assets/stock/medal_bronze.png";
+import Folder from "../../assets/stock/folder.png";
+import Trash from "../../assets/icons/Trash.png";
 
 //library
 import SliderComponent from "./SliderComponent";
