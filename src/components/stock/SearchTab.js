@@ -8,6 +8,9 @@ import { addsearch } from "../../store/reducers/recentsearch";
 import Folder from "../../assets/stock/folder.png";
 import Search from "../../assets/icons/Search.png";
 
+import "../../styles/searchtab.css";
+import SearchDrop from "../../components/stock/SearchDrop";
+
 export default function SearchTab() {
   const dispatch = useDispatch();
   const search = useSelector((state) => state.search.searchList) || [];
@@ -23,50 +26,57 @@ export default function SearchTab() {
       }}
     >
       <div
+        class="dropdown"
         style={{
           display: "flex",
+          flexDirection: "column", // 추가된 코드
           width: "480px",
           height: "50px",
           border: "3px solid black",
           alignItems: "center",
+          position: "relative",
         }}
       >
-        <img
-          src={Search}
-          className="iconMedium"
-          style={{ marginRight: "4px" }}
-        />
-        <input
-          class="input-style"
-          type="text"
-          onChange={(e) => {
-            setInputValue(e.target.value);
-          }}
-        />
         <div
-          class="searchbutton-style"
-          onClick={() => {
-            const action = addsearch(inputValue);
-            dispatch(action);
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "50px",
+            alignItems: "center",
           }}
         >
-          검색
+          <img
+            src={Search}
+            className="iconMedium"
+            style={{ marginRight: "4px" }}
+          />
+          <input
+            class="input-style"
+            type="text"
+            onChange={(e) => {
+              setInputValue(e.target.value);
+            }}
+          />
+          <div
+            class="searchbutton-style"
+            onClick={() => {
+              const action = addsearch({
+                id: search.length,
+                content: inputValue,
+              });
+              dispatch(action);
+              console.log(action);
+            }}
+          >
+            검색
+          </div>
+        </div>
+        <div class="block">
+          <SearchDrop />
         </div>
       </div>
-      <div style={{ display: "flex", gap: "5%", left: 30 }}>
-        <tab class="korea">
-          <img src={Folder} />
-          국내주식
-        </tab>
-        <tab class="korea">
-          <img src={Folder} />
-          해외주식
-        </tab>
-        <tab class="korea">
-          <img src={Folder} />
-          내주식
-        </tab>
-      </div>
+
+   
     </div>
   );
 }
