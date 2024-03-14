@@ -18,9 +18,10 @@ export default function SearchDrop() {
           }}
         >
           {item.content}
-          <button
-            style={{ width: "25px", backgroundImage: `url(${Trash})` }}
-          ></button>
+          <img
+           src={Trash} style={{width:"25px"}}
+           onClick
+          ></img>
         </div>
       ))}
     </div>

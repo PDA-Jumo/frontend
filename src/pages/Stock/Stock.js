@@ -1,7 +1,7 @@
 import React from "react";
 import WorldStockDetails from "../../components/stock/WorldStockDetails";
 
-export default function TestStockPage() {
+export default function StockPage() {
   return (
     <div
       style={{
