@@ -6,6 +6,7 @@
   color: white;
   display: flex;
   align-items: center;
+  justify-content: space-between; /* 추가: 내부 요소들을 양 끝으로 정렬 */
 }
 
 .character-image {
@@ -20,7 +21,6 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .test-title {
@@ -79,18 +79,18 @@
   border-radius: 5px;
   display: flex; /* 수정: flex로 설정하여 flexbox 레이아웃을 사용합니다. */
   flex-direction: column; /* 수정: 항목들이 세로로 나열되도록 합니다. */
-  align-items: center; /* 추가: 문제들이 가운데(중앙)부터 시작하도록 정렬합니다. */
+  align-items: flex-end; /* 추가: 문제들이 가운데(중앙)부터 시작하도록 정렬합니다. */
 }
 
 .quiz-options {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* 버튼 사이의 간격을 조정합니다. */
-  align-items: flex-start;
+  gap: 10px;
+  margin-right: 10%;
 }
 
 .test-button {
-  width: 350px;
+  width: 800px;
   padding: 10px 20px;
   font-size: 24px;
   cursor: pointer;
@@ -109,7 +109,7 @@
 }
 .progress-bar-background {
   width: 90%;
-  margin-top: 10px;
+  margin: 10px auto; /* 상단 마진을 유지하면서 좌우 마진을 auto로 설정하여 중앙 정렬 */
   background-color: #e0e0e0;
   border-radius: 10px;
 }
