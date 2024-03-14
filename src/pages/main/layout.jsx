@@ -29,6 +29,7 @@ export default function MainLayout() {
         <img src={hat} alt="모자 이미지" style={{ width: "900px" }} />
       </div>
 
+      {/* 아래는 테스트코드임. 충돌나면 허상진 찾아오세요 */}
       <div style={{ position: "absolute", bottom: "20px", right: "20px" }}>
         <button
           onClick={redirectToQuiz}
