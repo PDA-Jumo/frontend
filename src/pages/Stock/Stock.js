@@ -4,6 +4,7 @@ import React from "react";
 import Folder from "../../assets/stock/folder.png";
 //components
 import SearchTab from "../../components/stock/SearchTab";
+import StockDetail from "../../components/stock/StockDetail";
 import WorldStockDetails from "../../components/stock/WorldStockDetails";
 
 //css
@@ -69,7 +70,8 @@ export default function StockPage() {
           padding: "8px",
         }}
       >
-        <WorldStockDetails />
+        {/* <WorldStockDetails /> */}
+        <StockDetail />
       </div>
       <div
         style={{
