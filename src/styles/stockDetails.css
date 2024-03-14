@@ -47,6 +47,7 @@
 
 .stockListView {
   height: 30px;
+  width: 95%;
   margin-block: 8px;
   border-radius: 16px;
   padding: 4px 8px;

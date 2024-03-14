@@ -9,6 +9,10 @@ import Flag from "../../assets/icons/flag.png";
 import Document from "../../assets/icons/Document.png";
 import shinhan_heart_chatbox from "../../assets/stock/shinhan_heart_chatbox.png";
 import shinhan_singing_chatbox from "../../assets/stock/shinhan_singing_chatbox.png";
+import refresh from "../../assets/icons/refresh.png";
+import gold from "../../assets/stock/medal_gold.png";
+import silver from "../../assets/stock/medal_silver.png";
+import bronze from "../../assets/stock/medal_bronze.png";
 
 //library
 import SliderComponent from "./SliderComponent";
@@ -38,7 +42,11 @@ export default function StockDetails() {
           className="textShadow"
           style={{ display: "flex", alignItems: "center", fontSize: "24px" }}
         >
-          <img src={Document} className="iconSmall" style={{ margin: "8px" }} />
+          <img
+            src={Document}
+            className="iconSmall"
+            style={{ marginRight: "8px" }}
+          />
           마켓 이슈
         </div>
         <div
@@ -51,7 +59,7 @@ export default function StockDetails() {
           <SliderComponent />
         </div>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ width: "45%" }}>
           <div style={{ display: "flex" }}>
             <img
@@ -129,21 +137,11 @@ export default function StockDetails() {
               </div>
             </div>
             <div>
-              <div className="stockListView">
-                <StockList />
-              </div>
-              <div className="stockListView">
-                <StockList />
-              </div>
-              <div className="stockListView">
-                <StockList />
-              </div>
-              <div className="stockListView">
-                <StockList />
-              </div>
-              <div className="stockListView">
-                <StockList />
-              </div>
+              <StockList />
+              <StockList />
+              <StockList />
+              <StockList />
+              <StockList />
             </div>
           </div>
         </div>
@@ -165,14 +163,14 @@ export default function StockDetails() {
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           marginBlock: "32px",
         }}
       >
         <div style={{ width: "45%" }}>
           <div
             className="textShadow"
-            style={{ display: "flex", fontSize: "24px", margin: "8px" }}
+            style={{ display: "flex", fontSize: "24px", marginRight: "8px" }}
           >
             <img
               src={Flag}
@@ -220,21 +218,11 @@ export default function StockDetails() {
               </div>
             </div>
             <div>
-              <div className="stockListView">
-                <StockList />
-              </div>
-              <div className="stockListView">
-                <StockList />
-              </div>
-              <div className="stockListView">
-                <StockList />
-              </div>
-              <div className="stockListView">
-                <StockList />
-              </div>
-              <div className="stockListView">
-                <StockList />
-              </div>
+              <StockList />
+              <StockList />
+              <StockList />
+              <StockList />
+              <StockList />
             </div>
           </div>
         </div>
@@ -253,28 +241,186 @@ export default function StockDetails() {
           />
         </div>
       </div>
+      <div>
+        <div
+          className="textShadow"
+          style={{ fontSize: "24px", display: "flex", alignItems: "center" }}
+        >
+          <img
+            src={Flag}
+            className="iconSmall"
+            style={{ marginRight: "8px" }}
+          />
+          오늘 주목받은 테마
+          <img
+            src={refresh}
+            className="iconSmall"
+            style={{ marginLeft: "16px" }}
+          />
+          <span
+            style={{
+              color: "#807F7E",
+              textShadow: "none",
+              fontSize: "16px",
+              alignSelf: "flex-end",
+              marginLeft: "8px",
+            }}
+          >
+            11:07 기준
+          </span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            style={{
+              height: "80px",
+              width: "180px",
+              display: "flex",
+              alignItems: "center",
+              border: "1px solid black",
+              borderRadius: "16px",
+              padding: "4px 8px",
+              marginBlock: "8px",
+              marginInline: "16px",
+              justifyContent: "space-around",
+              boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
+            }}
+          >
+            <img src={gold} style={{ height: "48px", marginRight: "16px" }} />
+            <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+              <span
+                style={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                모더나
+              </span>
+              <span>+26.7%</span>
+            </div>
+          </div>
+          <div
+            style={{
+              height: "80px",
+              width: "180px",
+              display: "flex",
+              alignItems: "center",
+              border: "1px solid black",
+              borderRadius: "16px",
+              padding: "4px 8px",
+              marginBlock: "8px",
+              marginInline: "16px",
+              justifyContent: "space-around",
+              boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
+            }}
+          >
+            <img src={silver} style={{ height: "48px", marginRight: "16px" }} />
+            <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+              <span
+                style={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                모더나
+              </span>
+              <span>+26.7%</span>
+            </div>
+          </div>
+          <div
+            style={{
+              height: "80px",
+              width: "180px",
+              display: "flex",
+              alignItems: "center",
+              border: "1px solid black",
+              borderRadius: "16px",
+              padding: "4px 8px",
+              marginBlock: "8px",
+              marginInline: "16px",
+              justifyContent: "space-around",
+              boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
+            }}
+          >
+            <img src={bronze} style={{ height: "48px", marginRight: "16px" }} />
+            <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+              <span
+                style={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                모더나
+              </span>
+              <span>+26.7%</span>
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            border: "3px solid #FBD115",
+            display: "flex",
+            height: "300px",
+            borderRadius: "16px",
+            boxShadow: "0 0 10px 0 rgba(0,0,0,0.2)",
+          }}
+        >
+          <div className="MainChartView">
+            <StockList />
+            <StockList />
+            <StockList />
+            <StockList />
+            <StockList />
+          </div>
+          <div //구분선
+            style={{
+              width: "3px",
+              height: "250px",
+              backgroundColor: "#FBD115",
+              alignSelf: "center",
+            }}
+          />
+          <div className="MainChartView">
+            <StockList />
+            <StockList />
+            <StockList />
+            <StockList />
+            <StockList />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 const StockList = () => {
   return (
-    <div style={{ display: "flex", alignItems: "center", flex: 6 }}>
+    <div className="stockListView">
       <div
         style={{
-          flex: 1,
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-around",
+          flex: 6,
         }}
       >
-        <span>1</span>
-        <img src={Document} className="iconSmall" />
-      </div>
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-around",
+          }}
+        >
+          <span>1</span>
+          <img src={Document} className="iconSmall" />
+        </div>
 
-      <span style={{ flex: 3 }}>씨씨에스</span>
-      <span style={{ flex: 1 }}>5,000원</span>
-      <span style={{ flex: 1 }}>+26.7%</span>
+        <span style={{ flex: 3 }}>씨씨에스</span>
+        <span style={{ flex: 1 }}>5,000원</span>
+        <span style={{ flex: 1 }}>+26.7%</span>
+      </div>
     </div>
   );
 };
@@ -311,7 +457,7 @@ const MainChartComponent = () => {
         className="textShadow"
         style={{ display: "flex", alignItems: "center", fontSize: "24px" }}
       >
-        <img src={Flag} className="iconSmall" style={{ margin: "8px" }} />
+        <img src={Flag} className="iconSmall" style={{ marginRight: "8px" }} />
         주요 지수
       </div>
       <div
