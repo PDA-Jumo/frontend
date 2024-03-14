@@ -6,10 +6,10 @@ import { addsearch } from "../../store/reducers/recentsearch";
 //assets
 import Background from "../../assets/backgrounds/Stock.png";
 import Folder from "../../assets/stock/folder.png";
-import Trash from "../../assets/icons/Trash.png"
 
 //components
 import StockDetail from "../../components/stock/StockDetail";
+import SearchDrop from "../../components/stock/SearchDrop";
 
 export default function StockLayout() {
   const dispatch = useDispatch();
@@ -46,8 +46,12 @@ export default function StockLayout() {
             <button
               class="searchbutton-style"
               onClick={() => {
-                const action = addsearch(inputValue);
+                const action = addsearch({
+                  id: search.length,
+                  content: inputValue,
+                });
                 dispatch(action);
+                console.log(action);
               }}
             />
           </div>
@@ -66,9 +70,7 @@ export default function StockLayout() {
             </tab>
           </div>
         </div>
-        {search.map((item, index) => (
-          <div style={{width:"200px", display:"flex", justifyContent:"space-between"}}key={index}>{item} <img style ={{width:"25px"}} src={Trash}/></div>
-        ))}
+            <SearchDrop/>
       </div>
     </div>
   );
