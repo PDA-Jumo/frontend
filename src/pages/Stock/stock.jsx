@@ -9,7 +9,7 @@ import Folder from "../../assets/stock/folder.png";
 import Trash from "../../assets/icons/Trash.png"
 
 //components
-import StockDetails from "../../components/stock/StockDetails";
+import StockDetail from "../../components/stock/StockDetail";
 
 export default function StockLayout() {
   const dispatch = useDispatch();
