@@ -2,7 +2,7 @@ import React from "react";
 import SearchTab from "../../components/stock/SearchTab";
 import WorldStockDetails from "../../components/stock/WorldStockDetails";
 
-export default function TestStockPage() {
+export default function StockPage() {
   return (
     <div
       style={{
