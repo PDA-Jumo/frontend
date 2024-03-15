@@ -1,0 +1,19 @@
+.container {
+  width: 60%;
+  height: 100%;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.rounded-rectangle {
+  background-color: #ffde6b;
+  border-radius: 20px; /* 각 꼭짓점 둥글게 */
+  padding: 20px;
+}
+
+.icon {
+  position: relative;
+  top: -0.2em; /* 텍스트의 험 글자 위에 위치 */
+}

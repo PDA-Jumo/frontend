@@ -12,11 +12,11 @@ import StockLayout from "../pages/Stock/stock";
 
 export const mainRouter = [
   {
-    path: "/",
+    path: "",
     element: <UserLayout />,
     children: [
       {
-        path: "/start",
+        path: "",
         element: <StartPage />,
         index: true,
       },
@@ -26,7 +26,7 @@ export const mainRouter = [
         index: true,
       },
       {
-        path: "/signin",
+        path: "/signup",
         element: <SignUpPage />,
         index: true,
       },
