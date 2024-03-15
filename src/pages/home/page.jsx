@@ -6,9 +6,15 @@ import quizIcon from "../../assets/main/quiz.png";
 import messageIcon from "../../assets/main/message.png";
 import encyclopediaIcon from "../../assets/main/encyclopedia.png";
 import { useNavigate } from "react-router-dom"; // react-router-dom을 사용하여 페이지 이동을 처리
+import { useSelector } from "react-redux";
 
-function PortfolioPage() {
+function MainPage() {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user) || {};
+  console.log(user);
+
+  // useSelector 훅을 사용하여 Redux store에서 사용자 정보를 가져옵니다.
+  // const user = useSelector((state) => state.userReducer.user);
 
   // 페이지 이동 함수
   const navigateTo = (path) => {
@@ -17,8 +23,21 @@ function PortfolioPage() {
 
   return (
     <div className="portfolio-page">
-      {/* 현금 보유액 표시 */}
-      <div className="cash-display">현금: ₩100,000</div>
+      {/* 사용자 프로필 이미지 및 기본 정보 표시 */}
+      <div className="user-info">
+        <img
+          src={user?.profile_img}
+          alt="프로필 이미지"
+          className="profile-img"
+        />
+        <div className="details">
+          <div>닉네임: {user?.nickname}</div>
+          <div>현금: ₩{user?.cash?.toLocaleString()}</div>
+          <div>총 자산: ₩{user?.total_assets?.toLocaleString()}</div>
+          <div>레벨: {user?.level}</div>
+          <div>유형: {user?.type}</div>
+        </div>
+      </div>
 
       {/* 보유 종목 버튼 */}
       <button onClick={() => navigateTo("/holdings")}>보유종목</button>
@@ -51,4 +70,4 @@ function PortfolioPage() {
   );
 }
 
-export default PortfolioPage;
+export default MainPage;
