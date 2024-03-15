@@ -7,33 +7,29 @@ import CommunityLayout from "../pages/community/community";
 import BookLayout from "../pages/book/book";
 import StockLayout from "../pages/Stock/stock";
 import TestLayout from "../pages/test/test";
+import TestResultLayout from "../pages/test/testResult";
 
 export const mainRouter = [
   {
     path: "/",
     element: <MainLayout />,
   },
-
   {
     path: "/login",
     element: <MainLayout />,
   },
-
   {
     path: "/signup",
     element: <MainLayout />,
   },
-
   {
     path: "/rank",
     element: <RankLayout />,
   },
-
   {
     path: "/quiz",
     element: <QuizLayout />,
   },
-
   {
     path: "/community",
     element: <CommunityLayout />,
@@ -46,10 +42,13 @@ export const mainRouter = [
     path: "/stock",
     element: <StockLayout />,
   },
-  ,
   {
     path: "/test",
     element: <TestLayout />,
+  },
+  {
+    path: "/test/result",
+    element: <TestResultLayout />,
   },
 ];
 

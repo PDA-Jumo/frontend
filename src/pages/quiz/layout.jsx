@@ -1,11 +1,13 @@
-//TODO 유저의 레벨이 확정되면, 레벨별로 출제되어야 할 문제 체크하도록.
+//TODO 여기부터 유저의 정보를 받아오고 있어야 함(persist를 통해 연동되는 로그인 기능)
 
 import React, { useState, useEffect } from "react";
 import quizBackground from "../../assets/backgrounds/quiz.png";
 import "./quiz.css";
 import quizData from "./quizData";
+import { useNavigate } from "react-router-dom";
 
 export default function QuizLayout() {
+  const navigate = useNavigate();
   const [showQuiz, setShowQuiz] = useState(false);
   const [currentQuiz, setCurrentQuiz] = useState({});
   const [selectedOption, setSelectedOption] = useState("");
@@ -24,6 +26,8 @@ export default function QuizLayout() {
 
     const randomIndex = Math.floor(Math.random() * quizData.length);
     const quiz = quizData[randomIndex];
+
+    //TODO if userlevel<minLevel reshuffle
 
     const shuffledOptions =
       quiz.type === "OX" ? [...quiz.options] : shuffleArray([...quiz.options]);
@@ -49,7 +53,7 @@ export default function QuizLayout() {
 
   const handleBack = () => {
     console.log("뒤로가기 버튼이 클릭되었습니다.");
-    window.location.href = "http://localhost:3000"; //TODO 언젠간 결국 navigate를 활용해야 할 듯
+    navigate("/");
   };
 
   return (
@@ -86,8 +90,14 @@ export default function QuizLayout() {
               <button
                 key={index}
                 onClick={() => checkAnswer(option)}
-                className={`quiz-button ${
-                  selectedOption === option ? "quiz-button-selected" : ""
+                className={`quiz-button ${option === "X" ? "x-stroke" : ""} ${
+                  selectedOption
+                    ? selectedOption === option
+                      ? "quiz-button-selected"
+                      : currentQuiz.type === "OX"
+                      ? "unselected-text-stroke"
+                      : "unselected"
+                    : ""
                 } ${currentQuiz.type === "OX" ? "ox-quiz-button" : ""}`}
               >
                 {option}
@@ -96,7 +106,11 @@ export default function QuizLayout() {
           </div>
           {isCorrect !== null && (
             <div>
-              <div className="quiz-result">
+              <div
+                className={`quiz-result ${
+                  isCorrect ? "correct-answer" : "wrong-answer"
+                }`}
+              >
                 {isCorrect
                   ? "정답입니다!"
                   : `틀렸습니다. 정답은: ${currentQuiz.answer}`}

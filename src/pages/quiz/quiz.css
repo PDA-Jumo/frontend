@@ -18,7 +18,7 @@
   color: white;
   font-size: 36px;
   text-align: center;
-  word-wrap: break-word;
+  word-break: keep-all;
   max-width: 65vw;
   margin: 0 auto;
   margin-bottom: 20px;
@@ -60,15 +60,26 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.quiz-button-selected {
-  background-color: gray;
-}
-
+/* 여기: 결과*/
 .quiz-result {
   margin-top: 20px;
   font-size: 28px;
   text-align: center;
-  color: white;
+}
+.quiz-result.correct-answer {
+  color: blue;
+}
+
+.quiz-result.wrong-answer {
+  color: red;
+}
+
+/* 배별하님 피드백으로 수정.*/
+.quiz-explanation {
+  font-size: 28px;
+  text-align: center;
+  color: black;
+  -webkit-text-stroke: 0.5px white;
 }
 
 .grid-container {
@@ -119,7 +130,17 @@
   transition: none;
 }
 
+.x-stroke {
+  -webkit-text-stroke: 1px blue;
+}
+
 .ox-quiz-button:hover {
   background-color: transparent;
   box-shadow: none;
+}
+.unselected {
+  border: 10px solid grey;
+}
+.unselected-text-stroke {
+  -webkit-text-stroke: 1px grey;
 }
