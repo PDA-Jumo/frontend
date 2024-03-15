@@ -27,7 +27,7 @@ export default function MyLikeStock() {
           <div class="mediumText">김광태가뭐야</div>
         </div>
 
-        <div>
+        <div style={{display:"flex", justifyContent:"center"}}>
           <img src={Character} style={{ width: "250px", height: "300px", padding:"5% 0" }} />
         </div>
       </div>

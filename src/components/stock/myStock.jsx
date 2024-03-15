@@ -1,22 +1,21 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import "../../styles/globalStyle.css";
 import Character from "../../assets/stock/character.png";
 import Coin from "../../assets/stock/coin.png";
 import { MyStockPageContext } from "../../pages/Stock/Stock";
-import "../../styles/myStock.css"
+import "../../styles/myStock.css";
 
 export default function MyStock() {
-  const {setMyStockPage} = useContext(MyStockPageContext)
+  const { setMyStockPage } = useContext(MyStockPageContext);
 
   return (
     <div
       style={{
-        position: "absolute",
-        top: "150px",
+        top: "190px",
         width: "100%",
-        height: "77%",
+        height: "1000px",
         display: "flex",
-        justifyContent: "center",
+        //justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
       }}
@@ -24,8 +23,9 @@ export default function MyStock() {
       <div
         style={{
           display: "flex",
-          width: "47%",
+          width: "50%",
           justifyContent: "space-between",
+          padding:"4% 5%"
         }}
       >
         <img src={Character}></img>
@@ -57,25 +57,16 @@ export default function MyStock() {
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
-          paddingTop: "4%",
+          paddingTop: "2%",
         }}
       >
-        <div
-          class="tab"
-          onClick={()=>setMyStockPage("2")}
-        >
+        <div class="tab" onClick={() => setMyStockPage("2")}>
           국내주식
         </div>
-        <div
-          class="tab"
-          onClick={()=>setMyStockPage("3")}
-        >
+        <div class="tab" onClick={() => setMyStockPage("3")}>
           해외주식
         </div>
-        <div
-          class="tab"
-          onClick={()=>setMyStockPage("4")}
-        >
+        <div class="tab" onClick={() => setMyStockPage("4")}>
           관심종목
         </div>
       </div>
