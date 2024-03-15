@@ -1,18 +1,18 @@
 import React from "react";
 // 아래 이미지 경로는 예시입니다. 실제 프로젝트에 맞게 조정해주세요.
-import rankingIcon from "/src/assets/main/ranking.png";
-import tradeIcon from "/src/assets/main/trade.png";
-import quizIcon from "/src/assets/main/quiz.png";
-import messageIcon from "/src/assets/main/message.png";
-import encyclopediaIcon from "/src/assets/main/encyclopedia.png";
-import { useHistory } from "react-router-dom"; // react-router-dom을 사용하여 페이지 이동을 처리
+import rankingIcon from "../../assets/main/ranking.png";
+import tradeIcon from "../../assets/main/trade.png";
+import quizIcon from "../../assets/main/quiz.png";
+import messageIcon from "../../assets/main/message.png";
+import encyclopediaIcon from "../../assets/main/encyclopedia.png";
+import { useNavigate } from "react-router-dom"; // react-router-dom을 사용하여 페이지 이동을 처리
 
 function PortfolioPage() {
-  let history = useHistory(); // useHistory 훅을 사용하여 페이지 이동
+  const navigate = useNavigate();
 
   // 페이지 이동 함수
   const navigateTo = (path) => {
-    history.push(path);
+    navigate(path);
   };
 
   return (

@@ -2,15 +2,11 @@ import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./page.css";
 import { login, signup } from "../../../lib/apis/auth";
+import character1 from "./character1.png";
+import character2 from "./character2.png";
 
 // 예시 이미지 주소 배열
-const images = [
-  "/src/assets/user/character/character1.png",
-  "/src/assets/user/character/character2.png",
-  "/src/assets/user/character/character3.png",
-  "/src/assets/user/character/character4.png",
-  "/src/assets/user/character/character5.png",
-];
+const images = [character1, character2];
 
 export default function SignUpPage() {
   const [userEmail, setUserEmail] = useState("");
@@ -18,6 +14,7 @@ export default function SignUpPage() {
   const [userNickname, setUserNickname] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
   const [showImages, setShowImages] = useState(false);
+  const navigate = useNavigate();
 
   const onInputChange = useCallback((inputText, setFn) => {
     setFn(inputText);
@@ -26,6 +23,7 @@ export default function SignUpPage() {
   const onRegisterSubmit = useCallback((email, password, nickname, image) => {
     // signup 함수 로직 구현 필요
     console.log({ email, password, nickname, image });
+    navigate("/signin");
     // 예시로 console.log를 사용했으나, 실제로는 여기에 회원가입 로직을 구현해야 합니다.
   }, []);
 

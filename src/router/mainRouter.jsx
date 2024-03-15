@@ -4,6 +4,7 @@ import UserLayout from "../pages/user/layout";
 import StartPage from "../pages/user/start/page";
 import SignInPage from "../pages/user/signin/page";
 import SignUpPage from "../pages/user/signup/page";
+import MainPage from "../pages/main/page";
 import RankLayout from "../pages/rank/layout";
 import QuizLayout from "../pages/quiz/layout";
 import CommunityLayout from "../pages/community/community";
@@ -31,6 +32,11 @@ export const mainRouter = [
         index: true,
       },
     ],
+  },
+  {
+    path: "/main",
+    element: <MainPage />,
+    index: true,
   },
   {
     path: "/rank",

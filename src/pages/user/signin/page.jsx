@@ -22,14 +22,14 @@ export default function SignInPage() {
           delete user.token;
           clientLogin(user);
         }
-        navigate("/signup");
+        navigate("/main");
         console.log(user);
       });
     },
     [navigate, clientLogin]
   );
 
-  const handleSignUpClick = () => {
+  const onHandleSignUpClick = () => {
     navigate("/signup");
   };
 
@@ -73,6 +73,12 @@ export default function SignInPage() {
           }}
         >
           로그인
+        </button>
+        <button
+          className="w-100 btn btn-secondary mt-3"
+          onClick={onHandleSignUpClick}
+        >
+          회원가입
         </button>
       </div>
     </div>
