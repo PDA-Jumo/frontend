@@ -13,8 +13,7 @@ export default function MyLikeStock() {
   return (
     <div
       style={{
-        position: "absolute",
-        top: "80px",
+        top: "190px",
         right: "100px",
         width: "86%",
         height: "77%",
@@ -22,7 +21,7 @@ export default function MyLikeStock() {
         justifyContent: "space-between",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", width: "50%"}}>
+      <div style={{ display: "flex", flexDirection: "column", width: "40%", padding:"2% 5%"}}>
         <div>
           <div style={{ fontSize: "18px", color: "#F9C93E" }}>주대주주</div>
           <div class="mediumText">김광태가뭐야</div>
@@ -39,6 +38,7 @@ export default function MyLikeStock() {
           flexDirection: "column",
           width: "50%",
           height: "1000px",
+          padding:"2% 0%"
         }}
       >
         <div>

@@ -1,18 +1,37 @@
-import React from "react";
-
+import React, { useState, useEffect, useContext } from "react";
 //assets
 import Folder from "../../assets/stock/folder.png";
 //components
 import SearchTab from "../../components/stock/SearchTab";
 import StockDetail from "../../components/stock/StockDetail";
-import WorldStockDetails from "../../components/stock/WorldStockDetails";
-
+import MyStockSelector from "../../components/stock/MyStockSelector";
 //css
 import "../../styles/stock.css";
 
+export const MyStockPageContext = React.createContext()
+
 export default function StockPage() {
+  const [mystockPage, setMyStockPage] = useState("1")
+  const [page, Setpage] = useState(1);
+  const [component, setComponent] = useState(null);
+
+  useEffect(() => {
+    console.log(page);
+    switch (page) {
+      case 1:
+        setComponent(<StockDetail />);
+        break;
+      case 2:
+        setComponent(<StockDetail />);
+        break;
+      default:
+        setComponent(<MyStockSelector />);
+    }
+  }, [page]);
+
   return (
-    <div
+    <MyStockPageContext.Provider value={{mystockPage, setMyStockPage}}>
+      <div
       style={{
         backgroundColor: "white",
         border: "5px solid black",
@@ -47,18 +66,18 @@ export default function StockPage() {
       >
         <SearchTab />
         <div style={{ display: "flex", gap: "5%", left: 30 }}>
-          <tab class="korea">
+          <div class="korea" onClick={() => Setpage(1)}>
             <img src={Folder} />
             국내주식
-          </tab>
-          <tab class="korea">
+          </div>
+          <div class="korea" onClick={() => Setpage(2)}>
             <img src={Folder} />
             해외주식
-          </tab>
-          <tab class="korea">
+          </div>
+          <div class="korea" onClick={() => {Setpage(3); setMyStockPage("1")}}>
             <img src={Folder} />
             내주식
-          </tab>
+          </div>
         </div>
       </div>
       <div
@@ -70,8 +89,7 @@ export default function StockPage() {
           padding: "8px",
         }}
       >
-        {/* <WorldStockDetails /> */}
-        <StockDetail />
+        {component}
       </div>
       <div
         style={{
@@ -82,5 +100,8 @@ export default function StockPage() {
         }}
       />
     </div>
+      
+    </MyStockPageContext.Provider>
+    
   );
 }

@@ -1,14 +1,18 @@
-import React from "react";
+import React,{useContext} from "react";
 import "../../styles/globalStyle.css";
 import Character from "../../assets/stock/character.png";
 import Coin from "../../assets/stock/coin.png";
+import { MyStockPageContext } from "../../pages/Stock/Stock";
+import "../../styles/myStock.css"
 
 export default function MyStock() {
+  const {setMyStockPage} = useContext(MyStockPageContext)
+
   return (
     <div
       style={{
         position: "absolute",
-        top: "270px",
+        top: "150px",
         width: "100%",
         height: "77%",
         display: "flex",
@@ -57,44 +61,20 @@ export default function MyStock() {
         }}
       >
         <div
-          class="mediumText"
-          style={{
-            width: "200px",
-            height: "60px",
-            border: "5px solid #FFDE68",
-            borderRadius: "20px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          class="tab"
+          onClick={()=>setMyStockPage("2")}
         >
           국내주식
         </div>
         <div
-          class="mediumText"
-          style={{
-            width: "200px",
-            height: "60px",
-            border: "5px solid #FFDE68",
-            borderRadius: "20px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          class="tab"
+          onClick={()=>setMyStockPage("3")}
         >
           해외주식
         </div>
         <div
-          class="mediumText"
-          style={{
-            width: "200px",
-            height: "60px",
-            border: "5px solid #FFDE68",
-            borderRadius: "20px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          class="tab"
+          onClick={()=>setMyStockPage("4")}
         >
           관심종목
         </div>

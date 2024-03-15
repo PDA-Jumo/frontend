@@ -13,8 +13,7 @@ export default function MyWorldStock() {
   return (
     <div
       style={{
-        position: "absolute",
-        top: "80px",
+        top: "190px",
         right: "100px",
         width: "86%",
         height: "77%",
@@ -22,7 +21,7 @@ export default function MyWorldStock() {
         justifyContent: "space-between",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", width: "50%" }}>
+      <div style={{ display: "flex", flexDirection: "column", width: "50%", padding:"2% 5%" }}>
         <div>
           <div style={{ fontSize: "18px", color: "#F9C93E" }}>주대주주</div>
           <div class="mediumText">김광태가뭐야</div>
@@ -82,6 +81,7 @@ export default function MyWorldStock() {
           flexDirection: "column",
           width: "45%",
           height: "1000px",
+          padding:"2% 0%"
         }}
       >
         <div>
@@ -103,8 +103,8 @@ export default function MyWorldStock() {
                   borderRadius: "30px",
                   margin: "10px 0",
                   display: "flex",
-                  justifyContent:"space-between",
-                  alignItems:"center"
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
                 <div>
@@ -116,7 +116,6 @@ export default function MyWorldStock() {
                   style={{
                     width: "8%",
                     height: "4%",
-                  
                   }}
                 />
               </div>

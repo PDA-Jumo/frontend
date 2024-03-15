@@ -29,7 +29,7 @@ export default function SearchTab() {
         class="dropdown"
         style={{
           display: "flex",
-          flexDirection: "column", // 추가된 코드
+          flexDirection: "column", 
           width: "480px",
           height: "50px",
           border: "3px solid black",
