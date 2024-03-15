@@ -60,10 +60,6 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.quiz-button-selected {
-  background-color: gray;
-}
-
 .quiz-result {
   margin-top: 20px;
   font-size: 28px;
@@ -119,7 +115,17 @@
   transition: none;
 }
 
+.x-stroke {
+  -webkit-text-stroke: 1px blue;
+}
+
 .ox-quiz-button:hover {
   background-color: transparent;
   box-shadow: none;
+}
+.unselected {
+  border: 10px solid grey;
+}
+.unselected-text-stroke {
+  -webkit-text-stroke: 1px grey;
 }

@@ -89,8 +89,14 @@ export default function QuizLayout() {
               <button
                 key={index}
                 onClick={() => checkAnswer(option)}
-                className={`quiz-button ${
-                  selectedOption === option ? "quiz-button-selected" : ""
+                className={`quiz-button ${option === "X" ? "x-stroke" : ""} ${
+                  selectedOption
+                    ? selectedOption === option
+                      ? "quiz-button-selected"
+                      : currentQuiz.type === "OX"
+                      ? "unselected-text-stroke"
+                      : "unselected"
+                    : ""
                 } ${currentQuiz.type === "OX" ? "ox-quiz-button" : ""}`}
               >
                 {option}
