@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 //css
 import "../../styles/stockDetails.css";
 
 //assets
 import character from "../../assets/character/shinhan_computer.png";
+import TradeModal from "./TradeModal";
 
 export default function StockDetail() {
+  const [isTrade, setIsTrade] = useState(false);
   return (
     <div
       style={{
@@ -18,6 +20,7 @@ export default function StockDetail() {
         overflowX: "hidden",
       }}
     >
+      {isTrade ? <TradeModal setIsTrade={setIsTrade} /> : null}
       <div
         style={{
           backgroundColor: "#0F3AB1",
@@ -82,7 +85,12 @@ export default function StockDetail() {
           <div style={{ display: "flex", gap: "8px" }}>
             <div className="stockDetailTradeButton">커뮤니티</div>
             <div className="stockDetailTradeButton">소수점 거래하기</div>
-            <div className="stockDetailTradeButton">주식 거래하기</div>
+            <div
+              className="stockDetailTradeButton"
+              onClick={() => setIsTrade(true)}
+            >
+              주식 거래하기
+            </div>
           </div>
         </div>
       </div>
