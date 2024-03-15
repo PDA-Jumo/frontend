@@ -11,7 +11,10 @@ export default function TestResultLayout() {
   const [result, setResult] = useState({});
 
   useEffect(() => {
-    const index = Math.min(Math.floor(score / 7), investType.length - 1);
+    console.log(score);
+
+    let index = Math.floor(score / 6);
+    index = Math.min(index, investType.length - 1);
     setResult(investType[index]);
   }, [score]);
 
@@ -19,6 +22,19 @@ export default function TestResultLayout() {
     console.log("홈으로 버튼이 클릭되었습니다.");
     navigate("/");
   };
+
+  const buttonBackgroundColor = {
+    안정형: "#AEF07E",
+    안정추구형: "#FFEB33",
+    위험중립형: "#FFAD33",
+    적극투자형: "#FF8933",
+    공격투자형: "#FF3D00",
+  };
+
+  const getButtonBackgroundColor = (성향) => {
+    return buttonBackgroundColor[성향] || "#ffffff";
+  };
+
   return (
     <div className="test-layout">
       <img src={character1} className="character-image" alt="Character" />
@@ -27,10 +43,20 @@ export default function TestResultLayout() {
         <hr className="test-line" />
 
         <div className="result-container">
-          <div className="result-text">
-            <div>
-              <strong>성향:</strong> {result.성향}
+          <div>
+            <div className="tendency-text">당신의 투자성향은</div>
+            <div className="tendency-button-container">
+              <button
+                className="result-button"
+                style={{
+                  backgroundColor: getButtonBackgroundColor(result.성향),
+                }}
+              >
+                {result.성향}
+              </button>
             </div>
+          </div>
+          <div className="result-text">
             <div>
               <strong className="highlight">특징:</strong> {result.특징}
             </div>

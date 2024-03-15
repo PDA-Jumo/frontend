@@ -154,6 +154,25 @@
 }
 .result-container {
   position: absolute;
-  margin-top: 300px;
+  margin-top: 180px;
   right: 15%;
+}
+.tendency-button-container {
+  margin-bottom: 30px;
+}
+
+.result-button {
+  padding: 20px 80px;
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 40px;
+  transition: background-color 0.3s;
+}
+
+.tendency-text {
+  font-size: 36px;
+  margin-bottom: 24px;
 }

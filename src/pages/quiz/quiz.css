@@ -60,11 +60,26 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* 여기: 결과*/
 .quiz-result {
   margin-top: 20px;
   font-size: 28px;
   text-align: center;
-  color: white;
+}
+.quiz-result.correct-answer {
+  color: blue;
+}
+
+.quiz-result.wrong-answer {
+  color: red;
+}
+
+/* 배별하님 피드백으로 수정.*/
+.quiz-explanation {
+  font-size: 28px;
+  text-align: center;
+  color: black;
+  -webkit-text-stroke: 0.5px white;
 }
 
 .grid-container {

@@ -1,4 +1,3 @@
-//TODO 유저의 레벨이 확정되면, 유저의 레벨별로 보여지는 문제를 다르게 하는 알고리즘을 설정해야 함
 //TODO 여기부터 유저의 정보를 받아오고 있어야 함(persist를 통해 연동되는 로그인 기능)
 
 import React, { useState, useEffect } from "react";
@@ -27,6 +26,8 @@ export default function QuizLayout() {
 
     const randomIndex = Math.floor(Math.random() * quizData.length);
     const quiz = quizData[randomIndex];
+
+    //TODO if userlevel<minLevel reshuffle
 
     const shuffledOptions =
       quiz.type === "OX" ? [...quiz.options] : shuffleArray([...quiz.options]);
@@ -105,7 +106,11 @@ export default function QuizLayout() {
           </div>
           {isCorrect !== null && (
             <div>
-              <div className="quiz-result">
+              <div
+                className={`quiz-result ${
+                  isCorrect ? "correct-answer" : "wrong-answer"
+                }`}
+              >
                 {isCorrect
                   ? "정답입니다!"
                   : `틀렸습니다. 정답은: ${currentQuiz.answer}`}
