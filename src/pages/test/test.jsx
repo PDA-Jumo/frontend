@@ -79,7 +79,7 @@ export default function TestLayout() {
               className="start-test-button"
               onClick={() => setStartTest(true)}
             >
-              테스트 하러 가기
+              GO!
             </button>
           )}
         </div>
