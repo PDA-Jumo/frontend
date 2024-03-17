@@ -40,10 +40,6 @@ export const mainRouter = [
   },
   {
     path: "/stock",
-    element: <StockLayout />,
-  },
-  {
-    path: "/stock",
     element: <StockPage />,
   },
   {
