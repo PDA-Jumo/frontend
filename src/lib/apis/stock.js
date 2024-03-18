@@ -8,3 +8,8 @@ export const getMarketIssue = async () => {
   });
   return marketIssues;
 };
+
+export const getLiveSise = async () => {
+  const liveSise = await instance.get("/stock/liveSise");
+  return liveSise;
+};
