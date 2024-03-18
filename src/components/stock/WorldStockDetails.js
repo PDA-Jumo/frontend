@@ -477,7 +477,10 @@ const MainChartNumberComponent = (props) => {
         <span>개인</span>
         <span
           style={{
-            color: props.sise.person[0] === "+" ? "#F3322C" : "#2B83F6",
+            color:
+              props.sise && props.sise.person && props.sise.person[0] === "+"
+                ? "#F3322C"
+                : "#2B83F6",
           }}
         >
           {props.sise.person}
@@ -493,7 +496,12 @@ const MainChartNumberComponent = (props) => {
         <span>외국인</span>
         <span
           style={{
-            color: props.sise.foreigner[0] === "+" ? "#F3322C" : "#2B83F6",
+            color:
+              props.sise &&
+              props.sise.foreigner &&
+              props.sise.foreigner[0] === "+"
+                ? "#F3322C"
+                : "#2B83F6",
           }}
         >
           {props.sise.foreigner}
@@ -503,7 +511,10 @@ const MainChartNumberComponent = (props) => {
         <span>기관</span>
         <span
           style={{
-            color: props.sise.company[0] === "+" ? "#F3322C" : "#2B83F6",
+            color:
+              props.sise && props.sise.company && props.sise.company[0] === "+"
+                ? "#F3322C"
+                : "#2B83F6",
           }}
         >
           {props.sise.company}
@@ -592,10 +603,13 @@ const MainChart = (props) => {
             <span
               style={{
                 fontSize: "12px",
-                color: props.sise.num3[0] === "+" ? "#F3322C" : "#2B83F6",
+                color:
+                  props.sise && props.sise.num3 && props.sise.num3[0] === "+"
+                    ? "#F3322C"
+                    : "#2B83F6",
               }}
             >
-              {props.sise.num3[0]}
+              {props.sise.num3 && props.sise.num3[0]}
               {props.sise.num2}({props.sise.num3})
             </span>
           </div>
