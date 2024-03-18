@@ -68,28 +68,30 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 85%;
-  padding: 20px 10px;
-  margin-bottom: 24px;
+  padding: 15px 10px;
+  margin: 0 auto 24px;
   font-size: 32px;
-  background-color: #ddd;
-  border-radius: 20px;
-  color: #333;
   border: none;
-  cursor: pointer;
   text-align: center;
-  box-shadow: 0 0 0 2px #000;
+  position: relative;
+  background: #ffffff;
+  border: 10px solid #ff98cc;
+  border-radius: 30px;
 }
 
 .portfolio-button {
-  padding: 5px 10px;
-  font-size: 16px;
-  background-color: #ffffff;
-  color: black;
+  padding: 10px 40px;
+  font-size: 32px;
+  background-color: #ff98cc;
+  color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 30px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  pointer-events: auto; /* nested button도 클릭 가능하게 만듦 */
+  pointer-events: auto;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .ranking-button:last-child {
@@ -106,6 +108,7 @@ body {
 .ranking-icon-container {
   display: flex;
   align-items: center;
+  margin-top: 2px;
 }
 
 .ranking-icon {
@@ -127,4 +130,11 @@ body {
   cursor: pointer;
   font-size: 24px;
   transition: background-color 0.3s;
+}
+.ranking-button:hover {
+  border: 10px solid #00bfff; /* 하늘색으로 변경 */
+}
+
+.ranking-button:hover .portfolio-button {
+  background-color: #00bfff; /* 하늘색으로 변경 */
 }
