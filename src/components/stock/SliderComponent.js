@@ -1,28 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 
+// assets
 import magnify from "../../assets/icons/magnify.png";
+
+// apis
+import { getMarketIssue } from "../../lib/apis/stock";
 
 export default function SliderComponent() {
   const settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 2,
-    slidesToScroll: 2,
+    slidesToScroll: 1,
     arrows: true,
     centerMode: true,
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
   };
+  const [issue, setIssue] = useState([]);
+  useEffect(() => {
+    const setData = async () => {
+      const issueData = await getMarketIssue();
+      setIssue(issueData.data);
+      console.log(issueData.data);
+    };
+
+    setData();
+  }, []);
   return (
     <StyledSlide {...settings}>
-      <MarketIssue />
-      <MarketIssue />
-      <MarketIssue />
-      <MarketIssue />
-      <MarketIssue />
-      <MarketIssue />
+      {issue.map((item) => (
+        <MarketIssue item={item} />
+      ))}
     </StyledSlide>
   );
 }
@@ -49,7 +60,7 @@ const PrevArrow = (props) => {
   );
 };
 
-const MarketIssue = () => {
+const MarketIssue = (props) => {
   return (
     <div
       style={{
@@ -71,13 +82,10 @@ const MarketIssue = () => {
         }}
       >
         <img src={magnify} className="iconSmall" />
-        <span>『KOSDAQ, 바이오주 등 개인 수급 유입 확대로 상승』</span>
+        <span>{props.item.content.split("『")[1].split("』")[0]}</span>
       </div>
-      <span className="newsText">
-        코스피는 외국인 선물 수급 추이와 연동되며 1,700pt 초반대 등락 - 부양책
-        상원 통과했으나 샌더스의 보류 가능성 시사에 미국 증시 상승폭 축소
-        코스피는 외국인 선물 수급 추이와 연동되며 1,700pt 초반대 등락 - 부양책
-        상원 통과했으나 샌더스의 보류 가능성 시사에 미국 증시 상승폭 축소
+      <span className="newsText" style={{ display: "block" }}>
+        {props.item.content.substring(props.item.content.indexOf("』") + 1)}
       </span>
     </div>
   );
