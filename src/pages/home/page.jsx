@@ -5,10 +5,15 @@ import tradeIcon from "../../assets/main/trade.png";
 import quizIcon from "../../assets/main/quiz.png";
 import messageIcon from "../../assets/main/message.png";
 import encyclopediaIcon from "../../assets/main/encyclopedia.png";
+import dollarIcon from "../../assets/main/dollar.png";
+import stockIcon from "../../assets/main/stock.png";
+import clickmeIcon from "../../assets/main/clickme.png";
+import tipsIcon from "../../assets/main/tips.png";
 import { useNavigate } from "react-router-dom"; // react-router-dom을 사용하여 페이지 이동을 처리
 import { useSelector } from "react-redux";
+import "./page.css";
 
-function MainPage() {
+function HomePage() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user) || {};
   console.log(user);
@@ -23,27 +28,46 @@ function MainPage() {
 
   return (
     <div className="portfolio-page">
-      {/* 사용자 프로필 이미지 및 기본 정보 표시 */}
       <div className="user-info">
-        <img
-          src={user?.profile_img}
-          alt="프로필 이미지"
-          className="profile-img"
-        />
-        <div className="details">
-          <div>닉네임: {user?.nickname}</div>
-          <div>현금: ₩{user?.cash?.toLocaleString()}</div>
-          <div>총 자산: ₩{user?.total_assets?.toLocaleString()}</div>
-          <div>레벨: {user?.level}</div>
-          <div>유형: {user?.type}</div>
+        <div className="info-overlay">
+          <div className="basic-info white-rounded-box">
+            <div className="profile-and-info">
+              <img
+                src={user?.profile_img}
+                alt="프로필 이미지"
+                className="profile-img"
+              />
+              <div className="info-text">
+                <div className="level-type">
+                  <span>레벨: {user?.level}</span>
+                  <span>유형: {user?.type}</span>
+                </div>
+                <div>닉네임: {user?.nickname}</div>
+              </div>
+            </div>
+          </div>
+          <div className="white-rounded-box-row">
+            <img
+              src={dollarIcon}
+              alt="달러 아이콘"
+              style={{ width: "24px", height: "24px", marginRight: "10px" }}
+            />
+            <div>{user?.cash?.toLocaleString()}</div>
+          </div>
+          <div
+            className="white-rounded-box-row"
+            onClick={() => navigateTo("/holdings")}
+          >
+            <img
+              src={stockIcon}
+              alt="보유 종목"
+              style={{ width: "24px", height: "24px", marginRight: "10px" }}
+            />
+            <span>보유종목</span>
+          </div>
         </div>
       </div>
-
-      {/* 보유 종목 버튼 */}
-      <button onClick={() => navigateTo("/holdings")}>보유종목</button>
-
-      {/* 기능별 이동 버튼 */}
-      <div className="navigation-buttons">
+      <div className="navigation-buttons vertical">
         <img
           src={rankingIcon}
           alt="랭킹"
@@ -70,4 +94,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default HomePage;

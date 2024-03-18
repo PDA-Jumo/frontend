@@ -29,7 +29,7 @@ export default function SignInPage() {
           const action = loginAction(userData);
           console.log(action);
           dispatch(action);
-          navigate("/main"); // 모든 처리가 완료된 후 홈으로 이동
+          navigate("/home"); // 모든 처리가 완료된 후 홈으로 이동
         }
       } catch (error) {
         console.error(error); // 에러 처리

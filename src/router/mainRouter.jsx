@@ -4,12 +4,13 @@ import UserLayout from "../pages/user/layout";
 import StartPage from "../pages/user/start/page";
 import SignInPage from "../pages/user/signin/page";
 import SignUpPage from "../pages/user/signup/page";
-import MainPage from "../pages/home/page";
+import HomePage from "../pages/home/page";
 import RankLayout from "../pages/rank/layout";
 import QuizLayout from "../pages/quiz/layout";
 import CommunityLayout from "../pages/community/community";
 import BookLayout from "../pages/book/book";
 import StockLayout from "../pages/Stock/stock";
+import HomeLayout from "../pages/home/layout";
 
 export const mainRouter = [
   {
@@ -34,8 +35,15 @@ export const mainRouter = [
     ],
   },
   {
-    path: "/main",
-    element: <MainPage />,
+    path: "/home",
+    element: <HomeLayout />,
+    children: [
+      {
+        path: "",
+        element: <HomePage />,
+        index: true,
+      },
+    ],
   },
   {
     path: "/rank",
