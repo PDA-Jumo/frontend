@@ -23,8 +23,8 @@ body {
 
 .content-position {
   width: 80vw;
-  height: auto; /* 내용에 따라 높이 조정 */
-  max-height: 85vh; /* 화면의 85%를 넘지 않는 최대 높이 설정 */
+  height: auto;
+  max-height: 75vh;
   position: absolute;
   top: 10%;
   left: 50%;
@@ -34,7 +34,10 @@ body {
   border-radius: 20px;
   padding: 60px 20px;
   box-sizing: border-box;
-  overflow: hidden; /* 내부 스크롤 방지 */
+  overflow: auto;
+}
+.content-position::-webkit-scrollbar {
+  display: none;
 }
 
 .ranking-header {
@@ -61,6 +64,9 @@ body {
 }
 
 .ranking-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 85%;
   padding: 20px 10px;
   margin-bottom: 24px;
@@ -72,7 +78,18 @@ body {
   cursor: pointer;
   text-align: center;
   box-shadow: 0 0 0 2px #000;
-  pointer-events: none;
+}
+
+.portfolio-button {
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  pointer-events: auto; /* nested button도 클릭 가능하게 만듦 */
 }
 
 .ranking-button:last-child {
@@ -96,4 +113,18 @@ body {
   width: 48px;
   height: 48px;
   margin-right: 36px;
+}
+
+.back-button {
+  position: fixed;
+  right: 50px;
+  bottom: 10px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 24px;
+  transition: background-color 0.3s;
 }
