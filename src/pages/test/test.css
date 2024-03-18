@@ -55,13 +55,13 @@
 .start-test-button {
   display: block;
   width: auto;
-  padding: 10px 20px;
+  padding: 10px 80px;
   background-color: #ffffff;
   color: black;
   border: none;
-  border-radius: 30px;
+  border-radius: 45px;
   cursor: pointer;
-  font-size: 32px;
+  font-size: 40px;
   margin-top: 20px;
   margin-bottom: 20px;
   margin-left: 350px;
@@ -167,7 +167,8 @@
   color: black;
   border: none;
   border-radius: 50px;
-  cursor: pointer;
+  pointer-events: none;
+  cursor: default;
   font-size: 40px;
   transition: background-color 0.3s;
 }
