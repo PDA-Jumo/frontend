@@ -15,23 +15,25 @@ export default function RankLayout() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight ||
-      isLoading
-    )
-      return;
+  useEffect(() => {
+    loadMoreUsers();
+    const scrollableContent = document.querySelector(".scrollable-content");
+    if (scrollableContent) {
+      scrollableContent.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      if (scrollableContent) {
+        scrollableContent.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
+
+  const handleScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.target;
+    if (scrollHeight - scrollTop !== clientHeight || isLoading) return;
     loadMoreUsers();
   };
 
-  useEffect(() => {
-    loadMoreUsers();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  //TODO 이 부분에서 실제 유저 정보를 받아오도록 해야함
   const loadMoreUsers = () => {
     setIsLoading(true);
     setTimeout(() => {
@@ -115,13 +117,16 @@ export default function RankLayout() {
         <RankingHeader />
       </div>
       <div className="content-position">
-        <RankingList users={users} />
-        <MyRankingButton />
+        <div className="non-scrollable-header"></div>
+        <div className="scrollable-content">
+          <RankingList users={users} />
+          <MyRankingButton />
+          {isLoading && <p>로딩 중...</p>}
+        </div>
       </div>
       <button className="back-button" onClick={() => navigate("/")}>
         홈으로
       </button>
-      {isLoading && <p>로딩 중...</p>}
     </div>
   );
 }
