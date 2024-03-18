@@ -1,3 +1,5 @@
+//TODO 실제 랭킹값을 받아오도록 해야함
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
@@ -29,6 +31,7 @@ export default function RankLayout() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  //TODO 이 부분에서 실제 유저 정보를 받아오도록 해야함
   const loadMoreUsers = () => {
     setIsLoading(true);
     setTimeout(() => {
