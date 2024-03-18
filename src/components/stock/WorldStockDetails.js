@@ -478,7 +478,9 @@ const MainChartNumberComponent = (props) => {
         <span
           style={{
             color:
-              props.sise && props.sise.person && props.sise.person[0] === "+"
+              props.sise && props.sise.person && props.sise.person[0] === "0"
+                ? "black"
+                : props.sise.person[0] === "+"
                 ? "#F3322C"
                 : "#2B83F6",
           }}
@@ -499,7 +501,9 @@ const MainChartNumberComponent = (props) => {
             color:
               props.sise &&
               props.sise.foreigner &&
-              props.sise.foreigner[0] === "+"
+              props.sise.foreigner[0] === "0"
+                ? "black"
+                : props.sise.foreigner[0] === "+"
                 ? "#F3322C"
                 : "#2B83F6",
           }}
@@ -512,7 +516,9 @@ const MainChartNumberComponent = (props) => {
         <span
           style={{
             color:
-              props.sise && props.sise.company && props.sise.company[0] === "+"
+              props.sise && props.sise.company && props.sise.company[0] === "0"
+                ? "black"
+                : props.sise.company[0] === "+"
                 ? "#F3322C"
                 : "#2B83F6",
           }}
@@ -548,7 +554,7 @@ const MainChartComponent = (props) => {
           display: "flex",
           // border: "3px solid #6082E1",
           width: "98%",
-          boxShadow: "0 0 10px 0 rgba(96, 130, 225, 0.5)",
+          // boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
         }}
       >
         <MainChart
@@ -589,7 +595,7 @@ const MainChart = (props) => {
             display: "flex",
             flexDirection: "column",
             position: "absolute",
-            top: "3%",
+            top: "2%",
             left: "3%",
           }}
         >
@@ -604,7 +610,9 @@ const MainChart = (props) => {
               style={{
                 fontSize: "12px",
                 color:
-                  props.sise && props.sise.num3 && props.sise.num3[0] === "+"
+                  props.sise && props.sise.num3 && props.sise.num3[0] === "0"
+                    ? "black"
+                    : props.sise.num3[0] === "+"
                     ? "#F3322C"
                     : "#2B83F6",
               }}
