@@ -138,3 +138,12 @@ body {
 .ranking-button:hover .portfolio-button {
   background-color: #00bfff; /* 하늘색으로 변경 */
 }
+.rank-title {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  color: #f9c93e;
+  position: absolute;
+  top: 5px;
+  left: 130px;
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate 추가
+import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
 import rankStar from "../../assets/rankStar.png";
 import rankCrown from "../../assets/rankCrown.png";
@@ -11,7 +11,7 @@ import "./rank.css";
 export default function RankLayout() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate(); // navigate 함수 사용을 위해 선언
+  const navigate = useNavigate();
 
   const handleScroll = () => {
     if (
@@ -80,19 +80,7 @@ export default function RankLayout() {
       <div className="ranking-button">
         <div className="ranking-icon-container">
           <img src={rankImage} alt="Rank Icon" className="ranking-icon" />
-          <div
-            style={{
-              fontStyle: "normal",
-              fontWeight: "400",
-              fontSize: "13px",
-              color: "#F9C93E",
-              position: "absolute",
-              top: "5px",
-              left: "130px",
-            }}
-          >
-            주대주주
-          </div>
+          <div className="rank-title">주대주주</div>
           {rank}
         </div>
         <button
@@ -100,8 +88,7 @@ export default function RankLayout() {
           onClick={() => navigate("/rank/portfolio")}
         >
           포트폴리오 보기
-        </button>{" "}
-        {/* 수정된 부분 */}
+        </button>
       </div>
     );
   };
@@ -111,19 +98,7 @@ export default function RankLayout() {
       <div className="ranking-button my-ranking">
         <div className="ranking-icon-container">
           <img src={rankHeart} alt="Rank Icon" className="ranking-icon" />
-          <div
-            style={{
-              fontStyle: "normal",
-              fontWeight: "400",
-              fontSize: "13px",
-              color: "#F9C93E",
-              position: "absolute",
-              top: "5px",
-              left: "130px",
-            }}
-          >
-            주대주주
-          </div>
+          <div className="rank-title">주대주주</div>
           나의 랭킹
         </div>
       </div>
