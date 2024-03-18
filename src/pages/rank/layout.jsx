@@ -1,5 +1,7 @@
 //TODO 실제 랭킹값을 받아오도록 해야함
 
+//TODO 페이지 넘어올때 갱신..?
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
@@ -34,6 +36,7 @@ export default function RankLayout() {
     loadMoreUsers();
   };
 
+  // TODO 여기가 사용자 정보 받아오는 API가 들어갈 예정 (아마 Axios를 활용하게 되지 않을까?)
   const loadMoreUsers = () => {
     setIsLoading(true);
     setTimeout(() => {
@@ -66,18 +69,13 @@ export default function RankLayout() {
   };
 
   const RankingButton = ({ rank, index }) => {
-    const getRankImage = (index) => {
-      switch (index) {
-        case 0:
-          return rankCrown;
-        case 1:
-          return rankBluedia;
-        case 2:
-          return rankReddia;
-        default:
-          return rankHeart;
-      }
+    const rankImages = {
+      0: rankCrown,
+      1: rankBluedia,
+      2: rankReddia,
     };
+
+    const getRankImage = (index) => rankImages[index] || rankHeart;
 
     const rankImage = getRankImage(index);
 
@@ -85,7 +83,8 @@ export default function RankLayout() {
       <div className="ranking-button">
         <div className="ranking-icon-container">
           <img src={rankImage} alt="Rank Icon" className="ranking-icon" />
-          <div className="rank-title">주대주주</div>
+          <div className="rank-title">주대주주</div>{" "}
+          {/* TODO 유저 티어도 동적으로 받아오기 */}
           {rank}
         </div>
         <button
@@ -104,7 +103,7 @@ export default function RankLayout() {
         <div className="ranking-icon-container">
           <img src={rankHeart} alt="Rank Icon" className="ranking-icon" />
           <div className="rank-title">주대주주</div>
-          나의 랭킹
+          나의 랭킹 {/* TODO 내 정보도 전부 동적으로 받아오기 */}
         </div>
       </div>
     );
@@ -117,7 +116,8 @@ export default function RankLayout() {
         <RankingHeader />
       </div>
       <div className="content-position">
-        <div className="non-scrollable-header"></div>
+        <div className="non-scrollable-header">17:00 기준</div>{" "}
+        {/* TODO 서버시간기준 */}
         <div className="scrollable-content">
           <RankingList users={users} />
           <MyRankingButton />

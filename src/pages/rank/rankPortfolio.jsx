@@ -30,7 +30,7 @@ export default function PortfolioList() {
             </div>
           </div>
         </div>
-
+        {/* TODO 전체적으로 사용자의 정보 및 보유자산을 userId를 통해 받아올 수 있어야 한다*/}
         <div className="tabs-container">
           <button className="tab-button">국내주식</button>
           <button className="tab-button">해외주식</button>
