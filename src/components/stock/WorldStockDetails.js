@@ -36,6 +36,7 @@ export default function StockDetails() {
   const [isModal, setIsModal] = useState(false);
   const [issue, setIssue] = useState([]);
   const [clickedIssue, setClickedIssue] = useState({});
+  const [selectedTab, setSelectedTab] = useState(0);
   useEffect(() => {
     const setData = async () => {
       const liveSise = await getLiveSise();
@@ -115,22 +116,20 @@ export default function StockDetails() {
               style={{ marginRight: "8px" }}
             />
             <div
+              className="myStockTab"
               style={{
-                padding: "8px",
-                boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.2)",
-                borderTopLeftRadius: "16px",
-                borderTopRightRadius: "16px",
+                backgroundColor: selectedTab === 0 ? "lightgray" : "white",
               }}
+              onClick={() => setSelectedTab(0)}
             >
               나의 종목 시세
             </div>
             <div
+              className="myStockTab"
               style={{
-                padding: "8px",
-                boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.2)",
-                borderTopLeftRadius: "16px",
-                borderTopRightRadius: "16px",
+                backgroundColor: selectedTab === 1 ? "lightgray" : "white",
               }}
+              onClick={() => setSelectedTab(1)}
             >
               추천 종목
             </div>
