@@ -19,7 +19,7 @@
 }
 
 .form-group {
-  width: 60%;
+  width: 70%;
 }
 
 .form-control {
@@ -39,10 +39,10 @@
   margin: 0 5px; /* 버튼들 사이의 간격 설정 */
 }
 .custom-input {
-  font-size: 30px; /* 글씨 크기를 36px로 설정 */
-  border-radius: 50px; /* 테두리를 동그랗게 설정 */
-  padding: 10px 20px; /* 적당한 패딩을 추가하여 입력 내용이 잘 보이도록 함 */
-  margin-bottom: 24px;
+  font-size: 30px;
+  border-radius: 50px;
+  padding: 10px 20px;
+  margin-bottom: 36px;
 }
 .label-custom {
   color: white;
@@ -50,7 +50,7 @@
   margin-bottom: 12px;
 }
 .custom-login {
-  font-size: 24px; /* 글씨 크기를 36px로 설정 */
-  border-radius: 50px; /* 테두리를 동그랗게 설정 */
-  padding: 10px 20px; /* 적당한 패딩을 추가하여 입력 내용이 잘 보이도록 함 */
+  font-size: 24px;
+  border-radius: 50px;
+  padding: 10px 20px;
 }

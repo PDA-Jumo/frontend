@@ -106,6 +106,23 @@ export default function SignUpPage() {
           <div className="form-area">
             <div className="form-group1">
               <div className="form-floating mb-3">
+                <label htmlFor="floatingNickname" className="label-custom">
+                  닉네임
+                </label>
+                <input
+                  type="text"
+                  className="form-control custom-input"
+                  id="floatingNickname"
+                  placeholder="닉네임을 입력해주세요.(최대 6글자)"
+                  onChange={(e) =>
+                    onInputChange(e.target.value, setUserNickname)
+                  }
+                  value={userNickname}
+                  required
+                />
+              </div>
+
+              <div className="form-floating mb-3">
                 <label htmlFor="floatingInput" className="label-custom">
                   이메일
                 </label>
@@ -113,7 +130,7 @@ export default function SignUpPage() {
                   type="email"
                   className="form-control custom-input"
                   id="floatingInput"
-                  placeholder="name@example.com"
+                  placeholder="이메일을 입력해주세요."
                   onChange={(e) => onInputChange(e.target.value, setUserEmail)}
                   value={userEmail}
                   required
@@ -128,28 +145,11 @@ export default function SignUpPage() {
                   type="password"
                   className="form-control custom-input"
                   id="floatingPassword"
-                  placeholder="Password"
+                  placeholder="비밀번호를 입력해주세요."
                   onChange={(e) =>
                     onInputChange(e.target.value, setUserPassword)
                   }
                   value={userPassword}
-                  required
-                />
-              </div>
-
-              <div className="form-floating mb-3">
-                <label htmlFor="floatingNickname" className="label-custom">
-                  별명
-                </label>
-                <input
-                  type="text"
-                  className="form-control custom-input"
-                  id="floatingNickname"
-                  placeholder="Nickname"
-                  onChange={(e) =>
-                    onInputChange(e.target.value, setUserNickname)
-                  }
-                  value={userNickname}
                   required
                 />
               </div>

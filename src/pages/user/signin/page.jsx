@@ -54,7 +54,7 @@ export default function SignInPage() {
           style={{
             display: "flex",
             flexDirection: "column",
-            paddingTop: "64px",
+            paddingTop: "48px",
             alignItems: "center",
             width: "100%",
             height: "calc(100% - 96px)",
@@ -69,7 +69,7 @@ export default function SignInPage() {
                 type="email"
                 className="form-control custom-input"
                 id="floatingInput"
-                placeholder="name@example.com"
+                placeholder="이메일을 입력해주세요."
                 onChange={(e) => {
                   onInputChange(e.target.value, setUserEmail);
                 }}
@@ -85,7 +85,7 @@ export default function SignInPage() {
                 type="password"
                 className="form-control custom-input"
                 id="floatingPassword"
-                placeholder="Password"
+                placeholder="비밀번호를 입력해주세요."
                 onChange={(e) => {
                   onInputChange(e.target.value, setUserPassword);
                 }}
