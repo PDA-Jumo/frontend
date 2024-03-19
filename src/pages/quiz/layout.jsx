@@ -26,51 +26,43 @@ export default function QuizLayout() {
 
   useEffect(() => {
     if (!showQuiz) return;
-    // 사용자의 레벨을 숫자로 변환합니다.
+
     const userLevel = parseInt(user.level, 10);
-    // 사용자의 레벨보다 크거나 같은 문제들만 필터링합니다.
+
     const suitableQuizzes = quizData.filter((quiz) => {
-      // 문제의 레벨을 숫자로 변환합니다.
       const quizLevel = parseInt(quiz.level, 10);
       return userLevel >= quizLevel;
     });
-    // 적합한 문제가 없다면 함수를 종료합니다.
+
     if (suitableQuizzes.length === 0) return;
-    // 적합한 문제들 중에서 랜덤하게 하나를 선택합니다.
+
     const randomIndex = Math.floor(Math.random() * suitableQuizzes.length);
     const quiz = suitableQuizzes[randomIndex];
-    // OX 퀴즈인 경우 옵션을 그대로 사용하고, 아닌 경우 옵션을 섞습니다.
+
     const shuffledOptions =
       quiz.type === "OX" ? [...quiz.options] : shuffleArray([...quiz.options]);
-    // 선택된 문제와 섞인 옵션을 현재 퀴즈로 설정합니다.
+
     const shuffledQuiz = { ...quiz, options: shuffledOptions };
     setCurrentQuiz(shuffledQuiz);
     setIsCorrect(null);
     setSelectedOption("");
   }, [showQuiz, user.level, quizData]);
 
-  const upCash = useCallback(
-    async (user_id, level) => {
-      // async 키워드를 추가하여 비동기 함수임을 명시합니다.
-      try {
-        const resp = await quizSuccess({ user_id, level }); // await을 사용하여 비동기 로그인 함수의 완료를 기다립니다.
-      } catch (error) {
-        console.error(error); // 에러 처리
-        // 필요하다면 에러에 대한 추가적인 처리를 여기에 작성할 수 있습니다.
-      }
-    },
-    [] // 의존성 배열에 포함된 항목들
-  );
+  const upCash = useCallback(async (user_id, level) => {
+    try {
+      const resp = await quizSuccess({ user_id, level });
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   const checkAnswer = async (selected) => {
-    //TODO 퀴즈를 맞췄을때 유저한테 돈을 지급하도록 UPDATE되어야 함
     if (isCorrect !== null) return;
 
     setSelectedOption(selected);
     if (selected === currentQuiz.answer) {
       setIsCorrect(true);
 
-      // 이 안에 돈주는로직
       await upCash(user.user_id, user.level);
     } else {
       setIsCorrect(false);
@@ -79,7 +71,7 @@ export default function QuizLayout() {
 
   const handleBack = () => {
     console.log("뒤로가기 버튼이 클릭되었습니다.");
-    navigate("/");
+    navigate("/home");
   };
 
   return (

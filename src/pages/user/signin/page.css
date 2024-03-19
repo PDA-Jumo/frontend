@@ -43,3 +43,8 @@
   border-radius: 50px; /* 테두리를 동그랗게 설정 */
   padding: 10px 20px; /* 적당한 패딩을 추가하여 입력 내용이 잘 보이도록 함 */
 }
+.label-custom {
+  color: white;
+  font-size: 18px;
+  margin-bottom: 12px;
+}

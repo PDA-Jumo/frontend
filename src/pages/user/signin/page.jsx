@@ -47,9 +47,12 @@ export default function SignInPage() {
           {" "}
           {/* form-group 추가 */}
           <div className="form-floating mb-3">
+            <label htmlFor="floatingInput" className="label-custom">
+              이메일
+            </label>
             <input
               type="email"
-              className="form-control custom-input" // 클래스 이름에 custom-input 추가
+              className="form-control custom-input"
               id="floatingInput"
               placeholder="name@example.com"
               onChange={(e) => {
@@ -60,9 +63,12 @@ export default function SignInPage() {
             />
           </div>
           <div className="form-floating mb-3">
+            <label htmlFor="floatingPassword" className="label-custom">
+              비밀번호
+            </label>
             <input
               type="password"
-              className="form-control custom-input" // 클래스 이름에 custom-input 추가
+              className="form-control custom-input"
               id="floatingPassword"
               placeholder="Password"
               onChange={(e) => {
