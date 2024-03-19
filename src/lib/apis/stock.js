@@ -13,3 +13,8 @@ export const getLiveSise = async () => {
   const liveSise = await instance.get("/stock/liveSise");
   return liveSise;
 };
+
+export const getThemeRank = async () => {
+  const themeRank = await instance.get("/stock/theme");
+  return themeRank;
+};

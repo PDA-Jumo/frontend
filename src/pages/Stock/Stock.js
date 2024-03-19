@@ -19,7 +19,7 @@ export default function StockPage() {
   const [component, setComponent] = useState(null);
 
   useEffect(() => {
-    console.log(page);
+    // console.log(page);
     switch (page) {
       case 1:
         setComponent(<StockDetails />);

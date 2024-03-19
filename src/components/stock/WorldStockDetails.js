@@ -22,20 +22,33 @@ import Trash from "../../assets/icons/Trash.png";
 
 //library
 import SliderComponent from "./SliderComponent";
-import { getLiveSise } from "../../lib/apis/stock";
+
+//utils
+import { getLiveSise, getThemeRank } from "../../lib/apis/stock";
 
 export default function StockDetails() {
   const [kospiSise, setKospiSise] = useState({});
   const [kosdaqSise, setKosdaqSise] = useState({});
+  const [themeRank, setThemeRank] = useState([]);
+  const [isRefresh, setIsRefresh] = useState(false);
+  const [now, setNow] = useState("");
   useEffect(() => {
     const setData = async () => {
       const liveSise = await getLiveSise();
+      const themeRankData = await getThemeRank();
+      console.log(themeRankData);
+      setThemeRank(themeRankData.data);
       setKospiSise(liveSise.data.kospi);
       setKosdaqSise(liveSise.data.kosdaq);
-      console.log(kospiSise, kosdaqSise);
     };
     setData();
   }, []);
+  useEffect(() => {
+    const nowDate = new Date();
+    const hours = nowDate.getHours().toString().padStart(2, "0");
+    const minutes = nowDate.getMinutes().toString().padStart(2, "0");
+    setNow(`${hours}:${minutes}`);
+  }, [isRefresh]);
   return (
     <div
       style={{
@@ -299,7 +312,15 @@ export default function StockDetails() {
           <img
             src={refresh}
             className="iconSmall"
-            style={{ marginLeft: "16px" }}
+            style={{
+              marginLeft: "16px",
+              transform: isRefresh ? "rotate(360deg)" : "rotate(0deg)",
+              cursor: "pointer",
+              transition: "transform 0.5s ease",
+            }}
+            onClick={() => {
+              setIsRefresh(!isRefresh);
+            }}
           />
           <span
             style={{
@@ -310,101 +331,87 @@ export default function StockDetails() {
               marginLeft: "8px",
             }}
           >
-            11:07 기준
+            {now}
+            기준
           </span>
         </div>
         <div
           style={{
             display: "flex",
-            alignItems: "center",
+            alignItems: "flex-end",
             marginBottom: "16px",
           }}
         >
-          <div
-            style={{
-              height: "80px",
-              width: "180px",
-              display: "flex",
-              alignItems: "center",
-              border: "1px solid black",
-              borderRadius: "16px",
-              padding: "4px 8px",
-              marginBlock: "8px",
-              marginInline: "16px",
-              justifyContent: "space-around",
-              boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
-            }}
-          >
+          <div className="themeTop3" style={{ height: "80px" }}>
             <img src={gold} style={{ height: "48px", marginRight: "16px" }} />
-            <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
+              }}
+            >
               <span
                 style={{
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
+                  width: "120px",
                 }}
               >
-                모더나
+                {themeRank && themeRank[0] && themeRank[0].name}
               </span>
-              <span>+26.7%</span>
+              <span>
+                {themeRank && themeRank[0] && themeRank[0].volatility}%
+              </span>
             </div>
           </div>
-          <div
-            style={{
-              height: "80px",
-              width: "180px",
-              display: "flex",
-              alignItems: "center",
-              border: "1px solid black",
-              borderRadius: "16px",
-              padding: "4px 8px",
-              marginBlock: "8px",
-              marginInline: "16px",
-              justifyContent: "space-around",
-              boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
-            }}
-          >
+          <div className="themeTop3" style={{ height: "70px" }}>
             <img src={silver} style={{ height: "48px", marginRight: "16px" }} />
-            <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
+              }}
+            >
               <span
                 style={{
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
+                  width: "120px",
                 }}
               >
-                모더나
+                {themeRank && themeRank[1] && themeRank[1].name}
               </span>
-              <span>+26.7%</span>
+              <span>
+                {themeRank && themeRank[1] && themeRank[1].volatility}%
+              </span>
             </div>
           </div>
-          <div
-            style={{
-              height: "80px",
-              width: "180px",
-              display: "flex",
-              alignItems: "center",
-              border: "1px solid black",
-              borderRadius: "16px",
-              padding: "4px 8px",
-              marginBlock: "8px",
-              marginInline: "16px",
-              justifyContent: "space-around",
-              boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
-            }}
-          >
+          <div className="themeTop3" style={{ height: "60px" }}>
             <img src={bronze} style={{ height: "48px", marginRight: "16px" }} />
-            <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
+              }}
+            >
               <span
                 style={{
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
+                  width: "120px",
                 }}
               >
-                모더나
+                {themeRank && themeRank[2] && themeRank[2].name}
               </span>
-              <span>+26.7%</span>
+              <span>
+                {themeRank && themeRank[2] && themeRank[2].volatility}%
+              </span>
             </div>
           </div>
         </div>
@@ -420,11 +427,9 @@ export default function StockDetails() {
           }}
         >
           <div className="MainChartView">
-            <StockList />
-            <StockList />
-            <StockList />
-            <StockList />
-            <StockList />
+            {themeRank.slice(0, 5).map((item, index) => (
+              <StockList item={item} index={index} />
+            ))}
           </div>
           <div //구분선
             style={{
@@ -435,11 +440,9 @@ export default function StockDetails() {
             }}
           />
           <div className="MainChartView">
-            <StockList />
-            <StockList />
-            <StockList />
-            <StockList />
-            <StockList />
+            {themeRank.slice(5, 11).map((item, index) => (
+              <StockList item={item} index={index + 5} />
+            ))}
           </div>
         </div>
       </div>
@@ -447,14 +450,14 @@ export default function StockDetails() {
   );
 }
 
-const StockList = () => {
+const StockList = (props) => {
   return (
     <div className="stockListView">
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          flex: 6,
+          flex: 5,
         }}
       >
         <div
@@ -465,13 +468,16 @@ const StockList = () => {
             justifyContent: "space-around",
           }}
         >
-          <span>1</span>
+          <span>{props.index + 1}</span>
           <img src={Document} className="iconSmall" />
         </div>
 
-        <span style={{ flex: 3 }}>씨씨에스</span>
-        <span style={{ flex: 1 }}>5,000원</span>
-        <span style={{ flex: 1 }}>+26.7%</span>
+        <span style={{ flex: 3 }}>
+          {props && props.item && props.item.name}
+        </span>
+        <span style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          {props && props.item && props.item.volatility}%
+        </span>
       </div>
     </div>
   );
