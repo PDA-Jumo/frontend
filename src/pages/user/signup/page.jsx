@@ -111,7 +111,7 @@ export default function SignUpPage() {
                 </label>
                 <input
                   type="text"
-                  className="form-control custom-input"
+                  className="form-control custom-input2"
                   id="floatingNickname"
                   placeholder="닉네임을 입력해주세요.(최대 6글자)"
                   onChange={(e) =>
@@ -128,7 +128,7 @@ export default function SignUpPage() {
                 </label>
                 <input
                   type="email"
-                  className="form-control custom-input"
+                  className="form-control custom-input2"
                   id="floatingInput"
                   placeholder="이메일을 입력해주세요."
                   onChange={(e) => onInputChange(e.target.value, setUserEmail)}
@@ -143,7 +143,7 @@ export default function SignUpPage() {
                 </label>
                 <input
                   type="password"
-                  className="form-control custom-input"
+                  className="form-control custom-input2"
                   id="floatingPassword"
                   placeholder="비밀번호를 입력해주세요."
                   onChange={(e) =>
@@ -154,22 +154,20 @@ export default function SignUpPage() {
                 />
               </div>
 
-              <div className="button-group">
-                <button
-                  className="btn btn-primary custom-login"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onRegisterSubmit(
-                      userEmail,
-                      userPassword,
-                      userNickname,
-                      userImage
-                    );
-                  }}
-                >
-                  회원가입
-                </button>
-              </div>
+              <button
+                className="btn btn-primary custom-login button-width"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onRegisterSubmit(
+                    userEmail,
+                    userPassword,
+                    userNickname,
+                    userImage
+                  );
+                }}
+              >
+                회원가입
+              </button>
             </div>
           </div>
         </div>

@@ -28,6 +28,7 @@
 }
 
 .button-group {
+  margin-left: 20px;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -36,7 +37,7 @@
 .btn-primary,
 .btn-secondary {
   flex: 1; /* 버튼들이 동일한 크기를 가지도록 설정 */
-  margin: 0 5px; /* 버튼들 사이의 간격 설정 */
+  margin: 0 15px; /* 버튼들 사이의 간격 설정 */
 }
 .custom-input {
   font-size: 30px;
