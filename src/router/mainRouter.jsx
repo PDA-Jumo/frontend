@@ -48,7 +48,7 @@ export const mainRouter = [
     ],
   },
   {
-    path: "/rank",
+    path: "/ranking",
     element: <RankLayout />,
   },
 
