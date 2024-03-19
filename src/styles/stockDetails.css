@@ -1,7 +1,9 @@
 .MainChartNumberView {
   width: 45%;
   height: 50px;
-  border: 2px solid #6082e1;
+  /* border: 2px solid #6082e1; */
+  /* border: 2px solid black; */
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
   border-radius: 16px;
   display: flex;
   margin-top: 40px;
@@ -43,7 +45,7 @@
   box-sizing: border-box;
   height: 250px;
   border-radius: 16px;
-  box-shadow: 0 0 10px 0 rgba(96, 130, 225, 0.5);
+  box-shadow: 0 0 10px 0 rgba(225, 204, 236, 0.5);
 }
 
 .newsText {
@@ -66,11 +68,12 @@
   padding: 4px 8px;
   display: flex;
   align-items: center;
-  box-shadow: 2px 2px 3px rgba(96, 130, 225, 0.5);
+  box-shadow: 2px 2px 3px rgba(225, 204, 236, 0.5);
 }
 
 .stockDetailTradeButton {
   border: 3px solid #0f3ab1;
+  /* border: 3px solid black; */
   border-radius: 16px;
   padding: 8px 16px;
   cursor: pointer;

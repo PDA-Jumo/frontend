@@ -20,19 +20,18 @@ export default function SearchTab() {
     <div
       style={{
         display: "flex",
-        justifyContent: "space-between",
-        width: "90%",
-        marginBlock: "8px",
+        // justifyContent: "space-between",
+        // width: "90%",
+        // marginBlock: "8px",
       }}
     >
       <div
         class="dropdown"
         style={{
           display: "flex",
-          flexDirection: "column", 
-          width: "480px",
-          height: "50px",
-          border: "3px solid black",
+          flexDirection: "column",
+          // height: "50px",
+          // border: "4px solid black",
           alignItems: "center",
           position: "relative",
         }}
@@ -40,19 +39,23 @@ export default function SearchTab() {
         <div
           style={{
             display: "flex",
-            width: "100%",
-            height: "50px",
+            width: "400px",
+            // height: "50px",
             alignItems: "center",
+
+            // backgroundColor: "white",
+            borderBottom: "1px solid lightgray",
           }}
         >
-          <img
+          {/* <img
             src={Search}
             className="iconMedium"
             style={{ marginRight: "4px" }}
-          />
+          /> */}
           <input
             class="input-style"
             type="text"
+            placeholder="주식 종목을 검색해보세요."
             onChange={(e) => {
               setInputValue(e.target.value);
             }}
@@ -68,15 +71,13 @@ export default function SearchTab() {
               console.log(action);
             }}
           >
-            검색
+            <img src={Search} className="iconMedium" />
           </div>
         </div>
         <div class="block">
           <SearchDrop />
         </div>
       </div>
-
-   
     </div>
   );
 }

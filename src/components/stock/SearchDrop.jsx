@@ -15,12 +15,13 @@ export default function SearchDrop() {
   return (
     <div
       style={{
-        width: "480px",
-        border: "3px solid black",
+        width: "420px",
+        border: "2px solid black",
+        borderRadius: "16px",
       }}
     >
       <div style={{ margin: "2% 5%" }}>
-        <div class="smallText">최근 검색</div>
+        <div style={{ fontSize: "16px" }}>최근 검색</div>
         <div style={{ padding: "2% 0%" }}>
           {search.map((item) => (
             <div
@@ -32,7 +33,7 @@ export default function SearchDrop() {
               {item.content}
               <img
                 src={Trash}
-                style={{ width: "30px" }}
+                style={{ width: "25px", cursor: "pointer" }}
                 onClick={() => {
                   const action = deletesearch(item.id);
                   dispatch(action);

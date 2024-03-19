@@ -39,7 +39,7 @@ export default function StockDetails() {
   return (
     <div
       style={{
-        marginTop: "8px",
+        // marginTop: "8px",
         // height: "66vh",
         height: "100%",
         overflowY: "scroll",
@@ -121,7 +121,8 @@ export default function StockDetails() {
             <div style={{ display: "flex" }}>
               <div
                 style={{
-                  border: "2px solid #6082E1",
+                  // border: "2px solid #6082E1",
+                  border: "2px solid black",
                   borderRadius: "16px",
                   padding: "4px 8px",
                   display: "flex",
@@ -133,7 +134,8 @@ export default function StockDetails() {
               </div>
               <div
                 style={{
-                  border: "2px solid #6082E1",
+                  // border: "2px solid #6082E1",
+                  border: "2px solid black",
                   borderRadius: "16px",
                   padding: "4px 8px",
                   marginInline: "16px",
@@ -146,7 +148,8 @@ export default function StockDetails() {
               </div>
               <div
                 style={{
-                  border: "2px solid #6082E1",
+                  // border: "2px solid #6082E1",
+                  border: "2px solid black",
                   borderRadius: "16px",
                   padding: "4px 8px",
                   display: "flex",
@@ -218,7 +221,8 @@ export default function StockDetails() {
             <div style={{ display: "flex" }}>
               <div
                 style={{
-                  border: "2px solid #6082E1",
+                  // border: "2px solid #6082E1",
+                  border: "2px solid black",
                   borderRadius: "16px",
                   padding: "4px 8px",
                   width: "60px",
@@ -231,7 +235,8 @@ export default function StockDetails() {
               </div>
               <div
                 style={{
-                  border: "2px solid #6082E1",
+                  // border: "2px solid #6082E1",
+                  border: "2px solid black",
                   borderRadius: "16px",
                   padding: "4px 8px",
                   marginInline: "16px",
@@ -480,7 +485,9 @@ const MainChartNumberComponent = (props) => {
             color:
               props.sise && props.sise.person && props.sise.person[0] === "0"
                 ? "black"
-                : props.sise.person[0] === "+"
+                : props.sise &&
+                  props.sise.person &&
+                  props.sise.person[0] === "+"
                 ? "#F3322C"
                 : "#2B83F6",
           }}
@@ -491,8 +498,10 @@ const MainChartNumberComponent = (props) => {
       <div
         className="MainChartNumber"
         style={{
-          borderRight: "2px solid #6082E1",
-          borderLeft: "2px solid #6082E1",
+          // borderRight: "2px solid #6082E1",
+          // borderLeft: "2px solid #6082E1",
+          borderRight: "2px solid lightgray",
+          borderLeft: "2px solid lightgray",
         }}
       >
         <span>외국인</span>
@@ -503,7 +512,9 @@ const MainChartNumberComponent = (props) => {
               props.sise.foreigner &&
               props.sise.foreigner[0] === "0"
                 ? "black"
-                : props.sise.foreigner[0] === "+"
+                : props.sise &&
+                  props.sise.foreigner &&
+                  props.sise.foreigner[0] === "+"
                 ? "#F3322C"
                 : "#2B83F6",
           }}
@@ -518,7 +529,9 @@ const MainChartNumberComponent = (props) => {
             color:
               props.sise && props.sise.company && props.sise.company[0] === "0"
                 ? "black"
-                : props.sise.company[0] === "+"
+                : props.sise &&
+                  props.sise.company &&
+                  props.sise.company[0] === "+"
                 ? "#F3322C"
                 : "#2B83F6",
           }}
@@ -543,6 +556,7 @@ const MainChartComponent = (props) => {
           alignSelf: "start",
           fontSize: "24px",
           marginBottom: "8px",
+          marginTop: "8px",
         }}
       >
         <img src={Flag} className="iconSmall" style={{ marginRight: "8px" }} />
@@ -612,7 +626,9 @@ const MainChart = (props) => {
                 color:
                   props.sise && props.sise.num3 && props.sise.num3[0] === "0"
                     ? "black"
-                    : props.sise.num3[0] === "+"
+                    : props.sise &&
+                      props.sise.num3 &&
+                      props.sise.num3[0] === "+"
                     ? "#F3322C"
                     : "#2B83F6",
               }}
