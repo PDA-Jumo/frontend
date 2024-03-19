@@ -1,15 +1,25 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import "../../styles/globalStyle.css";
 import Character from "../../assets/stock/character.png";
 import Chart from "../../assets/stock/Increase.png";
 import Folder from "../../assets/stock/folder.png";
 import Arrow from "../../assets/stock/arrow.png";
-
-let color = ["#FF98CC", "#6366F1", "#3B82F6", "#F59E0B", "#D9D9D9"];
-
-let mykstock = ["삼성전자", "어쩌구", "저쩌구", "에구구", "얌마"];
+import "../../styles/stock.css"
+import { getLikePortfolio } from "../../lib/apis/portfolio";
 
 export default function MyLikeStock() {
+  const [likestock, setLikeStock] = useState([])
+
+  useEffect(() => {
+    const setData = async () => {
+      const resp = await getLikePortfolio(2);
+      setLikeStock(resp);
+   
+
+    };
+
+    setData();
+  }, []);
   return (
     <div
       style={{
@@ -44,29 +54,20 @@ export default function MyLikeStock() {
         <div>
           <div class="mediumText" style={{ display: "flex" }}>
             <img src={Chart} style={{ height: "40px", width: "40px" }} />
-            국내 보유종목
+            내 관심 종목
           </div>
         </div>
 
         <div style={{ height: "35%", overflow: "auto" }}>
-          {mykstock.map((stock, id) => {
+          {likestock.map((stock, id) => {
             return (
               <div
                 key={id}
-                className="mediumText"
-                style={{
-                  padding: "2% 5%",
-                  border: `5px solid ${color[id]}`,
-                  borderRadius: "30px",
-                  margin: "10px 0",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
+                className="likestock"
               >
                 <div>
                   <img src={Folder} />
-                  {stock}
+                  {stock.stock_name}
                 </div>
                 <img
                   src={Arrow}

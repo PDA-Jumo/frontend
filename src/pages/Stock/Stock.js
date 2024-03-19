@@ -11,10 +11,12 @@ import "../../styles/stock.css";
 
 export const MyStockPageContext = React.createContext();
 
+
 export default function StockPage() {
   const [mystockPage, setMyStockPage] = useState("1");
   const [page, Setpage] = useState(1);
   const [component, setComponent] = useState(null);
+  const [searchkey, setSearchkey] = useState('')
 
   useEffect(() => {
     console.log(page);
@@ -31,7 +33,8 @@ export default function StockPage() {
   }, [page]);
 
   return (
-    <MyStockPageContext.Provider value={{ mystockPage, setMyStockPage }}>
+    
+       <MyStockPageContext.Provider value={{ mystockPage, setMyStockPage }}>
       <div
         style={{
           backgroundColor: "white",
@@ -108,5 +111,7 @@ export default function StockPage() {
         />
       </div>
     </MyStockPageContext.Provider>
+
+   
   );
 }

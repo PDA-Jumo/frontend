@@ -57,8 +57,25 @@
   cursor: pointer;
 }
 
-.korea:hover{
+.korea:hover {
   background-color: #0f3ab1;
-  color:white
+  color: white;
+}
+
+.likestock {
+  padding: 2% 5%;
+  border: 5px solid #FCD8D4;
+  border-radius: 30px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.likestock:hover {
+  border: 5px solid #f5c6aa;
 
 }
+

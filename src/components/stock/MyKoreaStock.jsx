@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/globalStyle.css";
 import Coin from "../../assets/stock/coin.png";
 import Chart from "../../assets/stock/Increase.png";
 import Folder from "../../assets/stock/folder.png";
 import Arrow from "../../assets/stock/arrow.png";
-
-let color = ["#FF98CC", "#6366F1", "#3B82F6", "#F59E0B", "#D9D9D9"];
-
-let mykstock = ["삼성전자", "어쩌구", "저쩌구", "에구구", "얌마"];
+import { getKoreaPortfolio } from "../../lib/apis/portfolio";
+import { PieChartComponent } from "./PieChart";
 
 export default function MyKoreaStock() {
+  const [myStock, setMyStock] = useState([]);
+  const [assets, setAssets] = useState("0");
+  const [chart, setChart] = useState({});
+
+  useEffect(() => {
+    const setData = async () => {
+      const resp = await getKoreaPortfolio(2);
+      setMyStock(resp.myStock);
+      setAssets(resp.assets);
+      setChart(resp.mystock_percent);
+    };
+
+    setData();
+  }, []);
+
   return (
     <div
       style={{
@@ -21,7 +34,14 @@ export default function MyKoreaStock() {
         justifyContent: "space-between",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", width: "50%", padding:"2% 5%" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "50%",
+          padding: "2% 5%",
+        }}
+      >
         <div>
           <div style={{ fontSize: "18px", color: "#F9C93E" }}>주대주주</div>
           <div class="mediumText">김광태가뭐야</div>
@@ -41,11 +61,14 @@ export default function MyKoreaStock() {
             보유자산
           </div>
           <div class="smallText" style={{ display: "flex" }}>
-            500,000,000원
+            {assets}
           </div>
-          <div
-            style={{ width: "50%", height: "250px", backgroundColor: "blue" }}
-          ></div>
+          <div>
+            {chart &&
+              chart.length > 0 &&
+              PieChartComponent({ codeRatioArray: chart })}
+          </div>
+
           <div
             style={{
               width: "65%",
@@ -81,7 +104,7 @@ export default function MyKoreaStock() {
           flexDirection: "column",
           width: "45%",
           height: "1000px",
-          padding:"2% 0%"
+          padding: "2% 0%",
         }}
       >
         <div>
@@ -92,14 +115,14 @@ export default function MyKoreaStock() {
         </div>
 
         <div style={{ height: "35%", overflow: "auto" }}>
-          {mykstock.map((stock, id) => {
+          {myStock.map((stock, id) => {
             return (
               <div
                 key={id}
                 className="mediumText"
                 style={{
                   padding: "2% 5%",
-                  border: `5px solid ${color[id]}`,
+                  border: `5px solid #FCD8D4`,
                   borderRadius: "30px",
                   margin: "10px 0",
                   display: "flex",

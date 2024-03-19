@@ -9,6 +9,7 @@ import magnify from "../../assets/icons/magnify.png";
 import { getMarketIssue } from "../../lib/apis/stock";
 
 export default function SliderComponent() {
+
   const settings = {
     infinite: true,
     speed: 500,
@@ -20,6 +21,7 @@ export default function SliderComponent() {
     nextArrow: <NextArrow />,
   };
   const [issue, setIssue] = useState([]);
+
   useEffect(() => {
     const setData = async () => {
       const issueData = await getMarketIssue();

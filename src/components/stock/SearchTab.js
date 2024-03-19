@@ -11,6 +11,7 @@ import Search from "../../assets/icons/Search.png";
 import "../../styles/searchtab.css";
 import SearchDrop from "../../components/stock/SearchDrop";
 
+
 export default function SearchTab() {
   const dispatch = useDispatch();
   const search = useSelector((state) => state.search.searchList) || [];
@@ -72,7 +73,7 @@ export default function SearchTab() {
           </div>
         </div>
         <div class="block">
-          <SearchDrop />
+          {SearchDrop ({keyword: inputValue})}
         </div>
       </div>
 
