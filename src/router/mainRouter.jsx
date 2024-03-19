@@ -11,6 +11,8 @@ import QuizLayout from "../pages/quiz/layout";
 import CommunityLayout from "../pages/community/community";
 import BookLayout from "../pages/book/book";
 import StockLayout from "../pages/Stock/stock";
+import TestLayout from "../pages/test/test";
+import TestResultLayout from "../pages/test/testResult";
 
 export const mainRouter = [
   {
