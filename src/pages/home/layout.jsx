@@ -13,11 +13,11 @@ export default function HomeLayout() {
   const userLevel = useSelector((state) => state.user.user.level) || 0;
   const [backgroundImage, setBackgroundImage] = useState(home1); // 초기 배경 이미지 설정
 
-  store.subscribe(() => {
-    if (store.getState().action.indexOf("messanger") !== -1) {
-      console.log("subscribed for counter actions", store.getState());
-    }
-  });
+  // store.subscribe(() => {
+  //   if (store.getState().action.indexOf("messanger") !== -1) {
+  //     console.log("subscribed for counter actions", store.getState());
+  //   }
+  // });
 
   useEffect(() => {
     setBackgroundImage(selectBackgroundImage(userLevel)); // 사용자 레벨에 따른 배경 이미지 업데이트

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // 아래 이미지 경로는 예시입니다. 실제 프로젝트에 맞게 조정해주세요.
 import rankingIcon from "../../assets/main/ranking.png";
 import tradeIcon from "../../assets/main/trade.png";
@@ -15,11 +15,10 @@ import "./page.css";
 
 function HomePage() {
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user) || {};
-  console.log(user);
 
   // useSelector 훅을 사용하여 Redux store에서 사용자 정보를 가져옵니다.
-  // const user = useSelector((state) => state.userReducer.user);
+  const user = useSelector((state) => state.user.user) || {};
+  console.log(user);
 
   // 페이지 이동 함수
   const navigateTo = (path) => {

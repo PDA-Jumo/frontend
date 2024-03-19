@@ -7,9 +7,12 @@ import quizData from "./quizData";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { quizSuccess } from "../../lib/apis/quiz";
+import { updateFinancialsAction } from "../../store/reducers/user";
+import { useDispatch } from "react-redux";
 
 export default function QuizLayout() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user) || {};
   const [showQuiz, setShowQuiz] = useState(false);
   const [currentQuiz, setCurrentQuiz] = useState({});
@@ -50,7 +53,14 @@ export default function QuizLayout() {
 
   const upCash = useCallback(async (user_id, level) => {
     try {
+      // 퀴즈 성공시 DB 업데이트
       const resp = await quizSuccess({ user_id, level });
+      const { result, value } = resp.data;
+
+      // DB 업데이트 성공시 Redux Store State 업데이트
+      if (result === "성공") {
+        dispatch(updateFinancialsAction(value));
+      }
     } catch (error) {
       console.error(error);
     }
