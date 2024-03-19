@@ -1,16 +1,16 @@
 //TODO 여기부터 유저의 정보를 받아오고 있어야 함(persist를 통해 연동되는 로그인 기능)
 
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import quizBackground from "../../assets/backgrounds/quiz.png";
 import "./quiz.css";
 import quizData from "./quizData";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { quizSuccess } from "../../lib/apis/quiz";
 
 export default function QuizLayout() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user) || {};
-  console.log("레벨", user.level);
   const [showQuiz, setShowQuiz] = useState(false);
   const [currentQuiz, setCurrentQuiz] = useState({});
   const [selectedOption, setSelectedOption] = useState("");
@@ -49,13 +49,29 @@ export default function QuizLayout() {
     setSelectedOption("");
   }, [showQuiz, user.level, quizData]);
 
-  const checkAnswer = (selected) => {
+  const upCash = useCallback(
+    async (user_id, level) => {
+      // async 키워드를 추가하여 비동기 함수임을 명시합니다.
+      try {
+        const resp = await quizSuccess({ user_id, level }); // await을 사용하여 비동기 로그인 함수의 완료를 기다립니다.
+      } catch (error) {
+        console.error(error); // 에러 처리
+        // 필요하다면 에러에 대한 추가적인 처리를 여기에 작성할 수 있습니다.
+      }
+    },
+    [] // 의존성 배열에 포함된 항목들
+  );
+
+  const checkAnswer = async (selected) => {
     //TODO 퀴즈를 맞췄을때 유저한테 돈을 지급하도록 UPDATE되어야 함
     if (isCorrect !== null) return;
 
     setSelectedOption(selected);
     if (selected === currentQuiz.answer) {
       setIsCorrect(true);
+
+      // 이 안에 돈주는로직
+      await upCash(user.user_id, user.level);
     } else {
       setIsCorrect(false);
     }

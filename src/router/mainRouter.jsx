@@ -5,6 +5,7 @@ import StartPage from "../pages/user/start/page";
 import SignInPage from "../pages/user/signin/page";
 import SignUpPage from "../pages/user/signup/page";
 import HomeLayout from "../pages/home/layout";
+import HomePage from "../pages/home/page";
 import RankLayout from "../pages/rank/layout";
 import QuizLayout from "../pages/quiz/layout";
 import CommunityLayout from "../pages/community/community";
@@ -36,6 +37,13 @@ export const mainRouter = [
   {
     path: "/home",
     element: <HomeLayout />,
+    children: [
+      {
+        path: "",
+        element: <HomePage />,
+        index: true,
+      },
+    ],
   },
   {
     path: "/rank",
