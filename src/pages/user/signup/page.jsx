@@ -77,8 +77,12 @@ export default function SignUpPage() {
                   right: "auto",
                   bottom: "auto",
                   marginRight: "-50%",
-                  width: "fit-content", // 모달의 너비가 내용에 맞게 조정되도록 설정
-                  height: "fit-content", // 모달의 높이가 내용에 맞게 조정되도록 설정
+                  width: "60%", // 모달 너비 조정
+                  height: "80%", // 모달 높이 조정
+                  transform: "translate(-50%, -50%)",
+                },
+                overlay: {
+                  backgroundColor: "rgba(0, 0, 0, 0.5)", // 배경 투명도 조정
                 },
               }}
             >

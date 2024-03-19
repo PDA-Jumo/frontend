@@ -72,3 +72,16 @@
 .button-width {
   width: 250px;
 }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000; /* 모달 우선권 조정 */
+}
+
+.modal {
+  z-index: 1001; /* 모달 내부 요소 우선권 조정 */
+  /* 기타 스타일 조정 */
+}
