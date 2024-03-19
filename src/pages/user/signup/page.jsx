@@ -10,6 +10,8 @@ import character4 from "./character4.png";
 import character5 from "./character5.png";
 import hat from "../../../assets/user/Title.png";
 
+import { useEffect } from "react";
+
 const images = [character1, character2, character3, character4, character5];
 
 Modal.setAppElement("#root");
@@ -21,7 +23,12 @@ export default function SignUpPage() {
   const [userImage, setUserImage] = useState("");
   const [showImages, setShowImages] = useState(false);
   const navigate = useNavigate();
-
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
   const onInputChange = useCallback((inputText, setFn) => {
     setFn(inputText);
   }, []);
