@@ -15,10 +15,8 @@ export default function HomeLayout() {
 
   useEffect(() => {
     setBackgroundImage(selectBackgroundImage(userLevel));
-    // 스크롤 비활성화 적용
     document.body.classList.add("no-scroll");
 
-    // 컴포넌트 언마운트 시 스크롤 다시 활성화
     return () => {
       document.body.classList.remove("no-scroll");
     };

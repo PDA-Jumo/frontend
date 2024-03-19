@@ -6,6 +6,7 @@ import useAuth from "../../../lib/hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../../../store/reducers/user";
 import hat from "../../../assets/user/Title.png";
+import { useEffect } from "react";
 
 export default function SignInPage() {
   const { user, clientLogin } = useAuth();
@@ -13,7 +14,12 @@ export default function SignInPage() {
   const [userPassword, setUserPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
   const onInputChange = useCallback((inputText, setFn) => {
     setFn(inputText);
   }, []);
