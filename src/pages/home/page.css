@@ -70,3 +70,12 @@ button:hover,
 .navigation-buttons.vertical img:hover {
   opacity: 0.8;
 }
+
+.clickme {
+  height: 200px;
+}
+
+.clickme img {
+  width: 200px;
+  height: 200px;
+}

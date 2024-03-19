@@ -42,7 +42,7 @@ export default function TestResultLayout() {
       updateType(user.user_id, result.성향);
     }
     console.log("홈으로 버튼이 클릭되었습니다.");
-    navigate("/");
+    navigate("/home");
   };
 
   const buttonBackgroundColor = {

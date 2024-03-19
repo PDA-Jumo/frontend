@@ -89,6 +89,16 @@ function HomePage() {
           onClick={() => navigateTo("/encyclopedia")}
         />
       </div>
+      <div className="clickme">
+        <img
+          src={clickmeIcon}
+          alt="노가다"
+          onClick={() => {
+            // 여기에 cash를 올리는 로직을 구현하세요.
+            alert("Cash가 올라갔습니다!");
+          }}
+        />
+      </div>
     </div>
   );
 }
