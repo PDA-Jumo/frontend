@@ -41,6 +41,8 @@ export default function StockDetails() {
       style={{
         // marginTop: "8px",
         // height: "66vh",
+        paddingInline: "32px",
+        boxSizing: "border-box",
         height: "100%",
         overflowY: "scroll",
         overflowX: "hidden",
