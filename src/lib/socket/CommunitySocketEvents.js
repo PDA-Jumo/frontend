@@ -1,12 +1,30 @@
 import socket from "./socket";
 
-export const connectSocket = () => {
+export const connectSocket = (stock_code, user_id, nickname) => {
   console.log("**Connecting socket...**");
 
   socket.on("connect", () => {
     console.log("Connected.");
-    socket.emit("joinRoom", "0001");
+    socket.emit("joinRoom", {
+      stockCode: stock_code,
+      userId: user_id,
+      nickname,
+    });
+    console.log("join room.", stock_code, user_id, nickname);
   });
+};
+
+export const sendMessage = (data) => {
+  if (socket) {
+    const { stock_code, stock_name, message, user_id, nickname } = data;
+    socket.emit("sendMessage", {
+      stockCode: stock_code,
+      stockName: stock_name,
+      userId: user_id,
+      nickname,
+      content: message,
+    });
+  }
 };
 
 export const disconnectSocket = () => {
@@ -21,8 +39,4 @@ export const subscribeToChat = (cb) => {
     console.log("New message");
     cb(msg);
   });
-};
-
-export const sendMessage = (message) => {
-  if (socket) socket.emit("sendMessage", { stockCode: "0001", message });
 };

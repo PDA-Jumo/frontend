@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import Community from '../../assets/backgrounds/Community.png'
-import Chat from '../../components/community/Chat';
+import Community from '../../assets/backgrounds/Community.png';
 import CommunityList from '../../components/community/CommunityList';
 import HotCommunityList from '../../components/community/HotCommunityList';
 import CommunityDetail from '../../components/community/CommunityDetail';
 
-import './community.css';
 export default function CommunityLayout() {
   const [selectedCommunity, setSelectedCommunity] = useState(null);
+
+  const backToHotCommunity = () => {
+    setSelectedCommunity(null);
+  };
 
   return (
     <div
@@ -22,16 +24,22 @@ export default function CommunityLayout() {
       <div
         style={{
           position: "absolute",
-          top: 100,
+          top: 30,
           left: 100,
         }}
       >
-        <div style={{ display: 'flex' }}>
-          <CommunityList onSelectCommunity={setSelectedCommunity} />
+        <div style={{ display: 'flex' }}> {/* 여기에 margin 추가 */}
+          <div>
+            <CommunityList onSelectCommunity={setSelectedCommunity} />
+          </div>
           {selectedCommunity ? (
-            <CommunityDetail community={selectedCommunity} />
+            <div>
+              <CommunityDetail community={selectedCommunity} onBack={backToHotCommunity} />
+            </div>
           ) : (
-            <HotCommunityList onSelectCommunity={setSelectedCommunity} />
+            <div>
+              <HotCommunityList onSelectCommunity={setSelectedCommunity} />
+            </div>
           )}
         </div>
       </div>
