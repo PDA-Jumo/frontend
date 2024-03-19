@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Community from '../../assets/backgrounds/Community.png'
 import Chat from '../../components/community/Chat';
-
 import CommunityList from '../../components/community/CommunityList';
 import HotCommunityList from '../../components/community/HotCommunityList';
 import CommunityDetail from '../../components/community/CommunityDetail';
+
+import './community.css';
 
 export default function CommunityLayout() {
   const [selectedCommunity, setSelectedCommunity] = useState(null);
@@ -19,7 +20,6 @@ export default function CommunityLayout() {
       backgroundPosition: 'center'
 
     }}>
-      <Chat />
 
       <div style={{ display: 'flex' }}>
         <CommunityList onSelectCommunity={setSelectedCommunity} />

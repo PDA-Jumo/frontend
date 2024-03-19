@@ -1,4 +1,5 @@
 import React from "react";
+import "./community.css";
 
 export default function HotCommunityList({ onSelectCommunity }) {
   const hotCommunities = [
@@ -8,7 +9,7 @@ export default function HotCommunityList({ onSelectCommunity }) {
 
   return (
     <>
-      <div style={{ backgroundColor: "gray" }}>
+      <div className="communityBox">
         <div>HotCommunityList</div>'
         {hotCommunities.map((community) => (
           <div key={community.id} onClick={() => onSelectCommunity(community)}>

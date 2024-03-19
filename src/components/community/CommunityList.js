@@ -1,4 +1,5 @@
 import React from "react";
+import "./community.css";
 
 export default function CommunityList({ onSelectCommunity }) {
   const communities = [
@@ -7,7 +8,7 @@ export default function CommunityList({ onSelectCommunity }) {
   ]; // 예시 데이터
 
   return (
-    <div style={{ backgroundColor: "yellow" }}>
+    <div className="communityBox">
       {communities.map((community) => (
         <div key={community.id} onClick={() => onSelectCommunity(community)}>
           {community.name}
