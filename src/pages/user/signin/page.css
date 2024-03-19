@@ -1,19 +1,45 @@
-.container {
-  width: 60%;
-  height: 100%;
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .rounded-rectangle {
+  width: 80%;
+  height: 80%;
   background-color: #ffde6b;
-  border-radius: 20px; /* 각 꼭짓점 둥글게 */
+  border-radius: 60px;
   padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.icon {
-  position: relative;
-  top: -0.2em; /* 텍스트의 험 글자 위에 위치 */
+.form-group {
+  width: 60%; /* 로그인 폼의 너비를 40%로 설정 */
+}
+
+.form-control {
+  width: 100%; /* 부모 요소(.form-group)의 100% 너비를 차지하도록 설정 */
+  margin-bottom: 15px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between; /* 버튼들을 양 끝으로 정렬 */
+  width: 100%; /* 버튼 그룹의 너비를 100%로 설정 */
+}
+
+.btn-primary,
+.btn-secondary {
+  flex: 1; /* 버튼들이 동일한 크기를 가지도록 설정 */
+  margin: 0 5px; /* 버튼들 사이의 간격 설정 */
+}
+.custom-input {
+  font-size: 36px; /* 글씨 크기를 36px로 설정 */
+  border-radius: 50px; /* 테두리를 동그랗게 설정 */
+  padding: 10px 20px; /* 적당한 패딩을 추가하여 입력 내용이 잘 보이도록 함 */
 }
