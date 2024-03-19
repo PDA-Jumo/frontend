@@ -6,31 +6,35 @@ import HotCommunityList from '../../components/community/HotCommunityList';
 import CommunityDetail from '../../components/community/CommunityDetail';
 
 import './community.css';
-
 export default function CommunityLayout() {
   const [selectedCommunity, setSelectedCommunity] = useState(null);
 
   return (
-    <div style={{
-      backgroundImage: `url(${Community})`,
-      backgroundSize: 'contain',
-      width: '100vw',
-      height: '100vh',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center'
-
-    }}>
-
-      <div style={{ display: 'flex' }}>
-        <CommunityList onSelectCommunity={setSelectedCommunity} />
-        {selectedCommunity ? (
-          <CommunityDetail community={selectedCommunity} />
-        ) : (
-          <HotCommunityList onSelectCommunity={setSelectedCommunity} />
-        )}
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <img src={Community} style={{ width: "100%", height: "100%" }} />
+      <div
+        style={{
+          position: "absolute",
+          top: 100,
+          left: 100,
+        }}
+      >
+        <div style={{ display: 'flex' }}>
+          <CommunityList onSelectCommunity={setSelectedCommunity} />
+          {selectedCommunity ? (
+            <CommunityDetail community={selectedCommunity} />
+          ) : (
+            <HotCommunityList onSelectCommunity={setSelectedCommunity} />
+          )}
+        </div>
       </div>
-
     </div>
-
   );
 }
