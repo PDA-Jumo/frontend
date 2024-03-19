@@ -68,7 +68,8 @@ const MarketIssue = (props) => {
       style={{
         width: "500px",
         height: "150px",
-        border: "2px solid black",
+        // border: "2px solid black",
+        boxShadow: "3px 2px 5px 0 rgba(0,0,0,0.2)",
         borderRadius: "16px",
         padding: "16px",
         display: "flex",

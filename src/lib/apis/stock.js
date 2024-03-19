@@ -13,5 +13,14 @@ export const getMarketIssue = async () => {
 export const SearchKeyword = async (keyword) => {
   const resp = await instance.get(`/stock/search?stock_name=${keyword}`);
   return resp.data;
-  console.log(resp.data)
+};
+
+export const getLiveSise = async () => {
+  const liveSise = await instance.get("/stock/liveSise");
+  return liveSise;
+};
+
+export const getThemeRank = async () => {
+  const themeRank = await instance.get("/stock/theme");
+  return themeRank;
 };

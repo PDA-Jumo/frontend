@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -23,21 +23,48 @@ import Trash from "../../assets/icons/Trash.png";
 //library
 import SliderComponent from "./SliderComponent";
 
+//utils
+import { getLiveSise, getThemeRank } from "../../lib/apis/stock";
+
 export default function StockDetails() {
+  const [kospiSise, setKospiSise] = useState({});
+  const [kosdaqSise, setKosdaqSise] = useState({});
+  const [themeRank, setThemeRank] = useState([]);
+  const [isRefresh, setIsRefresh] = useState(false);
+  const [now, setNow] = useState("");
+  useEffect(() => {
+    const setData = async () => {
+      const liveSise = await getLiveSise();
+      const themeRankData = await getThemeRank();
+      console.log(themeRankData);
+      setThemeRank(themeRankData.data);
+      setKospiSise(liveSise.data.kospi);
+      setKosdaqSise(liveSise.data.kosdaq);
+    };
+    setData();
+  }, []);
+  useEffect(() => {
+    const nowDate = new Date();
+    const hours = nowDate.getHours().toString().padStart(2, "0");
+    const minutes = nowDate.getMinutes().toString().padStart(2, "0");
+    setNow(`${hours}:${minutes}`);
+  }, [isRefresh]);
   return (
     <div
       style={{
-        marginTop: "8px",
+        // marginTop: "8px",
         // height: "66vh",
+        paddingInline: "32px",
+        boxSizing: "border-box",
         height: "100%",
         overflowY: "scroll",
         overflowX: "hidden",
       }}
     >
-      <MainChartComponent />
+      <MainChartComponent kospi={kospiSise} kosdaq={kosdaqSise} />
       <div style={{ display: "flex", justifyContent: "space-around" }}>
-        <MainChartNumberComponent />
-        <MainChartNumberComponent />
+        <MainChartNumberComponent sise={kospiSise} />
+        <MainChartNumberComponent sise={kosdaqSise} />
       </div>
 
       <div
@@ -109,7 +136,8 @@ export default function StockDetails() {
             <div style={{ display: "flex" }}>
               <div
                 style={{
-                  border: "2px solid #6082E1",
+                  // border: "2px solid #6082E1",
+                  border: "2px solid black",
                   borderRadius: "16px",
                   padding: "4px 8px",
                   display: "flex",
@@ -121,7 +149,8 @@ export default function StockDetails() {
               </div>
               <div
                 style={{
-                  border: "2px solid #6082E1",
+                  // border: "2px solid #6082E1",
+                  border: "2px solid black",
                   borderRadius: "16px",
                   padding: "4px 8px",
                   marginInline: "16px",
@@ -134,7 +163,8 @@ export default function StockDetails() {
               </div>
               <div
                 style={{
-                  border: "2px solid #6082E1",
+                  // border: "2px solid #6082E1",
+                  border: "2px solid black",
                   borderRadius: "16px",
                   padding: "4px 8px",
                   display: "flex",
@@ -206,7 +236,8 @@ export default function StockDetails() {
             <div style={{ display: "flex" }}>
               <div
                 style={{
-                  border: "2px solid #6082E1",
+                  // border: "2px solid #6082E1",
+                  border: "2px solid black",
                   borderRadius: "16px",
                   padding: "4px 8px",
                   width: "60px",
@@ -219,7 +250,8 @@ export default function StockDetails() {
               </div>
               <div
                 style={{
-                  border: "2px solid #6082E1",
+                  // border: "2px solid #6082E1",
+                  border: "2px solid black",
                   borderRadius: "16px",
                   padding: "4px 8px",
                   marginInline: "16px",
@@ -280,7 +312,15 @@ export default function StockDetails() {
           <img
             src={refresh}
             className="iconSmall"
-            style={{ marginLeft: "16px" }}
+            style={{
+              marginLeft: "16px",
+              transform: isRefresh ? "rotate(360deg)" : "rotate(0deg)",
+              cursor: "pointer",
+              transition: "transform 0.5s ease",
+            }}
+            onClick={() => {
+              setIsRefresh(!isRefresh);
+            }}
           />
           <span
             style={{
@@ -291,101 +331,87 @@ export default function StockDetails() {
               marginLeft: "8px",
             }}
           >
-            11:07 기준
+            {now}
+            기준
           </span>
         </div>
         <div
           style={{
             display: "flex",
-            alignItems: "center",
+            alignItems: "flex-end",
             marginBottom: "16px",
           }}
         >
-          <div
-            style={{
-              height: "80px",
-              width: "180px",
-              display: "flex",
-              alignItems: "center",
-              border: "1px solid black",
-              borderRadius: "16px",
-              padding: "4px 8px",
-              marginBlock: "8px",
-              marginInline: "16px",
-              justifyContent: "space-around",
-              boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
-            }}
-          >
+          <div className="themeTop3" style={{ height: "80px" }}>
             <img src={gold} style={{ height: "48px", marginRight: "16px" }} />
-            <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
+              }}
+            >
               <span
                 style={{
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
+                  width: "120px",
                 }}
               >
-                모더나
+                {themeRank && themeRank[0] && themeRank[0].name}
               </span>
-              <span>+26.7%</span>
+              <span>
+                {themeRank && themeRank[0] && themeRank[0].volatility}%
+              </span>
             </div>
           </div>
-          <div
-            style={{
-              height: "80px",
-              width: "180px",
-              display: "flex",
-              alignItems: "center",
-              border: "1px solid black",
-              borderRadius: "16px",
-              padding: "4px 8px",
-              marginBlock: "8px",
-              marginInline: "16px",
-              justifyContent: "space-around",
-              boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
-            }}
-          >
+          <div className="themeTop3" style={{ height: "70px" }}>
             <img src={silver} style={{ height: "48px", marginRight: "16px" }} />
-            <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
+              }}
+            >
               <span
                 style={{
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
+                  width: "120px",
                 }}
               >
-                모더나
+                {themeRank && themeRank[1] && themeRank[1].name}
               </span>
-              <span>+26.7%</span>
+              <span>
+                {themeRank && themeRank[1] && themeRank[1].volatility}%
+              </span>
             </div>
           </div>
-          <div
-            style={{
-              height: "80px",
-              width: "180px",
-              display: "flex",
-              alignItems: "center",
-              border: "1px solid black",
-              borderRadius: "16px",
-              padding: "4px 8px",
-              marginBlock: "8px",
-              marginInline: "16px",
-              justifyContent: "space-around",
-              boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
-            }}
-          >
+          <div className="themeTop3" style={{ height: "60px" }}>
             <img src={bronze} style={{ height: "48px", marginRight: "16px" }} />
-            <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
+              }}
+            >
               <span
                 style={{
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
+                  width: "120px",
                 }}
               >
-                모더나
+                {themeRank && themeRank[2] && themeRank[2].name}
               </span>
-              <span>+26.7%</span>
+              <span>
+                {themeRank && themeRank[2] && themeRank[2].volatility}%
+              </span>
             </div>
           </div>
         </div>
@@ -401,11 +427,9 @@ export default function StockDetails() {
           }}
         >
           <div className="MainChartView">
-            <StockList />
-            <StockList />
-            <StockList />
-            <StockList />
-            <StockList />
+            {themeRank.slice(0, 5).map((item, index) => (
+              <StockList item={item} index={index} />
+            ))}
           </div>
           <div //구분선
             style={{
@@ -416,11 +440,9 @@ export default function StockDetails() {
             }}
           />
           <div className="MainChartView">
-            <StockList />
-            <StockList />
-            <StockList />
-            <StockList />
-            <StockList />
+            {themeRank.slice(5, 11).map((item, index) => (
+              <StockList item={item} index={index + 5} />
+            ))}
           </div>
         </div>
       </div>
@@ -428,14 +450,14 @@ export default function StockDetails() {
   );
 }
 
-const StockList = () => {
+const StockList = (props) => {
   return (
     <div className="stockListView">
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          flex: 6,
+          flex: 5,
         }}
       >
         <div
@@ -446,44 +468,90 @@ const StockList = () => {
             justifyContent: "space-around",
           }}
         >
-          <span>1</span>
+          <span>{props.index + 1}</span>
           <img src={Document} className="iconSmall" />
         </div>
 
-        <span style={{ flex: 3 }}>씨씨에스</span>
-        <span style={{ flex: 1 }}>5,000원</span>
-        <span style={{ flex: 1 }}>+26.7%</span>
+        <span style={{ flex: 3 }}>
+          {props && props.item && props.item.name}
+        </span>
+        <span style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+          {props && props.item && props.item.volatility}%
+        </span>
       </div>
     </div>
   );
 };
 
-const MainChartNumberComponent = () => {
+const MainChartNumberComponent = (props) => {
   return (
     <div className="MainChartNumberView">
       <div className="MainChartNumber">
         <span>개인</span>
-        <span>-9,065</span>
+        <span
+          style={{
+            color:
+              props.sise && props.sise.person && props.sise.person[0] === "0"
+                ? "black"
+                : props.sise &&
+                  props.sise.person &&
+                  props.sise.person[0] === "+"
+                ? "#F3322C"
+                : "#2B83F6",
+          }}
+        >
+          {props.sise.person}
+        </span>
       </div>
       <div
         className="MainChartNumber"
         style={{
-          borderRight: "2px solid #6082E1",
-          borderLeft: "2px solid #6082E1",
+          // borderRight: "2px solid #6082E1",
+          // borderLeft: "2px solid #6082E1",
+          borderRight: "2px solid lightgray",
+          borderLeft: "2px solid lightgray",
         }}
       >
-        <span>개인</span>
-        <span>-9,065</span>
+        <span>외국인</span>
+        <span
+          style={{
+            color:
+              props.sise &&
+              props.sise.foreigner &&
+              props.sise.foreigner[0] === "0"
+                ? "black"
+                : props.sise &&
+                  props.sise.foreigner &&
+                  props.sise.foreigner[0] === "+"
+                ? "#F3322C"
+                : "#2B83F6",
+          }}
+        >
+          {props.sise.foreigner}
+        </span>
       </div>
       <div className="MainChartNumber">
-        <span>개인</span>
-        <span>-9,065</span>
+        <span>기관</span>
+        <span
+          style={{
+            color:
+              props.sise && props.sise.company && props.sise.company[0] === "0"
+                ? "black"
+                : props.sise &&
+                  props.sise.company &&
+                  props.sise.company[0] === "+"
+                ? "#F3322C"
+                : "#2B83F6",
+          }}
+        >
+          {props.sise.company}
+        </span>
       </div>
     </div>
   );
 };
 
-const MainChartComponent = () => {
+const MainChartComponent = (props) => {
   return (
     <div
       style={{ display: "flex", alignItems: "center", flexDirection: "column" }}
@@ -496,6 +564,7 @@ const MainChartComponent = () => {
           alignSelf: "start",
           fontSize: "24px",
           marginBottom: "8px",
+          marginTop: "8px",
         }}
       >
         <img src={Flag} className="iconSmall" style={{ marginRight: "8px" }} />
@@ -507,10 +576,16 @@ const MainChartComponent = () => {
           display: "flex",
           // border: "3px solid #6082E1",
           width: "98%",
-          boxShadow: "0 0 10px 0 rgba(96, 130, 225, 0.5)",
+          // boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
         }}
       >
-        <MainChart category={"코스피"} />
+        <MainChart
+          category={"코스피"}
+          src={
+            "https://ssl.pstatic.net/imgfinance/chart/main/KOSPI.png?sidcode=1710227822049"
+          }
+          sise={props.kospi}
+        />
         <div //구분선
           style={{
             width: "3px",
@@ -519,7 +594,13 @@ const MainChartComponent = () => {
             alignSelf: "center",
           }}
         />
-        <MainChart category={"코스닥"} />
+        <MainChart
+          category={"코스닥"}
+          src={
+            "https://ssl.pstatic.net/imgfinance/chart/main/KOSDAQ.png?sidcode=1710227822051"
+          }
+          sise={props.kosdaq}
+        />
       </div>
     </div>
   );
@@ -529,14 +610,43 @@ const MainChart = (props) => {
   return (
     <div className="MainChartView">
       <p>{props.category}</p>
-      <div
-        style={{
-          width: "100%",
-          height: "250px",
-          borderRadius: "16px",
-        }}
-      >
-        <div className="MainChart" />
+      <div className="MainChartDiv">
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            position: "absolute",
+            top: "2%",
+            left: "3%",
+          }}
+        >
+          <span style={{ fontSize: "24px" }}>{props.sise.num1}</span>
+          <div>
+            <span
+              style={{ fontSize: "12px", marginRight: "4px", color: "#8B95A1" }}
+            >
+              어제보다
+            </span>
+            <span
+              style={{
+                fontSize: "12px",
+                color:
+                  props.sise && props.sise.num3 && props.sise.num3[0] === "0"
+                    ? "black"
+                    : props.sise &&
+                      props.sise.num3 &&
+                      props.sise.num3[0] === "+"
+                    ? "#F3322C"
+                    : "#2B83F6",
+              }}
+            >
+              {props.sise.num3 && props.sise.num3[0]}
+              {props.sise.num2}({props.sise.num3})
+            </span>
+          </div>
+        </div>
+        <img src={props.src} className="MainChart" />
       </div>
     </div>
   );

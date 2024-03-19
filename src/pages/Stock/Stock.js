@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 //assets
 import Folder from "../../assets/stock/folder.png";
+import Hat from "../../assets/backgrounds/hat.png";
+
 //components
 import SearchTab from "../../components/stock/SearchTab";
 import StockDetails from "../../components/stock/WorldStockDetails";
@@ -19,7 +21,7 @@ export default function StockPage() {
   const [searchkey, setSearchkey] = useState('')
 
   useEffect(() => {
-    console.log(page);
+    // console.log(page);
     switch (page) {
       case 1:
         setComponent(<StockDetails />);
@@ -38,6 +40,8 @@ export default function StockPage() {
       <div
         style={{
           backgroundColor: "white",
+          // background: linear-gradient(to bottom, #FFFFFF, #FFE27A);
+          // background: "linear-gradient(to bottom, #FFFFFF 0%, #FFF2CC 100%)",
           border: "5px solid black",
           height: "100vh",
           display: "flex",
@@ -47,36 +51,40 @@ export default function StockPage() {
       >
         <div
           style={{
-            backgroundColor: "#1F409A",
-            height: "60px",
+            // backgroundColor: "#1F409A",
+            backgroundColor: "#71A3FF",
+            height: "50px",
             width: "100%",
             display: "flex",
             alignItems: "center",
-            justifyContent: "flex-end",
-            border: "4px solid black",
-          }}
-        >
-          <span style={{ marginRight: "16px", color: "white" }}>
-            주린이의 모험
-          </span>
-        </div>
-        <div
-          style={{
-            display: "flex",
             justifyContent: "space-between",
-            width: "90%",
-            marginBlock: "8px",
+            // borderBottom: "1px solid black",
+            paddingInline: "32px",
+            paddingBlock: "8px",
+            boxSizing: "border-box",
+            boxShadow: "0 3px 3px 0 rgba(0,0,0,0.3)",
           }}
         >
           <SearchTab />
-          <div style={{ display: "flex", gap: "5%", left: 30 }}>
+
+          <img src={Hat} style={{ width: "180px" }} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "420px",
+              marginBlock: "8px",
+              gap: "5%",
+              left: 30,
+            }}
+          >
             <div class="korea" onClick={() => Setpage(1)}>
-              <img src={Folder} />
-              국내주식
+              <img src={Folder} style={{ width: "24px", marginRight: "4px" }} />
+              국내 주식
             </div>
             <div class="korea" onClick={() => Setpage(2)}>
-              <img src={Folder} />
-              해외주식
+              <img src={Folder} style={{ width: "24px", marginRight: "4px" }} />
+              해외 주식
             </div>
             <div
               class="korea"
@@ -85,30 +93,32 @@ export default function StockPage() {
                 setMyStockPage("1");
               }}
             >
-              <img src={Folder} />
-              내주식
+              <img src={Folder} style={{ width: "24px", marginRight: "4px" }} />
+              내 주식
             </div>
           </div>
         </div>
+
         <div
           style={{
-            border: "4px solid black",
-            width: "95%",
-            height: "70%",
+            // border: "4px solid black",
+            width: "100%",
+            height: "92%",
             marginBlock: "8px",
-            padding: "8px",
+            boxSizing: "border-box",
           }}
         >
           {component}
         </div>
-        <div
+        {/* <div
           style={{
             height: "40px",
-            backgroundColor: "#1F409A",
+            // backgroundColor: "#FFE8D2",
             width: "100%",
-            border: "4px solid black",
+            // border: "4px solid black",
+            boxShadow: "0 -3px 10px 0 rgba(0,0,0,0.3)",
           }}
-        />
+        /> */}
       </div>
     </MyStockPageContext.Provider>
 
