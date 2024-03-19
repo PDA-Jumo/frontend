@@ -7,8 +7,9 @@ import magnify from "../../assets/icons/magnify.png";
 
 // apis
 import { getMarketIssue } from "../../lib/apis/stock";
+import MarketIssueModal from "./MarketIssueModal";
 
-export default function SliderComponent() {
+export default function SliderComponent(props) {
   const settings = {
     infinite: true,
     speed: 500,
@@ -19,20 +20,14 @@ export default function SliderComponent() {
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
   };
-  const [issue, setIssue] = useState([]);
-  useEffect(() => {
-    const setData = async () => {
-      const issueData = await getMarketIssue();
-      setIssue(issueData.data);
-      console.log(issueData.data);
-    };
-
-    setData();
-  }, []);
   return (
     <StyledSlide {...settings}>
-      {issue.map((item) => (
-        <MarketIssue item={item} />
+      {props.issue.map((item) => (
+        <MarketIssue
+          item={item}
+          setIsModal={props.setIsModal}
+          setClickedIssue={props.setClickedIssue}
+        />
       ))}
     </StyledSlide>
   );
@@ -53,6 +48,7 @@ const PrevArrow = (props) => {
         justifyContent: "center",
         alignItems: "center",
         borderRadius: "32px",
+        zIndex: 1,
       }}
     >
       &lt;
@@ -73,6 +69,11 @@ const MarketIssue = (props) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        cursor: "pointer",
+      }}
+      onClick={() => {
+        props.setIsModal(true);
+        props.setClickedIssue(props.item);
       }}
     >
       <div

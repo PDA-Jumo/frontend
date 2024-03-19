@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-//redux
-import { useDispatch, useSelector } from "react-redux";
-import { addsearch } from "../../store/reducers/recentsearch";
-
 //css
 import "../../styles/globalStyle.css";
 import "../../styles/stockDetails.css";
@@ -24,7 +20,12 @@ import Trash from "../../assets/icons/Trash.png";
 import SliderComponent from "./SliderComponent";
 
 //utils
-import { getLiveSise, getThemeRank } from "../../lib/apis/stock";
+import {
+  getLiveSise,
+  getMarketIssue,
+  getThemeRank,
+} from "../../lib/apis/stock";
+import MarketIssueModal from "./MarketIssueModal";
 
 export default function StockDetails() {
   const [kospiSise, setKospiSise] = useState({});
@@ -32,11 +33,15 @@ export default function StockDetails() {
   const [themeRank, setThemeRank] = useState([]);
   const [isRefresh, setIsRefresh] = useState(false);
   const [now, setNow] = useState("");
+  const [isModal, setIsModal] = useState(false);
+  const [issue, setIssue] = useState([]);
+  const [clickedIssue, setClickedIssue] = useState({});
   useEffect(() => {
     const setData = async () => {
       const liveSise = await getLiveSise();
       const themeRankData = await getThemeRank();
-      console.log(themeRankData);
+      const issueData = await getMarketIssue();
+      setIssue(issueData.data);
       setThemeRank(themeRankData.data);
       setKospiSise(liveSise.data.kospi);
       setKosdaqSise(liveSise.data.kosdaq);
@@ -57,10 +62,13 @@ export default function StockDetails() {
         paddingInline: "32px",
         boxSizing: "border-box",
         height: "100%",
-        overflowY: "scroll",
+        overflowY: isModal ? "hidden" : "scroll",
         overflowX: "hidden",
       }}
     >
+      {isModal ? (
+        <MarketIssueModal issue={clickedIssue} setIsModal={setIsModal} />
+      ) : null}
       <MainChartComponent kospi={kospiSise} kosdaq={kosdaqSise} />
       <div style={{ display: "flex", justifyContent: "space-around" }}>
         <MainChartNumberComponent sise={kospiSise} />
@@ -91,7 +99,11 @@ export default function StockDetails() {
             position: "relative",
           }}
         >
-          <SliderComponent />
+          <SliderComponent
+            issue={issue}
+            setIsModal={setIsModal}
+            setClickedIssue={setClickedIssue}
+          />
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
