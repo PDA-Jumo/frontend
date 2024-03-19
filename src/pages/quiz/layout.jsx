@@ -27,8 +27,6 @@ export default function QuizLayout() {
     const randomIndex = Math.floor(Math.random() * quizData.length);
     const quiz = quizData[randomIndex];
 
-    //TODO if userlevel<minLevel reshuffle
-
     const shuffledOptions =
       quiz.type === "OX" ? [...quiz.options] : shuffleArray([...quiz.options]);
 
