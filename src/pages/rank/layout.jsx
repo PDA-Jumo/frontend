@@ -2,8 +2,16 @@ import React from "react";
 import Rank from "../../assets/backgrounds/rank.png";
 import character1 from "../../assets/backgrounds/character1.png";
 import "./rank.css";
+import { useEffect } from "react";
 
 export default function RankLayout() {
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
+
   return (
     <div className="background-style">
       <img src={Rank} className="background-image" alt="Rank Background" />
