@@ -8,9 +8,11 @@ import character2 from "./character2.png";
 import character3 from "./character3.png";
 import character4 from "./character4.png";
 import character5 from "./character5.png";
+import hat from "../../../assets/user/Title.png";
 
-// 예시 이미지 주소 배열
 const images = [character1, character2, character3, character4, character5];
+
+Modal.setAppElement("#root");
 
 export default function SignUpPage() {
   const [userEmail, setUserEmail] = useState("");
@@ -26,98 +28,151 @@ export default function SignUpPage() {
 
   const onRegisterSubmit = useCallback(
     (email, password, nickname, profile_img) => {
-      // signup 함수 로직 구현 필요
       signup({ email, password, nickname, profile_img }).then((data) => {
         console.log(data);
       });
       navigate("/signin");
-      // 예시로 console.log를 사용했으나, 실제로는 여기에 회원가입 로직을 구현해야 합니다.
     },
-    []
+    [navigate]
   );
 
   return (
-    <div className="container">
-      <Modal
-        isOpen={showImages}
-        onRequestClose={() => setShowImages(false)}
-        contentLabel="프로필 사진 선택"
-        className="modal"
-        overlayClassName="overlay"
-      >
-        <h2>프로필 사진을 입력하세요</h2>
-        <div className="image-options">
-          {images.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt={`Profile ${index + 1}`}
-              onClick={() => {
-                setUserImage(image);
-                setShowImages(false);
-              }}
-            />
-          ))}
+    <div className="centered-container">
+      <div className="rounded-rectangle2">
+        <div className="hat-section" style={{ height: "96px" }}>
+          <img src={hat} alt="Hat" style={{ width: "100%", height: "100%" }} />
         </div>
-      </Modal>
-
-      <div className="form-container">
-        <h3>Register</h3>
-
-        {/* 프로필 사진 선택 */}
         <div
-          className="profile-image-selector"
-          onClick={() => setShowImages(true)}
+          className="container-split"
+          style={{ display: "flex", paddingTop: "32px" }}
         >
-          {userImage ? (
-            <img
-              src={userImage}
-              alt="Selected profile"
-              className="selected-image"
-            />
-          ) : (
-            <button className="image-select-button">
-              프로필 사진을 선택하세요
-            </button>
-          )}
+          <div className="image-selection-area">
+            <div
+              className="profile-image-selector"
+              onClick={() => setShowImages(true)}
+            >
+              {/* userImage가 비어있으면 텍스트를 보여주고, 그렇지 않으면 이미지를 보여줌 */}
+              {userImage === "" ? (
+                <div className="selected-image-placeholder">
+                  프로필 이미지를 설정해주세요
+                </div>
+              ) : (
+                <img
+                  src={userImage}
+                  alt="Selected profile"
+                  className="selected-image"
+                />
+              )}
+            </div>
+            <Modal
+              isOpen={showImages}
+              onRequestClose={() => setShowImages(false)}
+              contentLabel="프로필 사진 선택"
+              className="modal"
+              overlayClassName="overlay"
+              style={{
+                content: {
+                  top: "50%",
+                  left: "50%",
+                  right: "auto",
+                  bottom: "auto",
+                  marginRight: "-50%",
+                  width: "fit-content", // 모달의 너비가 내용에 맞게 조정되도록 설정
+                  height: "fit-content", // 모달의 높이가 내용에 맞게 조정되도록 설정
+                },
+              }}
+            >
+              <h2>프로필 사진을 선택하세요</h2>
+              <div className="image-options">
+                {images.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`Profile ${index + 1}`}
+                    onClick={() => {
+                      setUserImage(image);
+                      setShowImages(false);
+                    }}
+                    className="selectable-image"
+                    style={{
+                      width: "144px",
+                      height: "144px",
+                    }} // 모달 내 이미지 크기 조정
+                  />
+                ))}
+              </div>
+            </Modal>
+          </div>
+          <div className="form-area">
+            <div className="form-group1">
+              <div className="form-floating mb-3">
+                <label htmlFor="floatingInput" className="label-custom">
+                  이메일
+                </label>
+                <input
+                  type="email"
+                  className="form-control custom-input"
+                  id="floatingInput"
+                  placeholder="name@example.com"
+                  onChange={(e) => onInputChange(e.target.value, setUserEmail)}
+                  value={userEmail}
+                  required
+                />
+              </div>
+
+              <div className="form-floating mb-3">
+                <label htmlFor="floatingPassword" className="label-custom">
+                  비밀번호
+                </label>
+                <input
+                  type="password"
+                  className="form-control custom-input"
+                  id="floatingPassword"
+                  placeholder="Password"
+                  onChange={(e) =>
+                    onInputChange(e.target.value, setUserPassword)
+                  }
+                  value={userPassword}
+                  required
+                />
+              </div>
+
+              <div className="form-floating mb-3">
+                <label htmlFor="floatingNickname" className="label-custom">
+                  별명
+                </label>
+                <input
+                  type="text"
+                  className="form-control custom-input"
+                  id="floatingNickname"
+                  placeholder="Nickname"
+                  onChange={(e) =>
+                    onInputChange(e.target.value, setUserNickname)
+                  }
+                  value={userNickname}
+                  required
+                />
+              </div>
+
+              <div className="button-group">
+                <button
+                  className="btn btn-primary custom-login"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onRegisterSubmit(
+                      userEmail,
+                      userPassword,
+                      userNickname,
+                      userImage
+                    );
+                  }}
+                >
+                  회원가입
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* 기본 회원가입 양식 */}
-        <label htmlFor="emailInput">Email address</label>
-        <input
-          id="emailInput"
-          type="email"
-          onChange={(e) => onInputChange(e.target.value, setUserEmail)}
-          placeholder="name@example.com"
-          required
-        />
-
-        <label htmlFor="passwordInput">Password</label>
-        <input
-          id="passwordInput"
-          type="password"
-          onChange={(e) => onInputChange(e.target.value, setUserPassword)}
-          placeholder="Password"
-          required
-        />
-
-        <label htmlFor="nicknameInput">Nickname</label>
-        <input
-          id="nicknameInput"
-          type="text"
-          onChange={(e) => onInputChange(e.target.value, setUserNickname)}
-          placeholder="별명을 입력하여 주세요."
-          required
-        />
-
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            onRegisterSubmit(userEmail, userPassword, userNickname, userImage);
-          }}
-        >
-          회원가입
-        </button>
       </div>
     </div>
   );
