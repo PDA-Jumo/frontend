@@ -6,7 +6,7 @@ import { addsearch } from "../../store/reducers/recentsearch";
 
 //assets
 import Folder from "../../assets/stock/folder.png";
-import Search from "../../assets/icons/Search.png";
+import Magnifier from "../../assets/icons/magnifier.png";
 
 import "../../styles/searchtab.css";
 import SearchDrop from "../../components/stock/SearchDrop";
@@ -44,7 +44,7 @@ export default function SearchTab() {
             alignItems: "center",
 
             // backgroundColor: "white",
-            borderBottom: "1px solid lightgray",
+            // borderBottom: "1px solid lightgray",
           }}
         >
           {/* <img
@@ -71,7 +71,7 @@ export default function SearchTab() {
               console.log(action);
             }}
           >
-            <img src={Search} className="iconMedium" />
+            <img src={Magnifier} className="iconSmall" />
           </div>
         </div>
         <div class="block">

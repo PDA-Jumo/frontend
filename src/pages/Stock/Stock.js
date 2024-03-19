@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 //assets
 import Folder from "../../assets/stock/folder.png";
+import Hat from "../../assets/backgrounds/hat.png";
+
 //components
 import SearchTab from "../../components/stock/SearchTab";
 import StockDetails from "../../components/stock/WorldStockDetails";
@@ -47,7 +49,7 @@ export default function StockPage() {
         <div
           style={{
             // backgroundColor: "#1F409A",
-            // backgroundColor: "#FFE8D2",
+            backgroundColor: "#71A3FF",
             height: "50px",
             width: "100%",
             display: "flex",
@@ -61,11 +63,13 @@ export default function StockPage() {
           }}
         >
           <SearchTab />
+
+          <img src={Hat} style={{ width: "180px" }} />
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
-              // width: "90%",
+              width: "420px",
               marginBlock: "8px",
               gap: "5%",
               left: 30,
@@ -73,11 +77,11 @@ export default function StockPage() {
           >
             <div class="korea" onClick={() => Setpage(1)}>
               <img src={Folder} style={{ width: "24px", marginRight: "4px" }} />
-              국내주식
+              국내 주식
             </div>
             <div class="korea" onClick={() => Setpage(2)}>
               <img src={Folder} style={{ width: "24px", marginRight: "4px" }} />
-              해외주식
+              해외 주식
             </div>
             <div
               class="korea"
@@ -87,12 +91,9 @@ export default function StockPage() {
               }}
             >
               <img src={Folder} style={{ width: "24px", marginRight: "4px" }} />
-              내주식
+              내 주식
             </div>
           </div>
-          {/* <span style={{ marginRight: "16px", color: "white" }}>
-            주린이의 모험
-          </span> */}
         </div>
 
         <div
