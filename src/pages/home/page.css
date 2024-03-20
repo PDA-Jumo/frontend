@@ -2,7 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%; /* 컨테이너 전체 너비 사용 */
+  width: 100%;
+  font-size: 24px;
 }
 
 .profile-img {
@@ -34,23 +35,25 @@
 
 .white-rounded-box {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 10px 20px;
   margin: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: flex-end; /* 오른쪽 정렬 */
+  font-size: 24px;
 }
 
 .white-rounded-box-row {
   background-color: white;
-  border-radius: 10px;
-  padding: 10px 20px;
+  border-radius: 20px;
+  padding: 10px 30px;
   margin: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row; /* 가로 방향으로 정렬 */
+  font-size: 24px;
 }
 
 .navigation-buttons.vertical {
@@ -60,9 +63,10 @@
 }
 
 .navigation-buttons.vertical img {
-  width: 40px; /* 이미지 너비를 40px로 설정 */
-  height: 40px; /* 이미지 높이를 40px로 설정 */
-  margin: 5px 0;
+  width: 60px; /* 이미지 너비를 40px로 설정 */
+  height: 60px; /* 이미지 높이를 40px로 설정 */
+  margin-bottom: 5px;
+  margin-right: 10px;
   cursor: pointer;
 }
 
@@ -78,4 +82,7 @@ button:hover,
 .clickme img {
   width: 200px;
   height: 200px;
+  position: relative; /* position을 relative로 변경 */
+  top: -100px; /* 원래 위치에서 위로 200px */
+  margin-left: 20px;
 }

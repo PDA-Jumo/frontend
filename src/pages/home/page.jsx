@@ -57,7 +57,7 @@ function HomePage() {
               <div className="info-text">
                 <div className="level-type">
                   <span>레벨: {user?.level}</span>
-                  <span>유형: {user?.type}</span>
+                  <span> {user?.type}</span>
                 </div>
                 <div>닉네임: {user?.nickname}</div>
               </div>
@@ -67,7 +67,12 @@ function HomePage() {
             <img
               src={dollarIcon}
               alt="달러 아이콘"
-              style={{ width: "24px", height: "24px", marginRight: "10px" }}
+              style={{
+                width: "24px",
+                height: "24px",
+                marginRight: "10px",
+                marginTop: "6px",
+              }}
             />
             <div>{user?.cash?.toLocaleString()}</div>
           </div>
@@ -78,7 +83,12 @@ function HomePage() {
             <img
               src={stockIcon}
               alt="보유 종목"
-              style={{ width: "24px", height: "24px", marginRight: "10px" }}
+              style={{
+                width: "24px",
+                height: "24px",
+                marginRight: "10px",
+                marginTop: "6px",
+              }}
             />
             <span>보유종목</span>
           </div>

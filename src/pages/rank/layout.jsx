@@ -5,11 +5,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
-import rankStar from "../../assets/rankStar.png";
-import rankCrown from "../../assets/rankCrown.png";
-import rankBluedia from "../../assets/rankBluedia.png";
-import rankReddia from "../../assets/rankReddia.png";
-import rankHeart from "../../assets/rankHeart.png";
+import rankStar from "../../assets/rank/rankStar.png";
+import rankCrown from "../../assets/rank/rankCrown.png";
+import rankBluedia from "../../assets/rank/rankBluedia.png";
+import rankReddia from "../../assets/rank/rankReddia.png";
+import rankHeart from "../../assets/rank/rankHeart.png";
 import "./rank.css";
 
 export default function RankLayout() {
