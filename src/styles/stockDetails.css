@@ -34,10 +34,10 @@
   position: relative;
 }
 
-/* .MainChartDiv:hover {
+.MainChartDiv:hover {
   transform: scale(1.1);
   transition: transform 0.5s ease;
-} */
+}
 
 .MainChart {
   width: 100%;
@@ -45,7 +45,7 @@
   box-sizing: border-box;
   height: 250px;
   border-radius: 16px;
-  box-shadow: 0 0 10px 0 rgba(225, 204, 236, 0.5);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 .newsText {
@@ -120,5 +120,33 @@
 }
 
 .myStockTab:hover {
-  background-color: #71a3ff !important;
+  background-color: #f2f2f2 !important;
+}
+
+.smallTab {
+  border: 2px solid black;
+  border-radius: 16px;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.smallTab:hover {
+  background-color: #71a3ff;
+  border: 2px solid white;
+  color: white;
+}
+
+.smallTabSelected {
+  border-radius: 16px;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: #71a3ff;
+  border: 2px solid white;
+  color: white;
 }

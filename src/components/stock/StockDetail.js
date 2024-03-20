@@ -18,6 +18,7 @@ export default function StockDetail() {
         flexDirection: "column",
         overflowY: "scroll",
         overflowX: "hidden",
+        backgroundColor: "white",
       }}
     >
       {isTrade ? <TradeModal setIsTrade={setIsTrade} /> : null}
@@ -29,7 +30,8 @@ export default function StockDetail() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          // padding: "8px",
+          padding: "8px",
+          boxSizing: "border-box",
         }}
       >
         <div
@@ -55,7 +57,14 @@ export default function StockDetail() {
           46,000
         </span>
       </div>
-      <div style={{ display: "flex", height: "300px" }}>
+      <div
+        style={{
+          display: "flex",
+          height: "300px",
+          padding: "16px",
+          boxSizing: "border-box",
+        }}
+      >
         <div
           style={{
             width: "60%",
@@ -95,7 +104,7 @@ export default function StockDetail() {
         </div>
       </div>
 
-      <div style={{ display: "flex", marginLeft: "4px" }}>
+      <div style={{ display: "flex", marginLeft: "20px" }}>
         <div className="stockDetailTab" style={{ marginLeft: "10px" }}>
           종목 정보
         </div>
@@ -106,6 +115,8 @@ export default function StockDetail() {
           border: "3px solid #0F3AB1",
           height: "200px",
           borderRadius: "16px",
+          marginInline: "16px",
+          marginBottom: "16px",
         }}
       ></div>
     </div>
