@@ -37,6 +37,7 @@ export default function StockDetails() {
   const [issue, setIssue] = useState([]);
   const [clickedIssue, setClickedIssue] = useState({});
   const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedMySmallTab, setSelectedMySmallTab] = useState(1);
   useEffect(() => {
     const setData = async () => {
       const liveSise = await getLiveSise();
@@ -118,7 +119,7 @@ export default function StockDetails() {
             <div
               className="myStockTab"
               style={{
-                backgroundColor: selectedTab === 0 ? "lightgray" : "white",
+                backgroundColor: selectedTab === 0 ? "#ffe27a" : "white",
               }}
               onClick={() => setSelectedTab(0)}
             >
@@ -127,7 +128,7 @@ export default function StockDetails() {
             <div
               className="myStockTab"
               style={{
-                backgroundColor: selectedTab === 1 ? "lightgray" : "white",
+                backgroundColor: selectedTab === 1 ? "#ffe27a" : "white",
               }}
               onClick={() => setSelectedTab(1)}
             >
@@ -144,44 +145,28 @@ export default function StockDetails() {
               padding: "8px",
             }}
           >
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", gap: "2%" }}>
               <div
-                style={{
-                  // border: "2px solid #6082E1",
-                  border: "2px solid black",
-                  borderRadius: "16px",
-                  padding: "4px 8px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className={
+                  selectedMySmallTab === 0 ? "smallTabSelected" : "smallTab"
+                }
+                onClick={() => setSelectedMySmallTab(0)}
               >
                 최근종목
               </div>
               <div
-                style={{
-                  // border: "2px solid #6082E1",
-                  border: "2px solid black",
-                  borderRadius: "16px",
-                  padding: "4px 8px",
-                  marginInline: "16px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className={
+                  selectedMySmallTab === 1 ? "smallTabSelected" : "smallTab"
+                }
+                onClick={() => setSelectedMySmallTab(1)}
               >
                 보유종목
               </div>
               <div
-                style={{
-                  // border: "2px solid #6082E1",
-                  border: "2px solid black",
-                  borderRadius: "16px",
-                  padding: "4px 8px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className={
+                  selectedMySmallTab === 2 ? "smallTabSelected" : "smallTab"
+                }
+                onClick={() => setSelectedMySmallTab(2)}
               >
                 관심종목
               </div>
@@ -632,7 +617,11 @@ const MainChart = (props) => {
             left: "3%",
           }}
         >
-          <span style={{ fontSize: "24px" }}>{props.sise.num1}</span>
+          <span style={{ fontSize: "24px" }}>
+            {props.sise && props.sise.num3 && props.sise.num3[0] === "0"
+              ? "개장 전"
+              : props.sise.num1}
+          </span>
           <div>
             <span
               style={{ fontSize: "12px", marginRight: "4px", color: "#8B95A1" }}

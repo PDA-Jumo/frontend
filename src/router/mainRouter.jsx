@@ -12,6 +12,7 @@ import StockDetail from "../components/stock/StockDetail";
 import TestLayout from "../pages/test/test";
 import TestResultLayout from "../pages/test/testResult";
 import MyStock from "../components/stock/myStock";
+import StockDetail from "../components/stock/StockDetail";
 
 export const mainRouter = [
   {
@@ -72,6 +73,10 @@ export const mainRouter = [
   {
     path: "/test/result",
     element: <TestResultLayout />,
+  },
+  {
+    path: "/stock/detail",
+    element: <StockDetail />,
   },
 ];
 const router = createBrowserRouter(mainRouter);
