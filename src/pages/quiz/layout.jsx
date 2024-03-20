@@ -1,18 +1,29 @@
 //TODO 여기부터 유저의 정보를 받아오고 있어야 함(persist를 통해 연동되는 로그인 기능)
 
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import quizBackground from "../../assets/backgrounds/quiz.png";
 import "./quiz.css";
 import quizData from "./quizData";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { quizSuccess } from "../../lib/apis/quiz";
+import { updateFinancialsAction } from "../../store/reducers/user";
+import { useDispatch } from "react-redux";
 
 export default function QuizLayout() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user) || {};
   const [showQuiz, setShowQuiz] = useState(false);
   const [currentQuiz, setCurrentQuiz] = useState({});
   const [selectedOption, setSelectedOption] = useState("");
   const [isCorrect, setIsCorrect] = useState(null);
-
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -24,28 +35,50 @@ export default function QuizLayout() {
   useEffect(() => {
     if (!showQuiz) return;
 
-    const randomIndex = Math.floor(Math.random() * quizData.length);
-    const quiz = quizData[randomIndex];
+    const userLevel = parseInt(user.level, 10);
 
-    //TODO if userlevel<minLevel reshuffle
+    const suitableQuizzes = quizData.filter((quiz) => {
+      const quizLevel = parseInt(quiz.level, 10);
+      return userLevel >= quizLevel;
+    });
+
+    if (suitableQuizzes.length === 0) return;
+
+    const randomIndex = Math.floor(Math.random() * suitableQuizzes.length);
+    const quiz = suitableQuizzes[randomIndex];
 
     const shuffledOptions =
       quiz.type === "OX" ? [...quiz.options] : shuffleArray([...quiz.options]);
 
     const shuffledQuiz = { ...quiz, options: shuffledOptions };
-
     setCurrentQuiz(shuffledQuiz);
     setIsCorrect(null);
     setSelectedOption("");
-  }, [showQuiz]);
+  }, [showQuiz, user.level, quizData]);
 
-  const checkAnswer = (selected) => {
-    //TODO 퀴즈를 맞췄을때 유저한테 돈을 지급하도록 UPDATE되어야 함
+  const upCash = useCallback(async (user_id, level) => {
+    try {
+      // 퀴즈 성공시 DB 업데이트
+      const resp = await quizSuccess({ user_id, level });
+      const { result, value } = resp.data;
+
+      // DB 업데이트 성공시 Redux Store State 업데이트
+      if (result === "성공") {
+        dispatch(updateFinancialsAction(value));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  const checkAnswer = async (selected) => {
     if (isCorrect !== null) return;
 
     setSelectedOption(selected);
     if (selected === currentQuiz.answer) {
       setIsCorrect(true);
+
+      await upCash(user.user_id, user.level);
     } else {
       setIsCorrect(false);
     }
@@ -53,7 +86,7 @@ export default function QuizLayout() {
 
   const handleBack = () => {
     console.log("뒤로가기 버튼이 클릭되었습니다.");
-    navigate("/");
+    navigate("/home");
   };
 
   return (

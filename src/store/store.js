@@ -1,4 +1,7 @@
-import { combineReducers, configureStore, createStore } from "@reduxjs/toolkit";
+// store.js
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+//import userReducer from "./reducers/user";
+import UserReducer from "./reducers/user";
 //import userReducer from "./reducers/user";
 import SearchReducer from "./reducers/recentsearch";
 
@@ -8,15 +11,11 @@ import SearchReducer from "./reducers/recentsearch";
 
 // const store = createStore(rootReducer);
 
+// export const rootReducer = combineReducers({
+//   search: SearchReducer
+// })
 
-import {
-  FLUSH,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-  REHYDRATE,
-} from "redux-persist";
+// const store = createStore(rootReducer);
 
 import storageSession from "redux-persist/lib/storage/session";
 import persistStore from "redux-persist/es/persistStore";
@@ -31,6 +30,7 @@ const rootPersistConfig = {
 const rootReducer = persistReducer(
   rootPersistConfig,
   combineReducers({
+    user: UserReducer,
     search: SearchReducer,
   })
 );

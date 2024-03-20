@@ -1,0 +1,22 @@
+.startButton {
+  background-color: white;
+  color: #ffde6b;
+  border: 5px solid #ffde6b;
+  border-radius: 30px;
+  /* padding: 8px 100px; */
+  width: 330px;
+  height: 60px;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+  margin-top: 30px;
+}
+
+.startButton:hover {
+  background-color: #ffde6b;
+  color: white;
+  border: 5px solid white;
+}
