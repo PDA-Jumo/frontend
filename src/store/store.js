@@ -2,6 +2,15 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 //import userReducer from "./reducers/user";
 import UserReducer from "./reducers/user";
+import { combineReducers, configureStore, createStore } from "@reduxjs/toolkit";
+//import userReducer from "./reducers/user";
+import SearchReducer from "./reducers/recentsearch";
+
+// export const rootReducer = combineReducers({
+//   search: SearchReducer
+// })
+
+// const store = createStore(rootReducer);
 
 // export const rootReducer = combineReducers({
 //   search: SearchReducer
@@ -16,13 +25,14 @@ import persistReducer from "redux-persist/es/persistReducer";
 const rootPersistConfig = {
   key: "root",
   storage: storageSession,
-  whitelist: ["user"],
+  whitelist: ["search"],
 };
 
 const rootReducer = persistReducer(
   rootPersistConfig,
   combineReducers({
     user: UserReducer,
+    search: SearchReducer,
   })
 );
 
