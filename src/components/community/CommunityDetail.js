@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import axios from "axios";
 import socketEvent from "../../lib/socket/CommunitySocketEvents";
 import { format } from "date-fns";
+import { useSelector, useDispatch } from "react-redux";
 
 import "../../styles/community.css";
 import "../../styles/globalStyle.css";
@@ -11,16 +11,22 @@ export default function CommunityDetail({ community, onBack }) {
   const [message, setMessage] = useState("");
   const { stock_code, stock_name } = community;
 
-  const user = {
-    user_id: 8,
-    nickname: "가람",
-    profile_img: "",
-    password: "",
-    cash: "",
-    total_assets: "",
-    level: "",
-    type: "",
-  };
+  const user = useSelector((state) => state.user.user) || {};
+
+  console.log("디테일", user);
+  console.log(user.user_id);
+  console.log(user.nickname);
+
+  // const user = {
+  //   user_id: 8,
+  //   nickname: "가람",
+  //   profile_img: "",
+  //   password: "",
+  //   cash: "",
+  //   total_assets: "",
+  //   level: "",
+  //   type: "",
+  // };
 
   // socket
   useEffect(() => {
@@ -85,6 +91,7 @@ export default function CommunityDetail({ community, onBack }) {
           {!isMyMessage && <span className="nickname">{chat.nickname}</span>}
           <span className="createdAt">
             {new Date(chat.created_at).toLocaleTimeString()}
+            {user.nickname} 님
           </span>
         </div>
         <div className="messageContent">{chat.content}</div>
