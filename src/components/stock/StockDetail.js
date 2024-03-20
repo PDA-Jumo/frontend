@@ -47,7 +47,7 @@ export default function StockDetail() {
       {isTrade ? <TradeModal setIsTrade={setIsTrade} /> : null}
       <div
         style={{
-          backgroundColor: "#0F3AB1",
+          // backgroundColor: "#FFDE6B",
           height: "70px",
           width: "100%",
           display: "flex",
@@ -62,11 +62,12 @@ export default function StockDetail() {
             display: "flex",
             alignItems: "flex-end",
             marginLeft: "16px",
+            borderBottom: "5px solid #FFDE6B",
+            boxSizing: "border-box",
+            paddingInline: "8px",
           }}
         >
-          <span className="largeText" style={{ color: "white" }}>
-            {params.stockName}
-          </span>
+          <span className="largeText">{params.stockName}</span>
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
           >
@@ -145,7 +146,7 @@ export default function StockDetail() {
       </div>
       <div
         style={{
-          border: "3px solid #0F3AB1",
+          border: "3px solid #ffde6b",
           height: "200px",
           borderRadius: "16px",
           marginInline: "16px",
