@@ -4,13 +4,19 @@ import { useNavigate } from "react-router-dom";
 import Coin from "../../assets/coin.png";
 import "./rank.css";
 import "./portfolio.css";
+import { useEffect } from "react";
 
 //TODO 랭크를 누르면, 해당 userId 정보에 해당하는 페이지로 redirect 되어야 함
 //TODO 라우터 링크도 /portfolio가 아닌 /:userId로 변경 예정
 
 export default function PortfolioList() {
   const navigate = useNavigate();
-
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
   return (
     <div className="background-style">
       <img src={Rank} className="background-image" alt="Rank Background" />
@@ -34,12 +40,10 @@ export default function PortfolioList() {
         <div className="tabs-container">
           <button className="tab-button">국내주식</button>
           <button className="tab-button">해외주식</button>
-          <button className="tab-button">관심종목</button>
         </div>
       </div>
 
-      <button className="back-button" onClick={() => navigate("/home")}>
-
+      <button className="back-button1" onClick={() => navigate("/home")}>
         홈으로
       </button>
     </div>

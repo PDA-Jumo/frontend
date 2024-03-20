@@ -73,7 +73,7 @@
 }
 .tabs-container {
   display: grid;
-  grid-template-columns: repeat(3, 300px);
+  grid-template-columns: repeat(2, 300px);
   gap: 64px;
   margin-top: 42px;
   margin-left: 18px;
