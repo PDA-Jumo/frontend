@@ -109,3 +109,16 @@
   justify-content: space-around;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
 }
+
+.myStockTab {
+  /* background-color: lightgray; */
+  padding: 8px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  cursor: pointer;
+}
+
+.myStockTab:hover {
+  background-color: #71a3ff !important;
+}
