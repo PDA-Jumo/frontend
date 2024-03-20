@@ -2,23 +2,11 @@
   font-family: "DNFBitBitv2", sans-serif;
 }
 
-html,
-body {
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
-}
-
 .background-style {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-}
-
-.background-image {
-  width: 100%;
-  height: 100%;
 }
 
 .content-position {
