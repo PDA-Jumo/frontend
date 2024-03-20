@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function TradeModal(props) {
+  const [quantity, setQuantity] = useState(0);
+  const [price, setPrice] = useState(0);
   return (
     <div
       style={{
@@ -204,6 +206,9 @@ export default function TradeModal(props) {
                       justifyContent: "center",
                       cursor: "pointer",
                     }}
+                    onClick={() =>
+                      quantity > 0 ? setQuantity((prev) => prev - 1) : null
+                    }
                   >
                     -
                   </div>
@@ -220,6 +225,8 @@ export default function TradeModal(props) {
                   >
                     <input
                       type="text"
+                      value={quantity === 0 ? "" : quantity}
+                      onChange={(e) => setQuantity(parseInt(e.target.value))}
                       style={{
                         width: "90%",
                         outline: "none",
@@ -241,6 +248,7 @@ export default function TradeModal(props) {
                       justifyContent: "center",
                       cursor: "pointer",
                     }}
+                    onClick={() => setQuantity((prev) => prev + 1)}
                   >
                     +
                   </div>
@@ -274,6 +282,9 @@ export default function TradeModal(props) {
                       justifyContent: "center",
                       cursor: "pointer",
                     }}
+                    onClick={() =>
+                      price > 0 ? setPrice((prev) => prev - 1) : null
+                    }
                   >
                     -
                   </div>
@@ -290,6 +301,8 @@ export default function TradeModal(props) {
                   >
                     <input
                       type="text"
+                      value={price === 0 ? "" : price}
+                      onChange={(e) => setPrice(parseInt(e.target.value))}
                       style={{
                         width: "90%",
                         outline: "none",
@@ -311,6 +324,7 @@ export default function TradeModal(props) {
                       justifyContent: "center",
                       cursor: "pointer",
                     }}
+                    onClick={() => setPrice((prev) => prev + 1)}
                   >
                     +
                   </div>
