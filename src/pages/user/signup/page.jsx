@@ -46,13 +46,10 @@ export default function SignUpPage() {
   return (
     <div className="centered-container">
       <div className="rounded-rectangle2">
-        <div className="hat-section" style={{ height: "128px" }}>
-          <img src={hat} alt="Hat" style={{ width: "100%", height: "100%" }} />
+        <div className="hat-section">
+          <img src={hat} alt="Hat" className="hat-image" />
         </div>
-        <div
-          className="container-split"
-          style={{ display: "flex", paddingTop: "16px" }}
-        >
+        <div className="container-split">
           <div className="image-selection-area">
             <div
               className="profile-image-selector"
@@ -91,7 +88,7 @@ export default function SignUpPage() {
                   justifyContent: "center",
                   alignItems: "center",
                   flexDirection: "column",
-                  backgroundColor: "white", // 배경색 지정
+                  backgroundColor: "white",
                 },
                 overlay: {
                   backgroundColor: "rgba(0, 0, 0, 0.7)",
@@ -107,7 +104,7 @@ export default function SignUpPage() {
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
-                  gap: "18px",
+                  gap: "24px",
                   justifyContent: "center",
                 }}
               >
