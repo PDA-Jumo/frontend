@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState} from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 //assets
 import Folder from "../../assets/stock/folder.png";

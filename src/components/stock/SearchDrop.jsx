@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deletesearch } from "../../store/reducers/recentsearch";
 import { SearchKeyword } from "../../lib/apis/stock";
-
 
 //assets
 import Trash from "../../assets/icons/Trash.png";
@@ -15,8 +15,8 @@ export default function SearchDrop({ keyword }) {
   const search = useSelector((state) => state.search.searchList) || [];
   const [searchlist, setSearchList] = useState([{}]); //최근검색 리스트
   const [prevKeyword, setPrevKeyword] = useState(""); // 키워드 변경시에만 요청 보내도록 이전 검색어 저장
+  const navigate = useNavigate();
 
-  
   useEffect(() => {
     //console.log(keyword)
     const setData = async (keyword) => {
@@ -31,7 +31,7 @@ export default function SearchDrop({ keyword }) {
     }
   }, [keyword]);
 
-  //console.log(searchlist);
+  console.log(searchlist);
 
   return (
     <div
@@ -41,17 +41,19 @@ export default function SearchDrop({ keyword }) {
         borderRadius: "16px",
       }}
     >
-      <div style={{ margin: "2% 5%" }} class="searchbox">
-        <div style={{ fontSize: "16px" }}>최근 검색</div>
-        <div style={{ padding: "2% 0%" }}>
-          {keyword === ""
-            ? search.map((item) => (
+      <div style={{ margin: "2% 5%" }} className="searchbox">
+        {keyword === "" && (
+          <>
+            <div style={{ fontSize: "16px" }}>최근 검색</div>
+            <div style={{ padding: "2% 0%" }}>
+              {search.map((item) => (
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
                   }}
                 >
+                  {item.content}
                   <img
                     src={Trash}
                     style={{ width: "25px", cursor: "pointer" }}
@@ -61,11 +63,21 @@ export default function SearchDrop({ keyword }) {
                     }}
                   ></img>
                 </div>
-              ))
-            : searchlist.map((item, index) => (
-                <div key={index}>{item.stock_name}</div>
               ))}
-        </div>
+            </div>
+          </>
+        )}
+        {keyword !== "" &&
+          searchlist.map((item, index) => (
+            <div
+              key={index}
+              onClick={() => {
+                navigate(`detail/${item.stock_code}`);
+              }}
+            >
+              {item.stock_name}
+            </div>
+          ))}
       </div>
     </div>
   );

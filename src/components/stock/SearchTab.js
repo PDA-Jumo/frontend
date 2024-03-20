@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addsearch } from "../../store/reducers/recentsearch";
 
 //assets
-import Folder from "../../assets/stock/folder.png";
 import Magnifier from "../../assets/icons/magnifier.png";
 
 import "../../styles/searchtab.css";

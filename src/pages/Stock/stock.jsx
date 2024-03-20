@@ -8,7 +8,6 @@ import Background from "../../assets/backgrounds/Stock.png";
 import Folder from "../../assets/stock/folder.png";
 
 //components
-import StockDetail from "../../components/stock/StockDetail";
 import SearchDrop from "../../components/stock/SearchDrop";
 
 export default function StockLayout() {

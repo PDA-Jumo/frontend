@@ -89,7 +89,7 @@ export const mainRouter = [
         index: true,
       },
       {
-        path: ":stockId",
+        path: "detail/:stockId",
         element: <StockDetail />,
         index: true,
       },
@@ -99,6 +99,10 @@ export const mainRouter = [
   {
     path: "/test/result",
     element: <TestResultLayout />,
+  },
+  {
+    path: "/stock/detail",
+    element: <StockDetail />,
   },
 ];
 const router = createBrowserRouter(mainRouter);
