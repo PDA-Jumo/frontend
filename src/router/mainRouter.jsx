@@ -12,7 +12,6 @@ import StockDetail from "../components/stock/StockDetail";
 import TestLayout from "../pages/test/test";
 import TestResultLayout from "../pages/test/testResult";
 import MyStock from "../components/stock/myStock";
-import StockDetail from "../components/stock/StockDetail";
 
 export const mainRouter = [
   {
