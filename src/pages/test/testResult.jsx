@@ -3,24 +3,46 @@ import "./test.css";
 import character1 from "../../assets/backgrounds/character1.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import investType from "./investType.js";
+import { testFinish } from "../../lib/apis/test";
+import { useSelector, useDispatch } from "react-redux";
+import { updateTypeAction } from "../../store/reducers/user";
 
 export default function TestResultLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const score = location.state?.score;
   const [result, setResult] = useState({});
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user) || {};
 
   useEffect(() => {
     console.log(score);
-
     let index = Math.floor(score / 6);
     index = Math.min(index, investType.length - 1);
     setResult(investType[index]);
   }, [score]);
 
-  const handleBack = () => {
+  const updateType = async (user_id, type) => {
+    try {
+      // 퀴즈 성공시 DB 업데이트
+      const resp = await testFinish({ user_id, type });
+      const data = resp.data;
+
+      // DB 업데이트 성공시 Redux Store State 업데이트
+      if (data === "성공") {
+        dispatch(updateTypeAction(type));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleBack = async () => {
+    if (result.성향) {
+      updateType(user.user_id, result.성향);
+    }
     console.log("홈으로 버튼이 클릭되었습니다.");
-    navigate("/");
+    navigate("/home");
   };
 
   const buttonBackgroundColor = {
