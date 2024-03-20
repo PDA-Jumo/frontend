@@ -37,7 +37,9 @@ export default function PortfolioList() {
           <button className="tab-button">관심종목</button>
         </div>
       </div>
+
       <button className="back-button" onClick={() => navigate("/home")}>
+
         홈으로
       </button>
     </div>

@@ -9,6 +9,7 @@
   overflow: hidden;
 }
 
+
 .content-position {
   width: 80vw;
   height: 75vh;
@@ -21,7 +22,9 @@
   border-radius: 20px;
   box-sizing: border-box;
   overflow: hidden;
+
   padding-bottom: 36px;
+
 }
 
 .non-scrollable-header {
@@ -119,6 +122,7 @@
   margin-right: 36px;
 }
 
+
 .back-button1 {
   position: fixed;
   right: 100px;
@@ -129,6 +133,7 @@
   border: none;
   border-radius: 30px;
   border: 3px solid #ff98cc;
+
   cursor: pointer;
   font-size: 24px;
   transition: background-color 0.3s;
