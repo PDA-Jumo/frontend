@@ -3,13 +3,21 @@ import Community from '../../assets/backgrounds/Community.png';
 import CommunityList from '../../components/community/CommunityList';
 import HotCommunityList from '../../components/community/HotCommunityList';
 import CommunityDetail from '../../components/community/CommunityDetail';
+import { useSelector, useDispatch } from "react-redux";
 
 export default function CommunityLayout() {
+  const user = useSelector((state) => state.user.user) || {};
   const [selectedCommunity, setSelectedCommunity] = useState(null);
 
   const backToHotCommunity = () => {
     setSelectedCommunity(null);
   };
+
+
+
+  console.log("메인", user);
+  console.log(user.user_id);
+  console.log(user.nickname);
 
   return (
     <div
