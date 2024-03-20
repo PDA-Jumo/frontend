@@ -10,11 +10,14 @@ import stockIcon from "../../assets/main/stock.png";
 import clickmeIcon from "../../assets/main/clickme.png";
 import tipsIcon from "../../assets/main/tips.png";
 import { useNavigate } from "react-router-dom"; // react-router-dom을 사용하여 페이지 이동을 처리
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateFinancialsAction } from "../../store/reducers/user";
+import { upCash } from "../../lib/apis/home";
 import "./page.css";
 
 function HomePage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // useSelector 훅을 사용하여 Redux store에서 사용자 정보를 가져옵니다.
   const user = useSelector((state) => state.user.user) || {};
@@ -23,6 +26,21 @@ function HomePage() {
   // 페이지 이동 함수
   const navigateTo = (path) => {
     navigate(path);
+  };
+
+  const upCashByWork = async (user_id, cash) => {
+    try {
+      // 퀴즈 성공시 DB 업데이트
+      const resp = await upCash({ user_id, cash });
+      const data = resp.data;
+
+      // DB 업데이트 성공시 Redux Store State 업데이트
+      if (data === "성공") {
+        dispatch(updateFinancialsAction(cash));
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -93,10 +111,7 @@ function HomePage() {
         <img
           src={clickmeIcon}
           alt="노가다"
-          onClick={() => {
-            // 여기에 cash를 올리는 로직을 구현하세요.
-            alert("Cash가 올라갔습니다!");
-          }}
+          onClick={() => upCashByWork(user.user_id, 1000)}
         />
       </div>
     </div>
