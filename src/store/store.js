@@ -2,7 +2,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 //import userReducer from "./reducers/user";
 import UserReducer from "./reducers/user";
-import { combineReducers, configureStore, createStore } from "@reduxjs/toolkit";
 //import userReducer from "./reducers/user";
 import SearchReducer from "./reducers/recentsearch";
 
