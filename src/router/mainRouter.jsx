@@ -62,7 +62,7 @@ export const mainRouter = [
         index: true,
       },
       {
-        path: "detail/:stockId",
+        path: "detail/:stockId/:stockName",
         element: <StockDetail />,
         index: true,
       },

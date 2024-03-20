@@ -150,3 +150,11 @@
   border: 2px solid white;
   color: white;
 }
+
+.info {
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  margin-top: 20px;
+}
