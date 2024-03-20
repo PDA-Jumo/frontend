@@ -33,7 +33,7 @@ export default function QuizLayout() {
   };
 
   useEffect(() => {
-    if (!showQuiz) return;
+    if (!showQuiz || isCorrect !== null) return; // isCorrect가 null이 아니면, 즉 정답을 맞추었거나 틀렸으면 새로운 문제를 불러오지 않습니다.
 
     const userLevel = parseInt(user.level, 10);
 
@@ -54,15 +54,13 @@ export default function QuizLayout() {
     setCurrentQuiz(shuffledQuiz);
     setIsCorrect(null);
     setSelectedOption("");
-  }, [showQuiz, user.level, quizData]);
+  }, [showQuiz, user.level, quizData, isCorrect]);
 
   const upCash = useCallback(async (user_id, level) => {
     try {
-      // 퀴즈 성공시 DB 업데이트
       const resp = await quizSuccess({ user_id, level });
       const { result, value } = resp.data;
 
-      // DB 업데이트 성공시 Redux Store State 업데이트
       if (result === "성공") {
         dispatch(updateFinancialsAction(value));
       }
