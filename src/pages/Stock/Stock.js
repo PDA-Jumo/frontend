@@ -1,42 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 //assets
 import Folder from "../../assets/stock/folder.png";
 import Hat from "../../assets/backgrounds/hat.png";
 
 //components
 import SearchTab from "../../components/stock/SearchTab";
-import StockDetails from "../../components/stock/WorldStockDetails";
-import MyStockSelector from "../../components/stock/MyStockSelector";
 
 //css
 import "../../styles/stock.css";
 
 export const MyStockPageContext = React.createContext();
 
-
 export default function StockPage() {
   const [mystockPage, setMyStockPage] = useState("1");
-  const [page, Setpage] = useState(1);
-  const [component, setComponent] = useState(null);
-  const [searchkey, setSearchkey] = useState('')
-
-  useEffect(() => {
-    // console.log(page);
-    switch (page) {
-      case 1:
-        setComponent(<StockDetails />);
-        break;
-      case 2:
-        setComponent(<StockDetails />);
-        break;
-      default:
-        setComponent(<MyStockSelector />);
-    }
-  }, [page]);
+  const navigate = useNavigate();
 
   return (
-    
-       <MyStockPageContext.Provider value={{ mystockPage, setMyStockPage }}>
+    <MyStockPageContext.Provider value={{ mystockPage, setMyStockPage }}>
       <div
         style={{
           backgroundColor: "white",
@@ -78,19 +59,19 @@ export default function StockPage() {
               left: 30,
             }}
           >
-            <div class="korea" onClick={() => Setpage(1)}>
+            <div class="korea" onClick={() => navigate("")}>
               <img src={Folder} style={{ width: "24px", marginRight: "4px" }} />
               국내 주식
             </div>
-            <div class="korea" onClick={() => Setpage(2)}>
+            <div class="korea" onClick={() => navigate("worldstock")}>
               <img src={Folder} style={{ width: "24px", marginRight: "4px" }} />
               해외 주식
             </div>
             <div
               class="korea"
               onClick={() => {
-                Setpage(3);
                 setMyStockPage("1");
+                navigate("myportfolio");
               }}
             >
               <img src={Folder} style={{ width: "24px", marginRight: "4px" }} />
@@ -108,7 +89,7 @@ export default function StockPage() {
             boxSizing: "border-box",
           }}
         >
-          {component}
+          <Outlet />
         </div>
         {/* <div
           style={{
@@ -121,7 +102,5 @@ export default function StockPage() {
         /> */}
       </div>
     </MyStockPageContext.Provider>
-
-   
   );
 }

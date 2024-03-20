@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deletesearch } from "../../store/reducers/recentsearch";
 import { SearchKeyword } from "../../lib/apis/stock";
+
 
 //assets
 import Trash from "../../assets/icons/Trash.png";
@@ -12,13 +13,14 @@ import "../../styles/globalStyle.css";
 export default function SearchDrop({ keyword }) {
   const dispatch = useDispatch();
   const search = useSelector((state) => state.search.searchList) || [];
-  const [searchlist, setSearchList] = useState([{}]);
-  const [prevKeyword, setPrevKeyword] = useState("");
+  const [searchlist, setSearchList] = useState([{}]); //최근검색 리스트
+  const [prevKeyword, setPrevKeyword] = useState(""); // 키워드 변경시에만 요청 보내도록 이전 검색어 저장
 
+  
   useEffect(() => {
     //console.log(keyword)
     const setData = async (keyword) => {
-      console.log(keyword);
+      //console.log(keyword);
       const resp = await SearchKeyword(keyword);
       setSearchList(resp);
     };
@@ -29,7 +31,7 @@ export default function SearchDrop({ keyword }) {
     }
   }, [keyword]);
 
-  console.log(searchlist);
+  //console.log(searchlist);
 
   return (
     <div
@@ -50,7 +52,6 @@ export default function SearchDrop({ keyword }) {
                     justifyContent: "space-between",
                   }}
                 >
-                  {item.content}
                   <img
                     src={Trash}
                     style={{ width: "25px", cursor: "pointer" }}

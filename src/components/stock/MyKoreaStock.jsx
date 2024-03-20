@@ -11,6 +11,7 @@ export default function MyKoreaStock() {
   const [myStock, setMyStock] = useState([]);
   const [assets, setAssets] = useState("0");
   const [chart, setChart] = useState({});
+  const [hoverdata, setHoverdata] = useState("");
 
   useEffect(() => {
     const setData = async () => {
@@ -22,6 +23,11 @@ export default function MyKoreaStock() {
 
     setData();
   }, []);
+
+  function handleHover(data) {
+    console.log(data.stock_name);
+    setHoverdata(data.stock_name);
+  }
 
   return (
     <div
@@ -64,9 +70,9 @@ export default function MyKoreaStock() {
             {assets}
           </div>
           <div>
-            {chart &&
-              chart.length > 0 &&
-              PieChartComponent({ codeRatioArray: chart })}
+            {chart && chart.length > 0 && (
+              <PieChartComponent codeRatioArray={chart} onHover={handleHover} />
+            )}
           </div>
 
           <div
@@ -116,6 +122,7 @@ export default function MyKoreaStock() {
 
         <div style={{ height: "35%", overflow: "auto" }}>
           {myStock.map((stock, id) => {
+            const isHovered = stock === hoverdata;
             return (
               <div
                 key={id}
@@ -128,6 +135,7 @@ export default function MyKoreaStock() {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  backgroundColor: isHovered ? "#FCD8D4" : "white",
                 }}
               >
                 <div>
