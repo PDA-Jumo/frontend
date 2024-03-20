@@ -1,21 +1,29 @@
-//TODO 실제 랭킹값을 받아오도록 해야함
+//TODO 페이지 넘어올때 API를 연동해서 랭킹값을 받아오도록 해야함
 
-//TODO 페이지 넘어올때 갱신..?
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
-import rankStar from "../../assets/rankStar.png";
-import rankCrown from "../../assets/rankCrown.png";
-import rankBluedia from "../../assets/rankBluedia.png";
-import rankReddia from "../../assets/rankReddia.png";
-import rankHeart from "../../assets/rankHeart.png";
+
+import rankStar from "../../assets/rank/rankStar.png";
+import rankCrown from "../../assets/rank/rankCrown.png";
+import rankBluedia from "../../assets/rank/rankBluedia.png";
+import rankReddia from "../../assets/rank/rankReddia.png";
+import rankHeart from "../../assets/rank/rankHeart.png";
+
 import "./rank.css";
 
 export default function RankLayout() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
 
   useEffect(() => {
     loadMoreUsers();
@@ -89,7 +97,9 @@ export default function RankLayout() {
         </div>
         <button
           className="portfolio-button"
-          onClick={() => navigate("/rank/portfolio")}
+
+          onClick={() => navigate("/ranking/portfolio")}
+
         >
           포트폴리오 보기
         </button>
@@ -117,14 +127,16 @@ export default function RankLayout() {
       </div>
       <div className="content-position">
         <div className="non-scrollable-header">17:00 기준</div>{" "}
-        {/* TODO 서버시간기준 */}
+
+        {/* TODO 근데 실시간으로 받아줄거면 ㅇㅇ시 기준이 필요없지 않나? 회의필요 */}
         <div className="scrollable-content">
           <RankingList users={users} />
           <MyRankingButton />
           {isLoading && <p>로딩 중...</p>}
         </div>
       </div>
-      <button className="back-button" onClick={() => navigate("/")}>
+
+      <button className="back-button1" onClick={() => navigate("/home")}>
         홈으로
       </button>
     </div>
