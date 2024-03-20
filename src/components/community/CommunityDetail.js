@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import {
-  connectSocket,
-  disconnectSocket,
-  subscribeToChat,
-  sendMessage,
-} from "../../lib/socket/CommunitySocketEvents";
+// import axios from "axios";
+import socketEvent from "../../lib/socket/CommunitySocketEvents";
+import { format } from "date-fns";
 
 import "../../styles/community.css";
 import "../../styles/globalStyle.css";
 
 export default function CommunityDetail({ community, onBack }) {
-  const [chattings, setChattings] = useState([]);
-  const { stock_code, stock_name } = community;
+  const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-  const LIMIT = 10;
+  const { stock_code, stock_name } = community;
+
   const user = {
     user_id: 8,
     nickname: "가람",
@@ -26,21 +22,55 @@ export default function CommunityDetail({ community, onBack }) {
     type: "",
   };
 
+  // socket
   useEffect(() => {
-    const fetchCommunities = async () => {
-      try {
-        const response = await axios.get(`/community/${stock_code}/${LIMIT}`);
-        setChattings(response.data);
-      } catch (error) {
-        console.error(
-          "커뮤니티 데이터를 불러오는 중 에러가 발생했습니다.",
-          error
-        );
-      }
-    };
+    // 종목 커뮤니티 입장
+    socketEvent.joinRoom(stock_code, user.user_id);
 
-    fetchCommunities();
-  }, [stock_code]);
+    // 이전 내용 로드
+    socketEvent.onLoadPreviousMessages((m) => {
+      setMessages(m);
+    });
+
+    // 메시지 수신
+    socketEvent.onMessageReceived((nm) => {
+      console.log("NEW MESSAGE");
+      setMessages((pm) => [nm, ...pm]);
+    });
+
+    return () => {
+      socketEvent.leaveRoom(stock_code, user.user_id);
+    };
+  }, [stock_code, user.user_id]);
+
+  // 메시지 발신
+  const sendMessages = () => {
+    const createdAt = format(new Date(), "yyyy-MM-dd HH:mm:ss");
+    if (message.trim() !== "") {
+      socketEvent.sendMessage({
+        user_id: user.user_id,
+        stock_code,
+        stock_name,
+        nickname: user.nickname,
+        message,
+        created_at: createdAt,
+      });
+      setMessage("");
+    }
+  };
+
+  // 메시지 전송 이벤트 핸들러 내에서 sendSocketMessage 호출
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault(); // 기본 이벤트 방지 (엔터로 인한 줄바꿈 방지)
+      sendMessages();
+    }
+  };
+
+  // 입력 필드 변경 핸들러
+  const handleInputChange = (event) => {
+    setMessage(event.target.value);
+  };
 
   // 채팅 메시지 렌더링 함수
   const renderChatMessage = (chat) => {
@@ -62,59 +92,6 @@ export default function CommunityDetail({ community, onBack }) {
     );
   };
 
-  useEffect(() => {
-    connectSocket(stock_code, user.user_id, user.nickname);
-
-    subscribeToChat((newMessage) => {
-      setChattings((prevChattings) => [...prevChattings, newMessage]);
-    });
-
-    return () => {
-      disconnectSocket();
-    };
-  }, [stock_code, user.user_id, user.nickname]);
-
-  // 메시지 전송 함수
-  const sendSocketMessage = async () => {
-    if (message.trim() === "") return; // 메시지가 비어있으면 전송하지 않음
-
-    try {
-      // 메시지 전송 API 호출 예시
-      await axios.post(`/community/${stock_code}`, {
-        user_id: user.user_id,
-        stock_name: stock_name,
-        content: message,
-      });
-
-      // 소켓을 통해 메시지 전파
-      sendMessage({
-        stock_code,
-        stock_name,
-        message,
-        user_id: user.user_id,
-        nickname: user.nickname,
-      });
-
-      // 입력 필드 초기화
-      setMessage("");
-    } catch (error) {
-      console.error("메시지 전송 중 에러가 발생했습니다.", error);
-    }
-  };
-
-  // 메시지 전송 이벤트 핸들러 내에서 sendSocketMessage 호출
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault(); // 기본 이벤트 방지 (엔터로 인한 줄바꿈 방지)
-      sendSocketMessage();
-    }
-  };
-
-  // 입력 필드 변경 핸들러
-  const handleInputChange = (event) => {
-    setMessage(event.target.value);
-  };
-
   return (
     <>
       <div className="communityBox">
@@ -124,7 +101,7 @@ export default function CommunityDetail({ community, onBack }) {
           <span>{stock_code}</span>
         </div>
         <div className="chatBox">
-          {[...chattings].reverse().map(renderChatMessage)}
+          {[...messages].reverse().map(renderChatMessage)}
         </div>
         {/* 채팅 입력창 */}
         <div className="chatInputBox">
@@ -135,7 +112,7 @@ export default function CommunityDetail({ community, onBack }) {
             placeholder="메시지를 입력하세요..."
             className="chatInput"
           />
-          <button onClick={sendSocketMessage} className="sendButton">
+          <button onClick={sendMessages} className="sendButton">
             전송
           </button>
         </div>
