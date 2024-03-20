@@ -13,6 +13,7 @@ import BookLayout from "../pages/book/book";
 import StockLayout from "../pages/Stock/stock";
 import TestLayout from "../pages/test/test";
 import TestResultLayout from "../pages/test/testResult";
+import PortfolioList from "../pages/rank/rankPortfolio";
 
 export const mainRouter = [
   {
@@ -50,6 +51,10 @@ export const mainRouter = [
   {
     path: "/ranking",
     element: <RankLayout />,
+  },
+  {
+    path: "/ranking/portfolio",
+    element: <PortfolioList />,
   },
 
   {

@@ -94,7 +94,7 @@ export default function RankLayout() {
         </div>
         <button
           className="portfolio-button"
-          onClick={() => navigate("/rank/portfolio")}
+          onClick={() => navigate("/ranking/portfolio")}
         >
           포트폴리오 보기
         </button>
