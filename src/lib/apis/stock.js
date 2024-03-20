@@ -24,3 +24,8 @@ export const getThemeRank = async () => {
   const themeRank = await instance.get("/stock/theme");
   return themeRank;
 };
+
+export const getStockDetail = async (code) =>{
+  const resp = await instance.get(`/stock/detail/${code}`)
+  return resp
+}

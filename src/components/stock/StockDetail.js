@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 //css
 import "../../styles/stockDetails.css";
@@ -7,8 +8,12 @@ import "../../styles/stockDetails.css";
 import character from "../../assets/character/shinhan_computer.png";
 import TradeModal from "./TradeModal";
 
+import { getStockDetail } from "../../lib/apis/stock";
 export default function StockDetail() {
   const [isTrade, setIsTrade] = useState(false);
+  const params = useParams();
+  console.log(params.stockId);
+
   return (
     <div
       style={{
