@@ -1,0 +1,81 @@
+.profile-and-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* 컨테이너 전체 너비 사용 */
+}
+
+.profile-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 20px; /* 이미지와 텍스트 사이의 간격 */
+  border: 1px solid black;
+}
+
+.info-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 오른쪽 정렬 */
+}
+
+.level-type {
+  color: #f9c93e;
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  gap: 10px; /* level과 type 사이의 간격 */
+}
+
+.info-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 오른쪽 정렬 */
+}
+
+.white-rounded-box {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 오른쪽 정렬 */
+}
+
+.white-rounded-box-row {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row; /* 가로 방향으로 정렬 */
+}
+
+.navigation-buttons.vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 버튼들을 오른쪽 정렬 */
+}
+
+.navigation-buttons.vertical img {
+  width: 40px; /* 이미지 너비를 40px로 설정 */
+  height: 40px; /* 이미지 높이를 40px로 설정 */
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+button:hover,
+.navigation-buttons.vertical img:hover {
+  opacity: 0.8;
+}
+
+.clickme {
+  height: 200px;
+}
+
+.clickme img {
+  width: 200px;
+  height: 200px;
+}

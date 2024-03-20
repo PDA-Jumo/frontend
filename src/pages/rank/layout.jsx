@@ -1,9 +1,119 @@
-import React from "react";
+//TODO 실제 랭킹값을 받아오도록 해야함
+
+//TODO 페이지 넘어올때 갱신..?
+
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
-import character1 from "../../assets/backgrounds/character1.png";
+import rankStar from "../../assets/rankStar.png";
+import rankCrown from "../../assets/rankCrown.png";
+import rankBluedia from "../../assets/rankBluedia.png";
+import rankReddia from "../../assets/rankReddia.png";
+import rankHeart from "../../assets/rankHeart.png";
 import "./rank.css";
 
 export default function RankLayout() {
+  const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
+  useEffect(() => {
+    loadMoreUsers();
+    const scrollableContent = document.querySelector(".scrollable-content");
+    if (scrollableContent) {
+      scrollableContent.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      if (scrollableContent) {
+        scrollableContent.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
+
+  const handleScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.target;
+    if (scrollHeight - scrollTop !== clientHeight || isLoading) return;
+    loadMoreUsers();
+  };
+
+  // TODO 여기가 사용자 정보 받아오는 API가 들어갈 예정 (아마 Axios를 활용하게 되지 않을까?)
+  const loadMoreUsers = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      const newUsers = Array.from(
+        { length: 20 },
+        (_, index) => `사용자 ${index + users.length + 1}`
+      );
+      setUsers((prev) => [...prev, ...newUsers]);
+      setIsLoading(false);
+    }, 1000);
+  };
+
+  const RankingHeader = () => {
+    return (
+      <div className="ranking-header">
+        <img src={rankStar} alt="Rank Star" className="ranking-star-img" />
+        랭킹
+      </div>
+    );
+  };
+
+  const RankingList = ({ users }) => {
+    return (
+      <>
+        {users.map((user, index) => (
+          <RankingButton key={index} rank={user} index={index} />
+        ))}
+      </>
+    );
+  };
+
+  const RankingButton = ({ rank, index }) => {
+    const rankImages = {
+      0: rankCrown,
+      1: rankBluedia,
+      2: rankReddia,
+    };
+
+    const getRankImage = (index) => rankImages[index] || rankHeart;
+
+    const rankImage = getRankImage(index);
+
+    return (
+      <div className="ranking-button">
+        <div className="ranking-icon-container">
+          <img src={rankImage} alt="Rank Icon" className="ranking-icon" />
+          <div className="rank-title">주대주주</div>{" "}
+          {/* TODO 유저 티어도 동적으로 받아오기 */}
+          {rank}
+        </div>
+        <button
+          className="portfolio-button"
+          onClick={() => navigate("/rank/portfolio")}
+        >
+          포트폴리오 보기
+        </button>
+      </div>
+    );
+  };
+
+  const MyRankingButton = () => {
+    return (
+      <div className="ranking-button my-ranking">
+        <div className="ranking-icon-container">
+          <img src={rankHeart} alt="Rank Icon" className="ranking-icon" />
+          <div className="rank-title">주대주주</div>
+          나의 랭킹 {/* TODO 내 정보도 전부 동적으로 받아오기 */}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="background-style">
       <img src={Rank} className="background-image" alt="Rank Background" />
@@ -11,44 +121,17 @@ export default function RankLayout() {
         <RankingHeader />
       </div>
       <div className="content-position">
-        <RankingList />
+        <div className="non-scrollable-header">17:00 기준</div>{" "}
+        {/* TODO 서버시간기준 */}
+        <div className="scrollable-content">
+          <RankingList users={users} />
+          <MyRankingButton />
+          {isLoading && <p>로딩 중...</p>}
+        </div>
       </div>
+      <button className="back-button" onClick={() => navigate("/home")}>
+        홈으로
+      </button>
     </div>
-  );
-}
-function RankingHeader() {
-  return <div className="ranking-header">랭킹</div>;
-}
-
-function RankingList() {
-  return (
-    <>
-      <RankingButton rank="사용자 A" />
-      <RankingButton rank="사용자 B" />
-      <RankingButton rank="사용자 C" />
-      <RankingButton rank="사용자 D" />
-    </>
-  );
-}
-
-// 랭킹 버튼 컴포넌트
-function RankingButton({ rank }) {
-  return (
-    <button className="ranking-button" onClick={() => {}}>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        {" "}
-        <img
-          src={character1}
-          alt="Rank Icon"
-          style={{
-            paddingLeft: "36px",
-            width: "48px",
-            height: "48px",
-            marginRight: "36px",
-          }}
-        />
-        {rank}
-      </div>
-    </button>
   );
 }
