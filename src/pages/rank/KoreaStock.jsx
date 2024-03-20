@@ -17,12 +17,22 @@ export default function KoreaStock() {
   useEffect(() => {
     const setData = async () => {
       const resp = {
-        myStock: ["삼성전자", "LG화학", "현대자동차"],
+        myStock: [
+          "삼성전자",
+          "LG화학",
+          "현대자동차",
+          "LG에너지솔루션",
+          "오브젠",
+          "프로티아",
+        ],
         assets: "100,000,000",
         mystock_percent: [
-          { stock_name: "삼성전자", percent: 50 },
-          { stock_name: "LG화학", percent: 30 },
-          { stock_name: "현대자동차", percent: 20 },
+          { stock_name: "삼성전자", percent: 10 },
+          { stock_name: "LG화학", percent: 20 },
+          { stock_name: "현대자동차", percent: 10 },
+          { stock_name: "LG에너지솔루션", percent: 10 },
+          { stock_name: "오브젠", percent: 20 },
+          { stock_name: "프로티아", percent: 20 },
         ],
       };
       setMyStock(resp.myStock);
@@ -39,129 +49,59 @@ export default function KoreaStock() {
   }
 
   return (
-    <div
-      style={{
-        top: "190px",
-        right: "100px",
-        height: "77%",
-        display: "flex",
-        justifyContent: "space-between",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "50%",
-          padding: "2% 5%",
-        }}
-      >
+    <div className="koreaStockContainer">
+      <div className="leftSection">
         <div>
-          <div style={{ fontSize: "18px", color: "#F9C93E" }}>주대주주</div>
-          <div class="mediumText text-white">김광태가뭐야</div>
+          <div className="title">주대주주</div>
+          <div className="mediumText text-white">김광태가뭐야</div>
         </div>
 
-        <div
-          style={{
-            border: "3px solid #FFDE68",
-            borderRadius: "100px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <div class="smallText text-white" style={{ display: "flex" }}>
-            <img
-              src={Coin}
-              style={{ height: "40px", width: "40px" }}
-              alt="Coin"
-            />
+        <div className="stockInfoSection">
+          <div className="smallText text-white assetsDisplay">
+            <img src={Coin} className="icon" alt="Coin" />
             보유자산
           </div>
-          <div class="smallText text-white" style={{ display: "flex" }}>
-            {assets}
-          </div>
+          <div className="smallText text-white">{assets}</div>
           <div>
             {chart && chart.length > 0 && (
               <PieChartComponent codeRatioArray={chart} onHover={handleHover} />
             )}
           </div>
 
-          <div
-            style={{
-              width: "65%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <div
-              style={{
-                width: "43%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <div class="text-white">전체 수익률</div>
-              <div style={{ color: "red" }}>19.37%</div>
+          <div className="profitInfo">
+            <div className="totalReturn">
+              <div className="text-white">전체 수익률</div>
+              <div className="profit">19.37%</div>
             </div>
-            <div
-              style={{
-                width: "55%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <div class="text-white">평가 수익금액</div>{" "}
-              <div style={{ color: "red" }}>7,040,204</div>
+            <div className="evaluationProfit">
+              <div className="text-white">평가 수익금액</div>
+              <div className="profit">7,040,204</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "45%",
-          padding: "2% 0%",
-        }}
-      >
+      <div className="rightSection">
         <div>
-          <div class="mediumText text-white" style={{ display: "flex" }}>
-            <img src={Chart} style={{ height: "40px", width: "40px" }} />
+          <div className="mediumText text-white stockDisplay">
+            <img src={Chart} className="icon" />
             국내 보유종목
           </div>
         </div>
 
-        <div style={{ overflow: "auto" }}>
+        <div className="stockList">
           {myStock.map((stock, id) => {
             const isHovered = stock === hoverdata;
             return (
               <div
                 key={id}
-                className="mediumText"
-                style={{
-                  padding: "2% 5%",
-                  border: `5px solid #FCD8D4`,
-                  borderRadius: "30px",
-                  margin: "10px 0",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  backgroundColor: isHovered ? "#FCD8D4" : "white",
-                }}
+                className={`stockItem ${isHovered ? "hovered" : ""}`}
               >
                 <div>
-                  <img src={Folder} />
+                  <img src={Folder} alt="Folder" />
                   {stock}
                 </div>
-                <img
-                  src={Arrow}
-                  style={{
-                    width: "8%",
-                    height: "4%",
-                  }}
-                />
+                <img src={Arrow} className="arrowIcon" alt="Arrow" />
               </div>
             );
           })}

@@ -4,6 +4,7 @@ import Rank from "../../assets/backgrounds/rank.png";
 import Coin from "../../assets/coin.png";
 import "./rank.css";
 import "./portfolio.css";
+import "./stockPortfolio.css";
 import KoreaStock from "./KoreaStock";
 
 export default function PortfolioList() {
