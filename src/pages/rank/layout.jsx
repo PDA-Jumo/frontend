@@ -16,7 +16,12 @@ export default function RankLayout() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
   useEffect(() => {
     loadMoreUsers();
     const scrollableContent = document.querySelector(".scrollable-content");
@@ -124,7 +129,7 @@ export default function RankLayout() {
           {isLoading && <p>로딩 중...</p>}
         </div>
       </div>
-      <button className="back-button" onClick={() => navigate("/")}>
+      <button className="back-button" onClick={() => navigate("/home")}>
         홈으로
       </button>
     </div>
