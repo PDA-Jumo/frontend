@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// 아래 이미지 경로는 예시입니다. 실제 프로젝트에 맞게 조정해주세요.
 import rankingIcon from "../../assets/main/ranking.png";
 import tradeIcon from "../../assets/main/trade.png";
 import quizIcon from "../../assets/main/quiz.png";
@@ -9,7 +8,7 @@ import dollarIcon from "../../assets/main/dollar.png";
 import stockIcon from "../../assets/main/stock.png";
 import clickmeIcon from "../../assets/main/clickme.png";
 import tipsIcon from "../../assets/main/tips.png";
-import { useNavigate } from "react-router-dom"; // react-router-dom을 사용하여 페이지 이동을 처리
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateFinancialsAction } from "../../store/reducers/user";
 import { upCash } from "../../lib/apis/home";
@@ -19,22 +18,18 @@ function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // useSelector 훅을 사용하여 Redux store에서 사용자 정보를 가져옵니다.
   const user = useSelector((state) => state.user.user) || {};
   console.log(user);
 
-  // 페이지 이동 함수
   const navigateTo = (path) => {
     navigate(path);
   };
 
   const upCashByWork = async (user_id, cash) => {
     try {
-      // 퀴즈 성공시 DB 업데이트
       const resp = await upCash({ user_id, cash });
       const data = resp.data;
 
-      // DB 업데이트 성공시 Redux Store State 업데이트
       if (data === "성공") {
         dispatch(updateFinancialsAction(cash));
       }
@@ -55,11 +50,13 @@ function HomePage() {
                 className="profile-img"
               />
               <div className="info-text">
-                <div className="level-type">
-                  <span>레벨: {user?.level}</span>
-                  <span> {user?.type}</span>
+                <div className="user-info">
+                  <div className="level-type">
+                    <span>레벨: {user?.level}</span>
+                    <span> {user?.type}</span>
+                  </div>
+                  <div className="nickname">{user?.nickname}님</div>
                 </div>
-                <div>닉네임: {user?.nickname}</div>
               </div>
             </div>
           </div>

@@ -1,6 +1,4 @@
-//TODO 실제 랭킹값을 받아오도록 해야함
-
-//TODO 페이지 넘어올때 갱신..?
+//TODO 페이지 넘어올때 API를 연동해서 랭킹값을 받아오도록 해야함
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -122,14 +120,14 @@ export default function RankLayout() {
       </div>
       <div className="content-position">
         <div className="non-scrollable-header">17:00 기준</div>{" "}
-        {/* TODO 서버시간기준 */}
+        {/* TODO 근데 실시간으로 받아줄거면 ㅇㅇ시 기준이 필요없지 않나? 회의필요 */}
         <div className="scrollable-content">
           <RankingList users={users} />
           <MyRankingButton />
           {isLoading && <p>로딩 중...</p>}
         </div>
       </div>
-      <button className="back-button" onClick={() => navigate("/home")}>
+      <button className="back-button1" onClick={() => navigate("/home")}>
         홈으로
       </button>
     </div>
