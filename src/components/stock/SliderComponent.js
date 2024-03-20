@@ -5,10 +5,6 @@ import styled from "styled-components";
 // assets
 import magnify from "../../assets/icons/magnify.png";
 
-// apis
-import { getMarketIssue } from "../../lib/apis/stock";
-import MarketIssueModal from "./MarketIssueModal";
-
 export default function SliderComponent(props) {
   const settings = {
     infinite: true,
@@ -22,13 +18,15 @@ export default function SliderComponent(props) {
   };
   return (
     <StyledSlide {...settings}>
-      {props.issue.map((item) => (
-        <MarketIssue
-          item={item}
-          setIsModal={props.setIsModal}
-          setClickedIssue={props.setClickedIssue}
-        />
-      ))}
+      {props &&
+        props.issue &&
+        props.issue.map((item) => (
+          <MarketIssue
+            item={item}
+            setIsModal={props.setIsModal}
+            setClickedIssue={props.setClickedIssue}
+          />
+        ))}
     </StyledSlide>
   );
 }

@@ -93,7 +93,7 @@ function HomePage() {
         <img
           src={tradeIcon}
           alt="매수매도"
-          onClick={() => navigateTo("/trade")}
+          onClick={() => navigateTo("/stock")}
         />
         <img src={quizIcon} alt="퀴즈" onClick={() => navigateTo("/quiz")} />
         <img
