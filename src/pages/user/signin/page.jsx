@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./page.css"; // CSS 파일을 임포트합니다.
+import "./page.css";
 import { login } from "../../../lib/apis/auth";
 import useAuth from "../../../lib/hooks/useAuth";
 import { useDispatch } from "react-redux";
@@ -50,9 +50,8 @@ export default function SignInPage() {
   return (
     <div className="centered-container">
       <div className="rounded-rectangle">
-        <div className="hat-section" style={{ height: "96px" }}>
+        <div className="hat-section" style={{ height: "128px" }}>
           {" "}
-          {/* hat 영역 추가 */}
           <img src={hat} alt="Hat" style={{ width: "100%", height: "100%" }} />
         </div>
         <div
@@ -60,11 +59,11 @@ export default function SignInPage() {
           style={{
             display: "flex",
             flexDirection: "column",
-            paddingTop: "48px",
+            paddingTop: "32px",
             alignItems: "center",
             width: "100%",
             height: "calc(100% - 96px)",
-          }} // 스타일 조정
+          }}
         >
           <div className="form-group">
             <div className="form-floating mb-3">

@@ -46,13 +46,10 @@ export default function SignUpPage() {
   return (
     <div className="centered-container">
       <div className="rounded-rectangle2">
-        <div className="hat-section" style={{ height: "96px" }}>
-          <img src={hat} alt="Hat" style={{ width: "100%", height: "100%" }} />
+        <div className="hat-section">
+          <img src={hat} alt="Hat" className="hat-image" />
         </div>
-        <div
-          className="container-split"
-          style={{ display: "flex", paddingTop: "32px" }}
-        >
+        <div className="container-split">
           <div className="image-selection-area">
             <div
               className="profile-image-selector"
@@ -84,17 +81,35 @@ export default function SignUpPage() {
                   right: "auto",
                   bottom: "auto",
                   marginRight: "-50%",
-                  width: "60%", // 모달 너비 조정
-                  height: "80%", // 모달 높이 조정
+                  width: "60%",
+                  height: "50%",
                   transform: "translate(-50%, -50%)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  backgroundColor: "white",
                 },
                 overlay: {
-                  backgroundColor: "rgba(0, 0, 0, 0.5)", // 배경 투명도 조정
+                  backgroundColor: "rgba(0, 0, 0, 0.7)",
                 },
               }}
             >
-              <h2>프로필 사진을 선택하세요</h2>
-              <div className="image-options">
+              <h2 style={{ marginBottom: "36px", fontSize: "36px" }}>
+                프로필 사진을 선택하세요
+              </h2>{" "}
+              {/* 하단 마진 추가 */}
+              <div
+                className="image-options"
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "24px",
+                  justifyContent: "center",
+                }}
+              >
+                {" "}
+                {/* 이미지 간격 조정 */}
                 {images.map((image, index) => (
                   <img
                     key={index}
@@ -108,7 +123,8 @@ export default function SignUpPage() {
                     style={{
                       width: "144px",
                       height: "144px",
-                    }} // 모달 내 이미지 크기 조정
+                      marginBottom: "36px",
+                    }}
                   />
                 ))}
               </div>
@@ -166,7 +182,7 @@ export default function SignUpPage() {
               </div>
 
               <button
-                className="btn btn-primary custom-login button-width"
+                className="btn btn-primary custom-signup button-width"
                 onClick={(e) => {
                   e.preventDefault();
                   onRegisterSubmit(
