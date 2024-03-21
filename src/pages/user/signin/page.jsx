@@ -14,12 +14,7 @@ export default function SignInPage() {
   const [userPassword, setUserPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  useEffect(() => {
-    document.body.classList.add("no-scroll");
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, []);
+
   const onInputChange = useCallback((inputText, setFn) => {
     setFn(inputText);
   }, []);
