@@ -21,7 +21,7 @@ export default function WorldStock() {
           "삼성전자",
           "LG화학",
           "현대자동차",
-          "LG에너지솔루션",
+          "KT&G",
           "오브젠",
           "프로티아",
         ],
@@ -30,7 +30,7 @@ export default function WorldStock() {
           { stock_name: "삼성전자", percent: 10 },
           { stock_name: "LG화학", percent: 20 },
           { stock_name: "현대자동차", percent: 10 },
-          { stock_name: "LG에너지솔루션", percent: 10 },
+          { stock_name: "KT&G", percent: 10 },
           { stock_name: "오브젠", percent: 20 },
           { stock_name: "프로티아", percent: 20 },
         ],
@@ -71,18 +71,6 @@ export default function WorldStock() {
               <PieChartComponent codeRatioArray={chart} onHover={handleHover} />
             )}
           </div>
-          {/*<div className="profitInfo">
-            <div className="totalReturn">
-              <div className="text-white">전체 수익률</div>
-              <div className="profit">19.37%</div>
-            </div>
-            <div className="evaluationProfit">
-              <div className="text-white">평가 수익금액</div>
-              <div className="profit">7,040,204</div>
-            </div>
-          </div>
-            */}{" "}
-          {/* 이 부분 피그마에 없어서 일단 주석처리함 */}
         </div>
       </div>
       <div className="rightSection">

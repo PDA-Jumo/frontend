@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
 import Coin from "../../assets/coin.png";
+import KoreaStock from "./KoreaStock";
+import WorldStock from "./WorldStock";
 import "./rank.css";
 import "./portfolio.css";
 import "./stockPortfolio.css";
-import KoreaStock from "./KoreaStock";
 
 export default function PortfolioList() {
   const navigate = useNavigate();
-  const [showKoreanStock, setShowKoreanStock] = useState(false);
-
-  const handleKoreanStockClick = () => {
-    setShowKoreanStock(true);
-  };
+  const [selectedTab, setSelectedTab] = useState(""); // 상태 관리를 위한 변수 변경
 
   return (
     <div className="background-style">
@@ -22,7 +19,7 @@ export default function PortfolioList() {
         <div className="ranking-header text-white">포트폴리오</div>
       </div>
       <div className="pp-position">
-        {!showKoreanStock && (
+        {selectedTab === "" && (
           <>
             <div className="ranking-content">
               <div>
@@ -37,23 +34,33 @@ export default function PortfolioList() {
               </div>
             </div>
             <div className="tabs-container">
-              <button className="tab-button" onClick={handleKoreanStockClick}>
+              <button
+                className="tab-button"
+                onClick={() => setSelectedTab("korean")}
+              >
                 국내주식
               </button>
-              <button className="tab-button">해외주식</button>
+              <button
+                className="tab-button"
+                onClick={() => setSelectedTab("world")}
+              >
+                해외주식
+              </button>
             </div>
           </>
         )}
-        {showKoreanStock && <KoreaStock />}
+        {selectedTab === "korean" && <KoreaStock />}
+        {selectedTab === "world" && <WorldStock />}
       </div>
-      <button className="back-button1" onClick={() => navigate("/home")}>
-        홈으로
-      </button>
-      {showKoreanStock && (
-        <button
-          className="back-button1"
-          onClick={() => setShowKoreanStock(false)}
-        >
+
+      {selectedTab == "" && (
+        <button className="back-button1" onClick={() => navigate("/home")}>
+          홈으로
+        </button>
+      )}
+
+      {selectedTab !== "" && (
+        <button className="back-button1" onClick={() => setSelectedTab("")}>
           뒤로가기
         </button>
       )}
