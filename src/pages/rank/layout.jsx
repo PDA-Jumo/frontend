@@ -17,6 +17,19 @@ export default function RankLayout() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    loadMoreUsers();
+    const scrollableContent = document.querySelector(".scrollable-content");
+    if (scrollableContent) {
+      scrollableContent.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      if (scrollableContent) {
+        scrollableContent.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
+
   const handleScroll = (e) => {
     const { scrollTop, clientHeight, scrollHeight } = e.target;
     if (scrollHeight - scrollTop !== clientHeight || isLoading) return;

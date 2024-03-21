@@ -11,13 +11,7 @@ export default function KoreaStock() {
   const [assets, setAssets] = useState("0");
   const [chart, setChart] = useState([]);
   const [hoverdata, setHoverdata] = useState("");
-  function handleMouseEnter(stockName) {
-    setHoverdata(stockName);
-  }
 
-  function handleMouseLeave() {
-    setHoverdata("");
-  }
   useEffect(() => {
     const setData = async () => {
       const resp = {
