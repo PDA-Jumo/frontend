@@ -16,7 +16,6 @@ import StockPage from "../pages/Stock/Stock";
 import StockDetails from "../components/stock/WorldStockDetails";
 import MyStockSelector from "../components/stock/MyStockSelector";
 import StockDetail from "../components/stock/StockDetail";
-import StockLayout from "../pages/Stock/stock";
 
 import TestLayout from "../pages/test/test";
 import TestResultLayout from "../pages/test/testResult";
@@ -26,7 +25,6 @@ import PortfolioList from "../pages/rank/rankPortfolio";
 
 export const mainRouter = [
   {
-
     path: "",
     element: <UserLayout />,
     children: [
@@ -117,7 +115,6 @@ export const mainRouter = [
     path: "/stock/detail",
     element: <StockDetail />,
   },
-
 ];
 const router = createBrowserRouter(mainRouter);
 export default router;
