@@ -17,6 +17,7 @@ import StockDetail from "../components/stock/StockDetail";
 import TestLayout from "../pages/test/test";
 import TestResultLayout from "../pages/test/testResult";
 import MyStock from "../components/stock/myStock";
+import PortfolioList from "../pages/rank/rankPortfolio";
 
 export const mainRouter = [
   {
@@ -55,6 +56,10 @@ export const mainRouter = [
     path: "/ranking",
     element: <RankLayout />,
   },
+  {
+    path: "/ranking/portfolio",
+    element: <PortfolioList />,
+  },
 
   {
     path: "/quiz",
@@ -89,7 +94,7 @@ export const mainRouter = [
         index: true,
       },
       {
-        path: "detail/:stockId",
+        path: "detail/:stockId/:stockName",
         element: <StockDetail />,
         index: true,
       },

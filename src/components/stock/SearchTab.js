@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +10,6 @@ import Magnifier from "../../assets/icons/magnifier.png";
 
 import "../../styles/searchtab.css";
 import SearchDrop from "../../components/stock/SearchDrop";
-
 
 export default function SearchTab() {
   const dispatch = useDispatch();
@@ -64,7 +64,7 @@ export default function SearchTab() {
             class="searchbutton-style"
             onClick={() => {
               const action = addsearch({
-                id: search.length,
+                id: uuidv4(),
                 content: inputValue,
               });
               dispatch(action);
@@ -74,9 +74,7 @@ export default function SearchTab() {
             <img src={Magnifier} className="iconSmall" />
           </div>
         </div>
-        <div class="block">
-          {SearchDrop ({keyword: inputValue})}
-        </div>
+        <div class="block">{SearchDrop({ keyword: inputValue })}</div>
       </div>
     </div>
   );

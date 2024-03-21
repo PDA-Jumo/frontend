@@ -57,8 +57,13 @@ export default function SignUpPage() {
             >
               {/* userImage가 비어있으면 텍스트를 보여주고, 그렇지 않으면 이미지를 보여줌 */}
               {userImage === "" ? (
-                <div className="selected-image-placeholder">
-                  프로필 이미지를 설정해주세요
+                <div
+                  className="selected-image-placeholder"
+                  style={{ textAlign: "center", color: "#a5a5a5" }}
+                >
+                  프로필 캐릭터를 설정하려면
+                  <br />
+                  클릭해주세요
                 </div>
               ) : (
                 <img
@@ -181,8 +186,8 @@ export default function SignUpPage() {
                 />
               </div>
 
-              <button
-                className="btn btn-primary custom-signup button-width"
+              <div
+                className="button"
                 onClick={(e) => {
                   e.preventDefault();
                   onRegisterSubmit(
@@ -194,7 +199,7 @@ export default function SignUpPage() {
                 }}
               >
                 회원가입
-              </button>
+              </div>
             </div>
           </div>
         </div>
