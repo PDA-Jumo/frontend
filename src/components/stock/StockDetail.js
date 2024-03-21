@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 //css
 import "../../styles/stockDetails.css";
@@ -9,13 +11,20 @@ import character from "../../assets/character/shinhan_computer.png";
 import TradeModal from "./TradeModal";
 
 import { getStockDetail, getStockNews } from "../../lib/apis/stock";
+import { createCommunity } from "../../lib/apis/community";
+
+import socketEvent from "../../lib/socket/StockSocketEvents";
 
 export default function StockDetail() {
   const [isTrade, setIsTrade] = useState(false);
   const [activeTab, setActiveTab] = useState("info");
   const [stockd, setStockD] = useState([]);
   const [stocknews, setStockNews] = useState([{}]);
+  const [prices, setPrices] = useState([]);
   const params = useParams();
+
+  const user = useSelector((state) => state.user.user) || {};
+  const navigate = useNavigate();
 
   useEffect(() => {
     const setData = async () => {
@@ -27,6 +36,30 @@ export default function StockDetail() {
 
     setData();
   }, []);
+
+  useEffect(() => {
+    // 종목 상세 페이지 입장
+    socketEvent.joinRoom(params.stockId, user.user_id);
+
+    // 현재가 데이터 로드
+    socketEvent.currentStockPrice((currentprice) => {
+      console.log(currentprice);
+      setPrices((price) => [...price, currentprice]);
+    });
+
+    return () => {
+      socketEvent.leaveRoom(params.stockId, user.user_id);
+    };
+  }, [params.stockId, user.user_id]);
+
+  const handleCommunityClick = async () => {
+    navigate(`/community/`);
+    try {
+      const data = await createCommunity(params.stockId);
+    } catch (error) {
+      console.error("커뮤니티 생성 중 오류 발생", error);
+    }
+  };
 
   console.log(stockd);
 
@@ -89,14 +122,19 @@ export default function StockDetail() {
           boxSizing: "border-box",
         }}
       >
+        {/* 종목 차트 */}
         <div
           style={{
             width: "60%",
             backgroundColor: "black",
             borderRadius: "16px",
             marginBlock: "16px",
+            color: "white",
           }}
-        />
+        >
+          종목차트!!
+          {prices}
+        </div>
         <div
           style={{
             width: "40%",
@@ -116,7 +154,12 @@ export default function StockDetail() {
           />
 
           <div style={{ display: "flex", gap: "8px" }}>
-            <div className="stockDetailTradeButton">커뮤니티</div>
+            <div
+              className="stockDetailTradeButton"
+              onClick={handleCommunityClick}
+            >
+              커뮤니티
+            </div>
             <div className="stockDetailTradeButton">소수점 거래하기</div>
             <div
               className="stockDetailTradeButton"
