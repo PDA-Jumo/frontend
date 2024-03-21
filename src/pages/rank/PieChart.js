@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 import * as PieCharts from "../../styles/PieChart.js";
 import { popularColors } from "./colorSelector.js";
+import './portfolio.css';
 
 function getRandomColor() {
   const randomIndex = Math.floor(Math.random() * popularColors.length);
@@ -34,7 +35,7 @@ export function PieChartComponent({ codeRatioArray, onHover, hoverdata }) {
               fill={colors[index] || getRandomColor()}
               onMouseOver={() => onHover(entry)}
               style={{
-                filter: hoverdata === entry.stock_name ? "brightness(150%)" : "none",
+                animation: hoverdata === entry.stock_name ? "sparkle 1s infinite" : "none",
               }}
             />
           ))}
