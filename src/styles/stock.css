@@ -34,6 +34,10 @@
   padding-left: 16px;
 }
 
+.input-style::placeholder {
+  color: rgb(230, 230, 230);
+}
+
 .searchbutton-style {
   /* background-image: url("../assets/stock/searchbar.png"); */
   /* height: 60px;
