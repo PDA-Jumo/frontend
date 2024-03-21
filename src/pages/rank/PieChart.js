@@ -31,8 +31,11 @@ export function PieChartComponent({ codeRatioArray, onHover, hoverdata }) {
           {codeRatioArray.map((entry, index) => (
             <Cell
               key={`cell-${index}`}
-              fill={colors[index] || getRandomColor()} 
+              fill={colors[index] || getRandomColor()}
               onMouseOver={() => onHover(entry)}
+              style={{
+                filter: hoverdata === entry.stock_name ? "brightness(150%)" : "none",
+              }}
             />
           ))}
         </Pie>

@@ -95,8 +95,8 @@ export default function KoreaStock() {
               <div
                 key={id}
                 className={`stockItem ${isHovered ? "hovered" : ""}`}
-                onMouseEnter={() => handleMouseEnter(stock)}
-                onMouseLeave={handleMouseLeave}
+                onMouseEnter={() => handleHover({ stock_name: stock })}
+                onMouseLeave={() => setHoverdata("")}
               >
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <img
