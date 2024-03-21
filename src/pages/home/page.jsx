@@ -95,7 +95,7 @@ function HomePage() {
         <img
           src={rankingIcon}
           alt="랭킹"
-          onClick={() => navigateTo("/community")}
+          onClick={() => navigateTo("/ranking")}
         />
         <img
           src={tradeIcon}

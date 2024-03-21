@@ -13,15 +13,6 @@ export default function HomeLayout() {
   const userLevel = useSelector((state) => state.user.user.level) || 0;
   const [backgroundImage, setBackgroundImage] = useState(home1);
 
-  useEffect(() => {
-    setBackgroundImage(selectBackgroundImage(userLevel));
-    document.body.classList.add("no-scroll");
-
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, [userLevel]);
-
   return (
     <div
       className="background-image"
