@@ -76,7 +76,7 @@ export default function UserReducer(state = initialState, action) {
       let newLevel = state.user.level;
       if (updatedCash >= 30000) {
         newLevel = 3;
-        // redux-saga thunk promise rduxjs/toolkit 
+        // thunk reduxjs/toolkit 
       } else if (updatedCash >= 20000) {
         newLevel = 2;
       } else if (updatedCash >= 10000) {
@@ -101,14 +101,6 @@ export default function UserReducer(state = initialState, action) {
           type: action.payload.type,
         },
       };
-    // case UP_CASH_BY_WORK:
-    //   return {
-    //     ...state,
-    //     user: {
-    //       ...state.user,
-    //       cash: (state.user.cash || 0) + action.payload.cash,
-    //     },
-    //   };
     default:
       return state;
   }

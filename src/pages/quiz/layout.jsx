@@ -1,5 +1,3 @@
-//TODO 여기부터 유저의 정보를 받아오고 있어야 함(persist를 통해 연동되는 로그인 기능)
-
 import React, { useCallback, useState, useEffect } from "react";
 import quizBackground from "../../assets/backgrounds/quiz.png";
 import "./quiz.css";
@@ -28,7 +26,7 @@ export default function QuizLayout() {
   };
 
   useEffect(() => {
-    if (!showQuiz || isCorrect !== null) return; // isCorrect가 null이 아니면, 즉 정답을 맞추었거나 틀렸으면 새로운 문제를 불러오지 않습니다.
+    if (!showQuiz || isCorrect !== null) return;
 
     const userLevel = parseInt(user.level, 10);
 

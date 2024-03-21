@@ -50,8 +50,6 @@ export default function WorldStock() {
 
   return (
     <div className="koreaStockContainer">
-      {" "}
-      {/* 어짜피 이름 변할 이유 없어서 재활용함 ㅎㅎ... */}
       <div className="leftSection">
         <div style={{ textAlign: "left", marginLeft: "60px" }}>
           <div className="title">주대주주</div>
@@ -71,8 +69,21 @@ export default function WorldStock() {
               <PieChartComponent codeRatioArray={chart} onHover={handleHover} />
             )}
           </div>
+          {/*<div className="profitInfo">
+            <div className="totalReturn">
+              <div className="text-white">전체 수익률</div>
+              <div className="profit">19.37%</div>
+            </div>
+            <div className="evaluationProfit">
+              <div className="text-white">평가 수익금액</div>
+              <div className="profit">7,040,204</div>
+            </div>
+          </div>
+            */}{" "}
+          {/* 이 부분 피그마에 없어서 일단 주석처리함 */}
         </div>
       </div>
+
       <div className="rightSection">
         <div>
           <div className="largeText text-white stockDisplay">
@@ -89,8 +100,12 @@ export default function WorldStock() {
                 key={id}
                 className={`stockItem ${isHovered ? "hovered" : ""}`}
               >
-                <div>
-                  <img src={Folder} alt="Folder" />
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={Folder}
+                    alt="Folder"
+                    style={{ marginRight: "8px" }}
+                  />
                   {stock}
                 </div>
                 <img src={Arrow} className="arrowIcon" alt="Arrow" />

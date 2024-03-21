@@ -100,8 +100,12 @@ export default function KoreaStock() {
                 key={id}
                 className={`stockItem ${isHovered ? "hovered" : ""}`}
               >
-                <div>
-                  <img src={Folder} alt="Folder" />
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={Folder}
+                    alt="Folder"
+                    style={{ marginRight: "8px" }}
+                  />
                   {stock}
                 </div>
                 <img src={Arrow} className="arrowIcon" alt="Arrow" />

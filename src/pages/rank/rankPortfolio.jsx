@@ -10,8 +10,7 @@ import "./stockPortfolio.css";
 
 export default function PortfolioList() {
   const navigate = useNavigate();
-  const [selectedTab, setSelectedTab] = useState(""); // 상태 관리를 위한 변수 변경
-
+  const [selectedTab, setSelectedTab] = useState("");
   return (
     <div className="background-style">
       <img src={Rank} className="background-image" alt="Rank Background" />
@@ -60,7 +59,11 @@ export default function PortfolioList() {
       )}
 
       {selectedTab !== "" && (
-        <button className="back-button1" onClick={() => setSelectedTab("")}>
+        <button
+          className="back-button1"
+          style={{ padding: "10px 28px" }}
+          onClick={() => setSelectedTab("")}
+        >
           뒤로가기
         </button>
       )}
