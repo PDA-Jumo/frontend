@@ -12,6 +12,18 @@ export default function KoreaStock() {
   const [chart, setChart] = useState([]);
   const [hoverdata, setHoverdata] = useState("");
 
+  /* API 오면 현재 코드 폐기하고 아래의 방식으로 유저데이터를 받을수 있지 않을까?. rankPortfolio.jsx에는 이미 userId가 존재한다.
+ useEffect(() => {
+    const setData = async () => {
+      const resp = await getKoreaPortfolio(2);
+      setMyStock(resp.myStock);
+      setAssets(resp.assets);
+      setChart(resp.mystock_percent);
+    };
+
+    setData();
+  }, []);*/
+
   useEffect(() => {
     const setData = async () => {
       const resp = {
@@ -42,7 +54,6 @@ export default function KoreaStock() {
   }, []);
 
   function handleHover(data) {
-    console.log(data.stock_name);
     setHoverdata(data.stock_name);
   }
 

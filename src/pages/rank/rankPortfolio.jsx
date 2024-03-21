@@ -17,6 +17,7 @@ export default function PortfolioList() {
       <div className="ranking-header-container">
         <div className="ranking-header text-white">포트폴리오</div>
       </div>
+      {/* TODO ranking/:userId로 navigate 되었으니까, userId로 DB Fetch 한번 해줘야될듯*/}
       <div className="pp-position">
         {selectedTab === "" && (
           <>

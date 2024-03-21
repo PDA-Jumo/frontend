@@ -1,3 +1,5 @@
+// TODO? : 색상 추가할까 말까
+
 export const popularColors = ['#FFEBEE', 
 '#FFCDD2', '#EF9A9A', '#E57373', '#EF5350', '#F44336', '#E53935', '#FCE4EC', 
 '#F8BBD0', '#F48FB1', '#F06292', '#EC407A', '#E91E63', '#D81B60', '#C2185B', 

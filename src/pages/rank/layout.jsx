@@ -1,6 +1,6 @@
 //TODO 페이지 넘어올때 API를 연동해서 랭킹값을 받아오도록 해야함
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
 
@@ -16,10 +16,11 @@ export default function RankLayout() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const scrollableContentRef = useRef(null);
 
   useEffect(() => {
     loadMoreUsers();
-    const scrollableContent = document.querySelector(".scrollable-content");
+    const scrollableContent = scrollableContentRef.current;
     if (scrollableContent) {
       scrollableContent.addEventListener("scroll", handleScroll);
     }
@@ -39,14 +40,16 @@ export default function RankLayout() {
   // TODO 여기가 사용자 정보 받아오는 API가 들어갈 예정 (아마 Axios를 활용하게 되지 않을까?)
   const loadMoreUsers = () => {
     setIsLoading(true);
+    // 여기부터 API call을 넣으면 됨
     setTimeout(() => {
       const newUsers = Array.from(
         { length: 20 },
         (_, index) => `사용자 ${index + users.length + 1}`
       );
       setUsers((prev) => [...prev, ...newUsers]);
+      // 여기까지가 API call이 되어야 함 (conts newUsers = 방식, 혹은 아예 다른 방식으로 받을수도 있을지도?)
       setIsLoading(false);
-    }, 1000);
+    }, 100);
   };
 
   const RankingHeader = () => {
@@ -79,31 +82,31 @@ export default function RankLayout() {
 
     const rankImage = getRankImage(index);
 
+    //TODO: User의 정보를 각각 띄워줄수 있도록 구현해야 할 듯?
     return (
       <div className="ranking-button">
         <div className="ranking-icon-container">
           <img src={rankImage} alt="Rank Icon" className="ranking-icon" />
-          <div className="rank-title">주대주주</div>{" "}
-          {/* TODO 유저 티어도 동적으로 받아오기 */}
-          {rank}
+          <div className="rank-title">주대주주</div>
+          {/* rank: 사용자의 이름... */} {rank}
         </div>
         <button
           className="portfolio-button"
-          onClick={() => navigate("/ranking/portfolio")}
+          onClick={() => navigate("/ranking/portfolio")} //TODO /ranking/:userId. 라우터도 나중에 수정해주기
         >
           포트폴리오 보기
         </button>
       </div>
     );
   };
-
+  // TODO: 내 정보를 받아서 띄워줄 수 있도록 해야함
   const MyRankingButton = () => {
     return (
       <div className="ranking-button my-ranking">
         <div className="ranking-icon-container">
           <img src={rankHeart} alt="Rank Icon" className="ranking-icon" />
           <div className="rank-title">주대주주</div>
-          나의 랭킹 {/* TODO 내 정보도 전부 동적으로 받아오기 */}
+          나의 랭킹
         </div>
       </div>
     );
@@ -116,9 +119,9 @@ export default function RankLayout() {
         <RankingHeader />
       </div>
       <div className="content-position">
-        <div className="non-scrollable-header">17:00 기준</div>{" "}
-        {/* TODO 근데 실시간으로 받아줄거면 ㅇㅇ시 기준이 필요없지 않나? 회의필요 */}
-        <div className="scrollable-content">
+        <div className="non-scrollable-header">17:00 기준</div>
+        <div className="scrollable-content" ref={scrollableContentRef}>
+          {/* TODO 유저의 랭킹을 어떤식으로, 어떤 간격으로 DB단에서 update 해줄 것인가? */}
           <RankingList users={users} />
           <MyRankingButton />
           {isLoading && <p>로딩 중...</p>}

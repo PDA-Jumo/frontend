@@ -38,6 +38,8 @@ function HomePage() {
     }
   };
 
+  //TODO 화면 좌측상단에 'Tip' + 팁들의 JSON도 작성해줘야됨
+
   return (
     <div className="portfolio-page">
       <div className="user-info">
