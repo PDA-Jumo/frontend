@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deletesearch } from "../../store/reducers/recentsearch";
+import { deletesearch, addsearch } from "../../store/reducers/recentsearch";
 import { SearchKeyword } from "../../lib/apis/stock";
-
+import { v4 as uuidv4 } from "uuid";
 //assets
 import Trash from "../../assets/icons/Trash.png";
 
@@ -13,7 +13,7 @@ import "../../styles/globalStyle.css";
 export default function SearchDrop({ keyword }) {
   const dispatch = useDispatch();
   const search = useSelector((state) => state.search.searchList) || [];
-  const [searchlist, setSearchList] = useState([{}]); //최근검색 리스트
+  const [searchlist, setSearchList] = useState([{}]); //연관검색어
   const [prevKeyword, setPrevKeyword] = useState(""); // 키워드 변경시에만 요청 보내도록 이전 검색어 저장
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ export default function SearchDrop({ keyword }) {
     }
   }, [keyword]);
 
-  console.log(searchlist);
+  console.log(search)
 
   return (
     <div
@@ -60,6 +60,7 @@ export default function SearchDrop({ keyword }) {
                     onClick={() => {
                       const action = deletesearch(item.id);
                       dispatch(action);
+                      console.log(action);
                     }}
                   ></img>
                 </div>
@@ -72,7 +73,17 @@ export default function SearchDrop({ keyword }) {
             <div
               key={index}
               onClick={() => {
-                navigate(`detail/${item.stock_code}`);
+                navigate(
+                  `detail/${item.stock_code}/${encodeURIComponent(
+                    item.stock_name
+                  )}` // 페이지 이동
+                );
+                const action = addsearch({
+                  id: uuidv4(),
+                  content: item.stock_name,
+                });
+                dispatch(action);
+                console.log(action); //검색 기록 저장
               }}
             >
               {item.stock_name}
