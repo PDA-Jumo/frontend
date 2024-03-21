@@ -90,6 +90,46 @@ const quizData = [
   },
   {
     "type": "multipleChoice",
+    "question": "주식은 무엇을 기반으로 발행되나요?",
+    "options": ["금", "은", "기업", "부동산"],
+    "answer": "기업",
+    "explanation": "증권시장에서 거래되는 주식은 기업이 발행한 것이에요.",
+    "level": "0"
+  },
+  {
+    "type": "multipleChoice",
+    "question": "수익률'이란 무엇을 의미할까요?",
+    "options": ["기업의 이익", "가격의 변동 정도", "수익의 비율", "주식 발행량의 증가율"],
+    "answer": "수익의 비율",
+    "explanation": "'수익률'은 투자한 자산이 얼마나 수익을 올렸는지를 나타내는 지표에요",
+    "level": "0"
+  },
+  {
+    "type": "OX",
+    "question": "주식 투자로 인해 발생한 손실은 세금 공제가 가능한가요?",
+    "options": ["O", "X"],
+    "answer": "X",
+    "explanation": "주식 투자로 인한 손실은 본인의 책임이에요.",
+    "level": "0"
+  },
+  {
+    "type": "multipleChoice",
+    "question": "한국 증권거래소(KRX)가 위치한 도시는 어디일까요?",
+    "options": ["서울", "대구", "부산", "인천"],
+    "answer": "서울",
+    "explanation": "한국 증권거래소는 서울에 위치해 있어요.",
+    "level": "0"
+  },
+  {
+    "type": "OX",
+    "question": "투자자의 결정에 따라 주식의 가격이 영향을 받지 않나요?",
+    "options": ["O", "X"],
+    "answer": "X",
+    "explanation": "대규모 투자자의 거래 결정은 주식 시장에 영향을 줄 수 있어요.",
+    "level": "2"
+  },
+  {
+    "type": "multipleChoice",
     "question": "한국 증권시장의 투자 주체가 아닌 것은?",
     "options": ["개인", "기관", "외국인", "외계인"],
     "answer": "외계인",
@@ -136,6 +176,15 @@ const quizData = [
     "explanation": "유동성: 자산을 가치의 손실 없이 얼마나 쉽고 빨리 현금으로 바꿀 수 있는가를 의미해요.",
     "level": "2", 
   },
+  {
+    "type": "multipleChoice",
+    "question": "'거래량'이란 무엇을 의미할까요?",
+    "options": ["매수/매도 건수", "주식 가격", "시장 지수", "주식 발행량"],
+    "answer": "매수/매도 건수",
+    "explanation": "'거래량'은 주식이 거래된 수를 의미해요.",
+    "level": "2"
+    },
+
   {
     "type": "multipleChoice",
     "question": "기업이 벌어들인 돈의 일부 혹은 전부를 주주들에게 돌려주는 것은?",
@@ -191,6 +240,22 @@ const quizData = [
     "answer": "X",
     "explanation": "거래량이 반드시 주가 상승의 원인이 되지는 않아요.",
     "level": "2", 
+  },
+  {
+    "type": "OX",
+    "question": "주식 거래시 수수료가 발생하나요?",
+    "options": ["O", "X"],
+    "answer": "O",
+    "explanation": "대부분의 증권사에서는 거래 시 수수료를 부과해요.",
+    "level": "2"
+  },
+  {
+    "type": "OX",
+    "question": "모든 주식은 배당금을 지급하나요?",
+    "options": ["O", "X"],
+    "answer": "X",
+    "explanation": "배당금 지급은 회사의 이익 상황과 정책에 따라 달라져요.",
+    "level": "2"
   },
   {
     "type": "multipleChoice",
