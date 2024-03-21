@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import socketEvent from "../../lib/socket/CommunitySocketEvents";
 import { format } from "date-fns";
 import { useSelector, useDispatch } from "react-redux";
+import backpage from "../../assets/icons/back.png";
 
 import "../../styles/community.css";
 import "../../styles/globalStyle.css";
@@ -89,12 +90,23 @@ export default function CommunityDetail({ community, onBack }) {
       >
         <div className="messageInfo">
           {!isMyMessage && <span className="nickname">{chat.nickname}</span>}
-          <span className="createdAt">
-            {new Date(chat.created_at).toLocaleTimeString()}
-            {user.nickname} 님
-          </span>
+          {user.nickname} 님
         </div>
-        <div className="messageContent">{chat.content}</div>
+        {isMyMessage ? (
+          <div style={{ display: "flex" }}>
+            <span className="createdAt" style={{marginRight:"5px"}}>
+              {new Date(chat.created_at).toLocaleTimeString()}
+            </span>
+            <div className="messageContent">{chat.content}</div>
+          </div>
+        ) : (
+          <div style={{ display: "flex" }}>
+            <div className="messageContent">{chat.content}</div>
+            <span className="createdAt" style={{marginRight:"5px"}}>
+              {new Date(chat.created_at).toLocaleTimeString()}
+            </span>
+          </div>
+        )}
       </div>
     );
   };
@@ -102,26 +114,36 @@ export default function CommunityDetail({ community, onBack }) {
   return (
     <>
       <div className="communityBox">
-        <button onClick={onBack}>뒤로 가기</button>
-        <div>
-          <span className="communityName">{stock_name}</span>
-          <span>{stock_code}</span>
-        </div>
-        <div className="chatBox">
-          {[...messages].reverse().map(renderChatMessage)}
-        </div>
-        {/* 채팅 입력창 */}
-        <div className="chatInputBox">
-          <textarea
-            value={message}
-            onChange={handleInputChange}
-            onKeyPress={handleKeyPress}
-            placeholder="메시지를 입력하세요..."
-            className="chatInput"
-          />
-          <button onClick={sendMessages} className="sendButton">
-            전송
-          </button>
+        <div style={{ margin: "5% 5%" }}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <span className="communityName" style={{ fontSize: "32px" }}>
+                {stock_name}
+              </span>
+              <span>{stock_code}</span>
+            </div>
+            <img
+              src={backpage}
+              onClick={onBack}
+              style={{ height: "40px" }}
+            ></img>
+          </div>
+          <div className="chatBox">
+            {[...messages].reverse().map(renderChatMessage)}
+          </div>
+          {/* 채팅 입력창 */}
+          <div className="chatInputBox">
+            <textarea
+              value={message}
+              onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
+              placeholder="메시지를 입력하세요..."
+              className="chatInput"
+            />
+            <button onClick={sendMessages} className="sendButton">
+              전송
+            </button>
+          </div>
         </div>
       </div>
     </>

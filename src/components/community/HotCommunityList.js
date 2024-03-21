@@ -25,18 +25,20 @@ export default function HotCommunityList({ onSelectCommunity }) {
   return (
     <>
       <div className="communityBox">
-        <div className="xLargeText communityName">지금 Hot한 종목!</div>
-        <div className="communityList">
-          {communities.map((community, index) => (
-            <div
-              key={community.stock_code}
-              onClick={() => onSelectCommunity(community)}
-              className="communityButton"
-            >
-              <span className="communityName">{index + 1} </span>
-              {community.stock_name}
-            </div>
-          ))}
+      <div style={{margin:"10% 10%"}}>
+          <div className="xLargeText communityName">지금 Hot한 종목!</div>
+          <div className="communityList">
+            {communities.map((community, index) => (
+              <div
+                key={community.stock_code}
+                onClick={() => onSelectCommunity(community)}
+                className="communityButton"
+              >
+                <span className="communityName" style={{fontSize:"24px", marginRight:"2%"}}>{index + 1} </span>
+                {community.stock_name}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
