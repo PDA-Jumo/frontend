@@ -1,6 +1,5 @@
 //TODO 페이지 넘어올때 API를 연동해서 랭킹값을 받아오도록 해야함
 
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
@@ -17,13 +16,6 @@ export default function RankLayout() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    document.body.classList.add("no-scroll");
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, []);
 
   useEffect(() => {
     loadMoreUsers();
@@ -97,9 +89,7 @@ export default function RankLayout() {
         </div>
         <button
           className="portfolio-button"
-
           onClick={() => navigate("/ranking/portfolio")}
-
         >
           포트폴리오 보기
         </button>
@@ -127,7 +117,6 @@ export default function RankLayout() {
       </div>
       <div className="content-position">
         <div className="non-scrollable-header">17:00 기준</div>{" "}
-
         {/* TODO 근데 실시간으로 받아줄거면 ㅇㅇ시 기준이 필요없지 않나? 회의필요 */}
         <div className="scrollable-content">
           <RankingList users={users} />
