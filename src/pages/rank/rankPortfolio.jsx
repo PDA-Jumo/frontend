@@ -12,6 +12,10 @@ export default function PortfolioList() {
   const [showKoreanStock, setShowKoreanStock] = useState(false);
 
   useEffect(() => {
+    // document 객체 직접 접근 지양 (reacT는 virtual-dom )
+    // WRAPPER element를 만들고,
+    // 전역적(모든 컴포넌트에서) wrapper element에 접근 및 조작이 필요.
+    // (전역적= > context), wrapper element에 접근(ref)
     document.body.classList.add("no-scroll");
     return () => {
       document.body.classList.remove("no-scroll");

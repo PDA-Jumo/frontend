@@ -3,7 +3,8 @@
   right: 100px;
   height: 77%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around; /* 내부 요소 사이의 간격을 균등하게 조정 */
+  padding: 0 20px; /* 좌우 패딩을 추가하여 전체적인 간격 조정 */
 }
 
 .leftSection,
@@ -17,6 +18,10 @@
   padding: 2% 5%;
 }
 
+.rightSection {
+  margin-right: 50px;
+}
+
 .title {
   font-size: 18px;
   color: #f9c93e;
@@ -24,19 +29,23 @@
 
 .stockInfoSection,
 .profitInfo {
+  margin-top: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-right: 100px;
 }
 
 .assetsDisplay,
 .stockDisplay {
   display: flex;
+  justify-content: flex-start;
 }
 
 .icon {
   height: 40px;
   width: 40px;
+  margin-top: 6px;
 }
 
 .profitInfo {
@@ -69,6 +78,7 @@
 
 .stockList {
   overflow: auto;
+  font-size: 24px;
 }
 
 .stockList::-webkit-scrollbar {

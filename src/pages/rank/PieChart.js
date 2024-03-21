@@ -7,14 +7,14 @@ export function PieChartComponent({ codeRatioArray, onHover }) {
   const COLORS = ["#D2E0FB", "#F9F3CC", "#D7E5CA", "#8EACCD"]; // 직접 설정한 색상
 
   return (
-    <PieCharts.Container>
+    <PieCharts.Container style={{ marginLeft: '50px' , marginTop: '20px'}}>
       <PieChart width={200} height={200}>
         <Pie
           data={codeRatioArray}
           cx="50%"
           cy="50%"
-          innerRadius={40}
-          outerRadius={70}
+          innerRadius={80}
+          outerRadius={100}
           //dataKey="stock_assets"
           dataKey="percent" // API 달면 윗줄 코드로 바꿔줘야함
           isAnimationActive={false}

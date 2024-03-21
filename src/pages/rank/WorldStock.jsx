@@ -5,10 +5,10 @@ import Chart from "../../assets/stock/Increase.png";
 import Folder from "../../assets/stock/folder.png";
 import Arrow from "../../assets/stock/arrow.png";
 // API 호출 대신 더미 데이터를 사용합니다.
-// import { getKoreaPortfolio } from "../../lib/apis/portfolio";
+// import { getWorldPortfolio } from "../../lib/apis/portfolio";
 import { PieChartComponent } from "./PieChart.js";
 
-export default function KoreaStock() {
+export default function WorldStock() {
   const [myStock, setMyStock] = useState([]);
   const [assets, setAssets] = useState("0");
   const [chart, setChart] = useState({});
@@ -50,6 +50,8 @@ export default function KoreaStock() {
 
   return (
     <div className="koreaStockContainer">
+      {" "}
+      {/* 어짜피 이름 변할 이유 없어서 재활용함 ㅎㅎ... */}
       <div className="leftSection">
         <div style={{ textAlign: "left", marginLeft: "60px" }}>
           <div className="title">주대주주</div>
@@ -83,12 +85,11 @@ export default function KoreaStock() {
           {/* 이 부분 피그마에 없어서 일단 주석처리함 */}
         </div>
       </div>
-
       <div className="rightSection">
         <div>
           <div className="largeText text-white stockDisplay">
             <img src={Chart} className="icon" />
-            국내 보유종목
+            해외 보유종목
           </div>
         </div>
 
