@@ -22,7 +22,7 @@ export default function MarketIssueModal(props) {
     >
       <div
         style={{
-          width: "50%",
+          width: "70%",
           height: "60%",
           borderRadius: "16px",
           backgroundColor: "white",
