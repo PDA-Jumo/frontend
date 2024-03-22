@@ -14,6 +14,7 @@ export default function MyKoreaStock() {
   const [hoverdata, setHoverdata] = useState("");
 
   useEffect(() => {
+    
     const setData = async () => {
       const resp = await getKoreaPortfolio(2);
       setMyStock(resp.myStock);

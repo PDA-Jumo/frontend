@@ -84,6 +84,7 @@ button:hover,
 .clickme img {
   width: 200px;
   height: 200px;
+<<<<<<< HEAD
   position: relative; /* position을 relative로 변경 */
   top: -100px; /* 원래 위치에서 위로 200px */
   margin-left: 20px;
@@ -96,4 +97,11 @@ button:hover,
 
 .nickname {
   font-size: 36px;
+=======
+  transition: transform 0.25s ease;
+}
+
+.clickme img:active {
+  transform: scale(1.2);
+>>>>>>> 5fb5e78872be05522036459b5569309fab06a4d7
 }

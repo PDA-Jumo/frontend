@@ -23,16 +23,21 @@ export default function CommunityList({ onSelectCommunity }) {
       }
     };
 
-    const setData = async (keyword) => {
-      //console.log(keyword);
-      // const resp = await getSearchRoom(keyword);
-      // setSearchList(resp);
-      console.log("얍");
-    };
+    if (searchkeyword !== "") {
+      const setData = async (keyword) => {
+        //console.log(keyword);
+        const resp = await getSearchRoom(keyword);
+        setSearchList(resp);
+        console.log("얍");
+      };
+
+      setData(searchkeyword);
+    }
 
     fetchCommunities();
-    setData(searchkeyword);
-  }, []);
+  }, [searchkeyword]);
+
+  useEffect(() => {});
 
   console.log(searchkeyword);
   console.log(searchlist);
@@ -52,15 +57,25 @@ export default function CommunityList({ onSelectCommunity }) {
             <img src={Search} style={{ marginRight: "15px" }}></img>
           </div>
           <div className="communityList">
-            {communities.map((community) => (
-              <div
-                key={community.stock_code}
-                onClick={() => onSelectCommunity(community)}
-                className="communityButton"
-              >
-                # {community.stock_name}
-              </div>
-            ))}
+            {searchkeyword === ""
+              ? communities.map((community) => (
+                  <div
+                    key={community.stock_code}
+                    onClick={() => onSelectCommunity(community)}
+                    className="communityButton"
+                  >
+                    # {community.stock_name}
+                  </div>
+                ))
+              : searchlist.map((item) => (
+                  <div
+                    key={item.stock_code}
+                    className="communityButton"
+                    onClick={() => onSelectCommunity(item)}
+                  >
+                    # {item.stock_name}
+                  </div>
+                ))}
           </div>
         </div>
       </div>
