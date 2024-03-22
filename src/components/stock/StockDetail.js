@@ -11,7 +11,7 @@ import character from "../../assets/character/shinhan_computer.png";
 import TradeModal from "./TradeModal";
 
 import { getStockDetail, getStockNews } from "../../lib/apis/stock";
-import { createCommunity } from "../../lib/apis/community";
+import { createCommunity, checkCommunity } from "../../lib/apis/community";
 
 import socketEvent from "../../lib/socket/StockSocketEvents";
 
@@ -41,6 +41,8 @@ export default function StockDetail() {
     // 종목 상세 페이지 입장
     socketEvent.joinRoom(params.stockId, user.user_id);
 
+    setPrices([]);
+
     // 현재가 데이터 로드
     socketEvent.currentStockPrice((currentprice) => {
       console.log(currentprice);
@@ -50,12 +52,15 @@ export default function StockDetail() {
     return () => {
       socketEvent.leaveRoom(params.stockId, user.user_id);
     };
-  }, [params.stockId, user.user_id]);
+  }, [params.stockId, user.user_id]); // 종목 ID나 사용자 ID가 변경되면 이 useEffect가 다시 실행됩니다.
 
   const handleCommunityClick = async () => {
-    navigate(`/community/`);
     try {
-      const data = await createCommunity(params.stockId);
+      const data = await checkCommunity(params.stockId);
+      if (data.length === 0) {
+        await createCommunity(params.stockId, params.stockName);
+      }
+      navigate(`/community/`);
     } catch (error) {
       console.error("커뮤니티 생성 중 오류 발생", error);
     }

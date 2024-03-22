@@ -14,9 +14,9 @@ export default function CommunityDetail({ community, onBack }) {
 
   const user = useSelector((state) => state.user.user) || {};
 
-  console.log("디테일", user);
-  console.log(user.user_id);
-  console.log(user.nickname);
+  // console.log("디테일", user);
+  // console.log(user.user_id);
+  // console.log(user.nickname);
 
   // const user = {
   //   user_id: 8,
@@ -94,7 +94,7 @@ export default function CommunityDetail({ community, onBack }) {
         </div>
         {isMyMessage ? (
           <div style={{ display: "flex" }}>
-            <span className="createdAt" style={{marginRight:"5px"}}>
+            <span className="createdAt" style={{ marginRight: "5px" }}>
               {new Date(chat.created_at).toLocaleTimeString()}
             </span>
             <div className="messageContent">{chat.content}</div>
@@ -102,7 +102,7 @@ export default function CommunityDetail({ community, onBack }) {
         ) : (
           <div style={{ display: "flex" }}>
             <div className="messageContent">{chat.content}</div>
-            <span className="createdAt" style={{marginRight:"5px"}}>
+            <span className="createdAt" style={{ marginRight: "5px" }}>
               {new Date(chat.created_at).toLocaleTimeString()}
             </span>
           </div>
