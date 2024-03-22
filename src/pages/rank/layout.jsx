@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
-
+import { useSelector, useDispatch } from "react-redux";
 import rankStar from "../../assets/rank/rankStar.png";
 import rankCrown from "../../assets/rank/rankCrown.png";
 import rankBluedia from "../../assets/rank/rankBluedia.png";
@@ -17,7 +17,8 @@ export default function RankLayout() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const scrollableContentRef = useRef(null);
-
+  const user = useSelector((state) => state.user.user) || {};
+  console.log(user);
   useEffect(() => {
     loadMoreUsers();
     const scrollableContent = scrollableContentRef.current;
@@ -39,6 +40,12 @@ export default function RankLayout() {
 
   // TODO 여기가 사용자 정보 받아오는 API가 들어갈 예정 (아마 Axios를 활용하게 되지 않을까?)
   const loadMoreUsers = () => {
+    // 현재 유저 수가 20명 이상일 경우 더 이상 유저를 로드하지 않음
+    if (users.length >= 20) {
+      setIsLoading(false); // 로딩 상태 해제
+      return; // 함수 종료
+    }
+
     setIsLoading(true);
     // 여기부터 API call을 넣으면 됨
     setTimeout(() => {
@@ -46,8 +53,9 @@ export default function RankLayout() {
         { length: 20 },
         (_, index) => `사용자 ${index + users.length + 1}`
       );
-      setUsers((prev) => [...prev, ...newUsers]);
-      // 여기까지가 API call이 되어야 함 (conts newUsers = 방식, 혹은 아예 다른 방식으로 받을수도 있을지도?)
+      // 유저 총수가 20명을 넘지 않도록 조절
+      setUsers((prev) => [...prev, ...newUsers].slice(0, 20));
+      // 여기까지가 API call이 되어야 함 (const newUsers = 방식, 혹은 아예 다른 방식으로 받을수도 있을지도?)
       setIsLoading(false);
     }, 100);
   };
@@ -99,18 +107,6 @@ export default function RankLayout() {
       </div>
     );
   };
-  // TODO: 내 정보를 받아서 띄워줄 수 있도록 해야함
-  const MyRankingButton = () => {
-    return (
-      <div className="ranking-button my-ranking">
-        <div className="ranking-icon-container">
-          <img src={rankHeart} alt="Rank Icon" className="ranking-icon" />
-          <div className="rank-title">주대주주</div>
-          나의 랭킹
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="background-style">
@@ -123,7 +119,6 @@ export default function RankLayout() {
         <div className="scrollable-content" ref={scrollableContentRef}>
           {/* TODO 유저의 랭킹을 어떤식으로, 어떤 간격으로 DB단에서 update 해줄 것인가? */}
           <RankingList users={users} />
-          <MyRankingButton />
           {isLoading && <p>로딩 중...</p>}
         </div>
       </div>
