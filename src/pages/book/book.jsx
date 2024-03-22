@@ -11,6 +11,19 @@ export default function BookLayout() {
     navigate("/home");
   };
 
+  // 실제 데이터로 변경
+  const levels = [
+    "Lv.0 주탄생",
+    "Lv.1 주얼딩",
+    "Lv.2 주린이",
+    "Lv.3 주초딩",
+    "Lv.4 주중딩",
+    "Lv.5 주고딩",
+    "Lv.6 주대딩",
+    "Lv.7 주졸부",
+    "Lv.8 주대주주",
+  ];
+
   return (
     <div className="BookLayout-container">
       <img
@@ -18,7 +31,14 @@ export default function BookLayout() {
         className="BookLayout-backgroundImage"
         alt="Book Background"
       />
-      <div className="BookLayout-rectangle"></div>
+      <div className="BookLayout-rectangle">
+        <div className="BookLayout-text">레벨을 선택해보세요!</div>
+        <ul className="BookLayout-list">
+          {levels.map((level, index) => (
+            <li key={index}>{level}</li>
+          ))}
+        </ul>
+      </div>
       <button className="quiz-button back-button" onClick={handleBack}>
         뒤로가기
       </button>
