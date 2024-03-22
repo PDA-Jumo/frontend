@@ -113,7 +113,7 @@ function HomePage() {
         <img
           src={encyclopediaIcon}
           alt="주식도감"
-          onClick={() => navigateTo("/encyclopedia")}
+          onClick={() => navigateTo("/book")}
         />
       </div>
       <div className="clickme">

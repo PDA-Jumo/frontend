@@ -1,25 +1,27 @@
 import React from "react";
 import Book from "../../assets/backgrounds/Book.png";
+import { useNavigate } from "react-router-dom";
+import "./book.css"; // CSS 파일 임포트
+
 export default function BookLayout() {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    console.log("뒤로가기 버튼이 클릭되었습니다.");
+    navigate("/home");
+  };
+
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <img src={Book} style={{ width: "100%", height: "100%" }} />
-      <div
-        style={{
-          position: "absolute",
-          top: 100,
-          left: 100,
-        }}
-      >
-        여기 작성
-      </div>
+    <div className="BookLayout-container">
+      <img
+        src={Book}
+        className="BookLayout-backgroundImage"
+        alt="Book Background"
+      />
+      <div className="BookLayout-rectangle"></div>
+      <button className="quiz-button back-button" onClick={handleBack}>
+        뒤로가기
+      </button>
     </div>
   );
 }
