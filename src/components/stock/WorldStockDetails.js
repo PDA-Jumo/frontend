@@ -41,7 +41,7 @@ export default function StockDetails() {
   const [clickedIssue, setClickedIssue] = useState({});
   const [selectedTab, setSelectedTab] = useState(0);
   const [selectedMySmallTab, setSelectedMySmallTab] = useState(1);
-  const [selectedRankingTab, setSelectedRankingTab] = useState(2);
+  const [selectedRankingTab, setSelectedRankingTab] = useState("2");
   const [liveRanking, setLiveRanking] = useState([]);
   //주가 그래프 관련 데이터
   useEffect(() => {
@@ -51,17 +51,17 @@ export default function StockDetails() {
       const issueData = await getMarketIssue();
       const liveRankingData = await getLiveRanking(selectedRankingTab);
       setIssue(issueData.data);
-      setThemeRank(themeRankData.data);
+      setThemeRank(themeRankData.data.data);
       setKospiSise(liveSise.data.kospi);
       setKosdaqSise(liveSise.data.kosdaq);
-      setLiveRanking(liveRankingData);
+      setLiveRanking(liveRankingData.data);
     };
     setData();
   }, []);
   useEffect(() => {
     const setNewData = async () => {
       const liveRankingData = await getLiveRanking(selectedRankingTab);
-      setLiveRanking(liveRankingData);
+      setLiveRanking(liveRankingData.data);
     };
     setNewData();
   }, [selectedRankingTab]);
@@ -74,7 +74,6 @@ export default function StockDetails() {
   }, [isRefresh]);
   const handleClickLiveRankingTab = (type) => {
     setSelectedRankingTab(type);
-    setLiveRanking([{}]);
   };
   return (
     <div
@@ -252,26 +251,26 @@ export default function StockDetails() {
             <div style={{ display: "flex" }}>
               <div
                 className={
-                  selectedRankingTab === 2 ? "smallTabSelected" : "smallTab"
+                  selectedRankingTab === "2" ? "smallTabSelected" : "smallTab"
                 }
-                onClick={() => handleClickLiveRankingTab(2)}
+                onClick={() => handleClickLiveRankingTab("2")}
               >
                 상승률
               </div>
               <div
                 className={
-                  selectedRankingTab === 1 ? "smallTabSelected" : "smallTab"
+                  selectedRankingTab === "1" ? "smallTabSelected" : "smallTab"
                 }
                 style={{
                   marginInline: "16px",
                 }}
-                onClick={() => handleClickLiveRankingTab(1)}
+                onClick={() => handleClickLiveRankingTab("1")}
               >
                 인기
               </div>
             </div>
             <div>
-              {liveRanking === [] ? (
+              {liveRanking !== [] ? (
                 liveRanking.map((item, index) => (
                   <StockList type="rank" item={item} key={item.stock_code} />
                 ))
@@ -377,10 +376,10 @@ export default function StockDetails() {
                   width: "120px",
                 }}
               >
-                {themeRank && themeRank[0] && themeRank[0].name}
+                {themeRank && themeRank[0] && themeRank[0].theme.name}
               </span>
               <span>
-                {themeRank && themeRank[0] && themeRank[0].volatility}%
+                {/* {themeRank && themeRank[0] && themeRank[0].volatility}% */}
               </span>
             </div>
           </div>
@@ -401,10 +400,10 @@ export default function StockDetails() {
                   width: "120px",
                 }}
               >
-                {themeRank && themeRank[1] && themeRank[1].name}
+                {themeRank && themeRank[1] && themeRank[1].theme.name}
               </span>
               <span>
-                {themeRank && themeRank[1] && themeRank[1].volatility}%
+                {/* {themeRank && themeRank[1] && themeRank[1].volatility}% */}
               </span>
             </div>
           </div>
@@ -425,10 +424,10 @@ export default function StockDetails() {
                   width: "120px",
                 }}
               >
-                {themeRank && themeRank[2] && themeRank[2].name}
+                {themeRank && themeRank[2] && themeRank[2].theme.name}
               </span>
               <span>
-                {themeRank && themeRank[2] && themeRank[2].volatility}%
+                {/* {themeRank && themeRank[2] && themeRank[2].volatility}% */}
               </span>
             </div>
           </div>
@@ -488,24 +487,38 @@ const StockList = (props) => {
         >
           <span>
             {props.type === "theme"
-              ? props.index + 1
+              ? props.item.stats.rank
               : props.type === "rank"
               ? props.item.rank
               : null}
           </span>
-          <img src={Document} className="iconSmall" />
+          <img
+            src={
+              props.type === "theme"
+                ? props.item.theme.image
+                : props.type === "rank"
+                ? `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${props.item.stock_code}.png`
+                : Document
+            }
+            onError={(e) => {
+              e.target.src =
+                "https://file.alphasquare.co.kr/media/images/stock_logo/ETF_230706.png";
+            }}
+            style={{ borderRadius: "16px" }}
+            className="iconSmall"
+          />
         </div>
 
         <span style={{ flex: 3 }}>
           {props && props.item && props.type === "theme"
-            ? props.item.name
+            ? props.item.theme.name
             : props.type === "rank"
             ? props.item.stbd_nm
             : null}
         </span>
         <span style={{ flex: 1, display: "flex", justifyContent: "center" }}>
           {props && props.type === "theme"
-            ? `${props.item.volatility}%`
+            ? `${props.item.theme.name}%`
             : props.type === "rank"
             ? `${props.item.stock_code}`
             : null}
