@@ -53,7 +53,6 @@ export default function BookLayout() {
             {selectedLevelData.map((item, index) => (
               <div key={index} className="BookLayout-gridItem">
                 <div>{item.title}</div>
-                <div>{item.body}</div>
               </div>
             ))}
           </div>
