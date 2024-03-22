@@ -54,7 +54,9 @@ function HomePage() {
               <div className="info-text">
                 <div className="user-info">
                   <div className="level-type">
-                    <span> Lv.{user?.level}</span>
+                    <span>
+                      Lv.{user?.level} {user?.level_name}
+                    </span>
                     <span> {user?.type}</span>
                   </div>
                   <div className="nickname">{user?.nickname}님</div>

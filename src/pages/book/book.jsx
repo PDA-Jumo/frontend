@@ -58,7 +58,7 @@ export default function BookLayout() {
           </div>
         )}
       </div>
-      <button className="quiz-button back-button" onClick={handleBack}>
+      <button className="room-back-button" onClick={handleBack}>
         뒤로가기
       </button>
     </div>
