@@ -64,7 +64,8 @@ export default function MarketIssueModal(props) {
           style={{
             height: "100%",
             width: "90%",
-            marginBlock: "16px",
+            marginBlock: "8px",
+            paddingBlock: "16px",
             boxSizing: "border-box",
             overflowY: "scroll",
             display: "flex",
