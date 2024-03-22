@@ -6,17 +6,20 @@ import Folder from "../../assets/stock/folder.png";
 import Arrow from "../../assets/stock/arrow.png";
 import { getKoreaPortfolio } from "../../lib/apis/portfolio";
 import { PieChartComponent } from "./PieChart";
+import { useSelector } from "react-redux";
 
 export default function MyKoreaStock() {
   const [myStock, setMyStock] = useState([]);
   const [assets, setAssets] = useState("0");
   const [chart, setChart] = useState({});
   const [hoverdata, setHoverdata] = useState("");
+  const user = useSelector((state) => state.user.user) || {};
+
+  console.log(user.user_id);
 
   useEffect(() => {
-    
     const setData = async () => {
-      const resp = await getKoreaPortfolio(2);
+      const resp = await getKoreaPortfolio(user.user_id);
       setMyStock(resp.myStock);
       setAssets(resp.assets);
       setChart(resp.mystock_percent);
