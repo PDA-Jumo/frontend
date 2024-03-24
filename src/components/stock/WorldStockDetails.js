@@ -379,7 +379,7 @@ export default function StockDetails() {
                 {themeRank && themeRank[0] && themeRank[0].theme.name}
               </span>
               <span>
-                {/* {themeRank && themeRank[0] && themeRank[0].volatility}% */}
+                +{themeRank && themeRank[0] && themeRank[0].stats.returns}%
               </span>
             </div>
           </div>
@@ -403,7 +403,7 @@ export default function StockDetails() {
                 {themeRank && themeRank[1] && themeRank[1].theme.name}
               </span>
               <span>
-                {/* {themeRank && themeRank[1] && themeRank[1].volatility}% */}
+                +{themeRank && themeRank[1] && themeRank[1].stats.returns}%
               </span>
             </div>
           </div>
@@ -427,7 +427,7 @@ export default function StockDetails() {
                 {themeRank && themeRank[2] && themeRank[2].theme.name}
               </span>
               <span>
-                {/* {themeRank && themeRank[2] && themeRank[2].volatility}% */}
+                +{themeRank && themeRank[2] && themeRank[2].stats.returns}%
               </span>
             </div>
           </div>
@@ -472,58 +472,50 @@ const StockList = (props) => {
     <div className="stockListView">
       <div
         style={{
+          flex: 1,
           display: "flex",
           alignItems: "center",
-          flex: 5,
+          justifyContent: "space-around",
         }}
       >
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
-          }}
-        >
-          <span>
-            {props.type === "theme"
-              ? props.item.stats.rank
+        <span>
+          {props.type === "theme"
+            ? props.item.stats.rank
+            : props.type === "rank"
+            ? props.item.rank
+            : null}
+        </span>
+        <img
+          src={
+            props.type === "theme"
+              ? props.item.theme.image
               : props.type === "rank"
-              ? props.item.rank
-              : null}
-          </span>
-          <img
-            src={
-              props.type === "theme"
-                ? props.item.theme.image
-                : props.type === "rank"
-                ? `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${props.item.stock_code}.png`
-                : Document
-            }
-            onError={(e) => {
-              e.target.src =
-                "https://file.alphasquare.co.kr/media/images/stock_logo/ETF_230706.png";
-            }}
-            style={{ borderRadius: "16px" }}
-            className="iconSmall"
-          />
-        </div>
-
-        <span style={{ flex: 3 }}>
-          {props && props.item && props.type === "theme"
-            ? props.item.theme.name
-            : props.type === "rank"
-            ? props.item.stbd_nm
-            : null}
-        </span>
-        <span style={{ flex: 1, display: "flex", justifyContent: "center" }}>
-          {props && props.type === "theme"
-            ? `${props.item.theme.name}%`
-            : props.type === "rank"
-            ? `${props.item.stock_code}`
-            : null}
-        </span>
+              ? `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${props.item.stock_code}.png`
+              : Document
+          }
+          onError={(e) => {
+            e.target.src =
+              "https://file.alphasquare.co.kr/media/images/stock_logo/ETF_230706.png";
+          }}
+          style={{ borderRadius: "16px", objectFit: "cover" }}
+          className="iconSmall"
+        />
       </div>
+
+      <span style={{ flex: 3 }}>
+        {props && props.item && props.type === "theme"
+          ? props.item.theme.name
+          : props.type === "rank"
+          ? props.item.stbd_nm
+          : null}
+      </span>
+      <span style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+        {props && props.type === "theme"
+          ? `+${props.item.stats.returns}%`
+          : props.type === "rank"
+          ? `${props.item.stock_code}`
+          : null}
+      </span>
     </div>
   );
 };
