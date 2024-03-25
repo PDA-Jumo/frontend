@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateFinancialsAction } from "../../store/reducers/user";
 import { upCash } from "../../lib/apis/home";
 import "./page.css";
+import levelData from "./levelData";
 
 // Swiper
 import "swiper/css";
@@ -34,17 +35,6 @@ function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLevelUp, setIsLevelUp] = useState(false);
-  const levelName = [
-    "초보 탈출",
-    "주얼딩",
-    "주린이",
-    "주초딩",
-    "주중딩",
-    "주고딩",
-    "주대딩",
-    "주졸부",
-    "주대주주",
-  ];
 
   const user = useSelector((state) => state.user.user) || {};
   const shuffleArray = (array) => {
@@ -123,7 +113,7 @@ function HomePage() {
                     <div className="level-type">
                       <span>
                         {" "}
-                        Lv.{user?.level} {levelName[user?.level]}
+                        Lv.{user?.level} {levelData[user?.level]}
                       </span>
                       <span> {user?.type}</span>
                     </div>
