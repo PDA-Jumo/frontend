@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import rankingIcon from "../../assets/main/star.png";
 import tradeIcon from "../../assets/main/cash.png";
 import quizIcon from "../../assets/main/pen.png";
@@ -14,17 +14,38 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateFinancialsAction } from "../../store/reducers/user";
 import { upCash } from "../../lib/apis/home";
 import "./page.css";
-import { useState } from "react";
-import { tipsdata } from "./tip";
-import { Swiper, SwiperSlide } from "swiper/react";
+
+// Swiper
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+// Modal
+import LevelUpModal from "../../components/home/LevelUpModal";
+
+// ToolTip
+import { Tooltip as ReactTooltip } from "react-tooltip";
+
+import { tipsdata } from "./tip";
 
 function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isLevelUp, setIsLevelUp] = useState(false);
+  const levelName = [
+    "초보 탈출",
+    "주얼딩",
+    "주린이",
+    "주초딩",
+    "주중딩",
+    "주고딩",
+    "주대딩",
+    "주졸부",
+    "주대주주",
+  ];
+
   const user = useSelector((state) => state.user.user) || {};
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -59,6 +80,7 @@ function HomePage() {
 
   return (
     <div className="portfolio-page">
+      {isLevelUp ? <LevelUpModal setIsLevelUp={setIsLevelUp} /> : null}
       <div className="user-info">
         <div className="info-overlay">
           <div className="info-container">
@@ -86,7 +108,10 @@ function HomePage() {
                 ))}
               </Swiper>
             </div>
-            <div className="basic-info white-rounded-box">
+            <div
+              className="basic-info white-rounded-box"
+              data-tooltip-id="my-tooltip-1"
+            >
               <div className="profile-and-info">
                 <img
                   src={user?.profile_img}
@@ -96,7 +121,10 @@ function HomePage() {
                 <div className="info-text">
                   <div className="user-info">
                     <div className="level-type">
-                      <span> Lv.{user?.level}</span>
+                      <span>
+                        {" "}
+                        Lv.{user?.level} {levelName[user?.level]}
+                      </span>
                       <span> {user?.type}</span>
                     </div>
                     <div className="nickname">{user?.nickname}님</div>
@@ -194,6 +222,11 @@ function HomePage() {
           onClick={() => upCashByWork(user.user_id, 1000)}
         />
       </div>
+      <ReactTooltip
+        id="my-tooltip-1"
+        place="left"
+        content="레벨업 하기 위해서는 10,000원을 더 모아야해요!"
+      />
     </div>
   );
 }
