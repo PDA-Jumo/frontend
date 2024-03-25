@@ -14,12 +14,7 @@ export default function SignInPage() {
   const [userPassword, setUserPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  useEffect(() => {
-    document.body.classList.add("no-scroll");
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, []);
+
   const onInputChange = useCallback((inputText, setFn) => {
     setFn(inputText);
   }, []);
@@ -99,21 +94,18 @@ export default function SignInPage() {
               />
             </div>
             <div className="button-group">
-              <button
-                className="btn btn-primary custom-login"
+              <div
+                className="button"
                 onClick={(e) => {
                   e.preventDefault();
                   onSubmitLogin(userEmail, userPassword);
                 }}
               >
                 로그인
-              </button>
-              <button
-                className="btn btn-secondary custom-login"
-                onClick={onHandleSignUpClick}
-              >
+              </div>
+              <div className="button" onClick={onHandleSignUpClick}>
                 회원가입
-              </button>
+              </div>
             </div>
           </div>
         </div>

@@ -76,6 +76,7 @@ export default function UserReducer(state = initialState, action) {
       let newLevel = state.user.level;
       if (updatedCash >= 30000) {
         newLevel = 3;
+        // redux-saga thunk promise rduxjs/toolkit 
       } else if (updatedCash >= 20000) {
         newLevel = 2;
       } else if (updatedCash >= 10000) {

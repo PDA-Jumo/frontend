@@ -18,12 +18,7 @@ export default function QuizLayout() {
   const [currentQuiz, setCurrentQuiz] = useState({});
   const [selectedOption, setSelectedOption] = useState("");
   const [isCorrect, setIsCorrect] = useState(null);
-  useEffect(() => {
-    document.body.classList.add("no-scroll");
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, []);
+
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));

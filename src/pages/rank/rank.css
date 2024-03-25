@@ -9,7 +9,6 @@
   overflow: hidden;
 }
 
-
 .content-position {
   width: 80vw;
   height: 75vh;
@@ -24,7 +23,6 @@
   overflow: hidden;
 
   padding-bottom: 36px;
-
 }
 
 .non-scrollable-header {
@@ -45,6 +43,7 @@
 .scrollable-content::-webkit-scrollbar {
   display: none;
 }
+
 .ranking-header {
   text-align: center;
   margin-bottom: 24px;
@@ -121,7 +120,6 @@
   height: 72px;
   margin-right: 36px;
 }
-
 
 .back-button1 {
   position: fixed;

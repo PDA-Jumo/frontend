@@ -28,6 +28,8 @@
 }
 
 .info-overlay {
+  padding-inline: 16px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-end; /* 오른쪽 정렬 */
@@ -55,20 +57,23 @@
   flex-direction: row; /* 가로 방향으로 정렬 */
   font-size: 24px;
   width: 250px;
-  margin-right: 40px;
+  /* margin-right: 40px; */
 }
 
 .navigation-buttons.vertical {
+  padding-inline: 16px;
+  box-sizing: border-box;
+  margin-right: 16px;
   display: flex;
   flex-direction: column;
   align-items: flex-end; /* 버튼들을 오른쪽 정렬 */
 }
 
 .navigation-buttons.vertical img {
-  margin-top: 7px;
-  width: 60px; /* 이미지 너비를 40px로 설정 */
-  height: 60px; /* 이미지 높이를 40px로 설정 */
-  margin-right: 10px;
+  /* margin-top: 7px; */
+  width: 60px;
+  height: 60px;
+  /* margin-right: 10px; */
   cursor: pointer;
 }
 
@@ -84,9 +89,9 @@ button:hover,
 .clickme img {
   width: 200px;
   height: 200px;
-  position: relative; /* position을 relative로 변경 */
-  top: -100px; /* 원래 위치에서 위로 200px */
-  margin-left: 20px;
+  position: absolute; /* position을 relative로 변경 */
+  bottom: 100px;
+  left: 80px;
 }
 
 .level-type {
@@ -96,4 +101,12 @@ button:hover,
 
 .nickname {
   font-size: 36px;
+}
+
+.columnCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-block: 2px;
 }
