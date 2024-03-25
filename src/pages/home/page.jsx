@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import rankingIcon from "../../assets/main/star.png";
 import tradeIcon from "../../assets/main/cash.png";
 import quizIcon from "../../assets/main/pen.png";
@@ -14,21 +14,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateFinancialsAction } from "../../store/reducers/user";
 import { upCash } from "../../lib/apis/home";
 import "./page.css";
-import { useState } from "react";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper styles
+// Swiper
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-// import required modules
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+// Modal
+import LevelUpModal from "../../components/home/LevelUpModal";
 
 function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [tips, setTips] = useState(["dfsdsf", "sdfsdfss", "32r3r2"]);
+  const [isLevelUp, setIsLevelUp] = useState(false);
 
   const user = useSelector((state) => state.user.user) || {};
   console.log(user);
@@ -52,6 +53,7 @@ function HomePage() {
 
   return (
     <div className="portfolio-page">
+      {isLevelUp ? <LevelUpModal setIsLevelUp={setIsLevelUp} /> : null}
       <div className="user-info">
         <div className="info-overlay">
           <div
