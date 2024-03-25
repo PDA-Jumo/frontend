@@ -1,0 +1,106 @@
+.koreaStockContainer {
+  top: 190px;
+  right: 100px;
+  height: 77%;
+  display: flex;
+  justify-content: space-around; /* 내부 요소 사이의 간격을 균등하게 조정 */
+  padding: 0 20px; /* 좌우 패딩을 추가하여 전체적인 간격 조정 */
+}
+
+.leftSection,
+.rightSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.leftSection {
+  width: 50%;
+  padding: 2% 5%;
+}
+
+.rightSection {
+  margin-right: 50px;
+}
+
+.title {
+  font-size: 18px;
+  color: #f9c93e;
+}
+
+.stockInfoSection,
+.profitInfo {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.assetsDisplay,
+.stockDisplay {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.icon {
+  height: 40px;
+  width: 40px;
+  margin-top: 6px;
+}
+
+.profitInfo {
+  width: 65%;
+  justify-content: space-between;
+}
+
+.totalReturn,
+.evaluationProfit {
+  display: flex;
+  justify-content: space-between;
+}
+
+.totalReturn {
+  width: 43%;
+}
+
+.evaluationProfit {
+  width: 55%;
+}
+
+.profit {
+  color: red;
+}
+
+.rightSection {
+  width: 45%;
+  height: 450px;
+}
+
+.stockList {
+  overflow: auto;
+  font-size: 24px;
+}
+
+.stockList::-webkit-scrollbar {
+  display: none;
+}
+
+.stockItem {
+  padding: 2% 5%;
+  border: 5px solid #fcd8d4;
+  border-radius: 30px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
+
+.stockItem.hovered {
+  background-color: #fcd8d4;
+}
+
+.arrowIcon {
+  width: 8%;
+  height: 4%;
+}

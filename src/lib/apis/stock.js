@@ -25,7 +25,22 @@ export const getThemeRank = async () => {
   return themeRank;
 };
 
-export const getStockDetail = async (code) =>{
-  const resp = await instance.get(`/stock/detail/${code}`)
-  return resp
-}
+export const getLiveRanking = async (type) => {
+  const apiKey = process.env.REACT_APP_SHINHAN_API_KEY;
+  const liveRanking = await instance.get(`/stock/liveRanking/${type}`, {
+    headers: {
+      apiKey: apiKey,
+    },
+  });
+  return liveRanking;
+};
+
+export const getStockDetail = async (code, name) => {
+  const resp = await instance.get(`/stock/detail/${code}/${name}`);
+  return resp.data;
+};
+
+export const getStockNews = async (code) => {
+  const resp = await instance.get(`/stock/news/${code}`);
+  return resp.data;
+};

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 //css
@@ -8,11 +8,29 @@ import "../../styles/stockDetails.css";
 import character from "../../assets/character/shinhan_computer.png";
 import TradeModal from "./TradeModal";
 
-import { getStockDetail } from "../../lib/apis/stock";
+import { getStockDetail, getStockNews } from "../../lib/apis/stock";
+
 export default function StockDetail() {
   const [isTrade, setIsTrade] = useState(false);
+  const [activeTab, setActiveTab] = useState("info");
+  const [stockd, setStockD] = useState([]);
+  const [stocknews, setStockNews] = useState([{}]);
   const params = useParams();
-  console.log(params.stockId);
+
+  useEffect(() => {
+    const setData = async () => {
+      const resp = await getStockDetail(params.stockId); //종목 정보 (시가총액, per ...)
+      const res = await getStockNews(params.stockId); // 종목 뉴스
+      setStockD(resp);
+      setStockNews(res);
+    };
+
+    setData();
+  }, []);
+
+  console.log(stockd);
+
+  console.log(stocknews);
 
   return (
     <div
@@ -29,7 +47,7 @@ export default function StockDetail() {
       {isTrade ? <TradeModal setIsTrade={setIsTrade} /> : null}
       <div
         style={{
-          backgroundColor: "#0F3AB1",
+          // backgroundColor: "#FFDE6B",
           height: "70px",
           width: "100%",
           display: "flex",
@@ -44,22 +62,23 @@ export default function StockDetail() {
             display: "flex",
             alignItems: "flex-end",
             marginLeft: "16px",
+            borderBottom: "5px solid #FFDE6B",
+            boxSizing: "border-box",
+            paddingInline: "8px",
           }}
         >
-          <span className="largeText" style={{ color: "white" }}>
-            신한지주
-          </span>
+          <span className="largeText">{params.stockName}</span>
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
           >
-            A05550
+            {params.stockId}
           </span>
         </div>
         <span
           className="largeText"
           style={{ color: "white", marginRight: "16px" }}
         >
-          46,000
+          {stockd.prpr}
         </span>
       </div>
       <div
@@ -110,20 +129,81 @@ export default function StockDetail() {
       </div>
 
       <div style={{ display: "flex", marginLeft: "20px" }}>
-        <div className="stockDetailTab" style={{ marginLeft: "10px" }}>
+        <div
+          className={"stockDetailTab" + (activeTab === "info" ? " active" : "")}
+          style={{ marginLeft: "10px", cursor: "pointer" }}
+          onClick={() => setActiveTab("info")}
+        >
           종목 정보
         </div>
-        <div className="stockDetailTab">뉴스</div>
+        <div
+          className={"stockDetailTab" + (activeTab === "news" ? " active" : "")}
+          style={{ cursor: "pointer" }}
+          onClick={() => setActiveTab("news")}
+        >
+          뉴스
+        </div>
       </div>
       <div
         style={{
-          border: "3px solid #0F3AB1",
+          border: "3px solid #ffde6b",
           height: "200px",
           borderRadius: "16px",
           marginInline: "16px",
           marginBottom: "16px",
         }}
-      ></div>
+      >
+        {activeTab === "info" && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "30vh",
+              gap: "5%",
+            }}
+          >
+            <div>
+              <div class="info">
+                시가 총액<div>{stockd.hts_avls}</div>
+              </div>
+              <hr />
+              <div class="info">
+                pbr <div>{stockd.pbr}</div>
+              </div>
+              <hr />
+            </div>
+
+            <div>
+              <div class="info">
+                per<div>{stockd.per}</div>
+              </div>
+              <hr />
+              <div class="info">
+                외국인 소진율<div>{stockd.hts_frgn_ehrt}</div>
+              </div>
+              <hr />
+            </div>
+          </div>
+        )}
+        {activeTab === "news" && (
+          <div style={{ height: "200px", overflowY: "scroll" }}>
+            <div style={{ margin: "2% 2%" }}>
+              {stocknews.map((item, id) => (
+                <div
+                  key={id}
+                  onClick={() => {
+                    window.location.href = item.url;
+                  }}
+                  style={{ cursor: "pointer", marginTop: "1%" }}
+                >
+                  {item.title}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

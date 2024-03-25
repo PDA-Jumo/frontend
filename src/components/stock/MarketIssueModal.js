@@ -1,5 +1,8 @@
 import React from "react";
 
+//assets
+import cheese from "../../assets/icons/cheese.png";
+
 export default function MarketIssueModal(props) {
   return (
     <div
@@ -19,7 +22,7 @@ export default function MarketIssueModal(props) {
     >
       <div
         style={{
-          width: "50%",
+          width: "70%",
           height: "60%",
           borderRadius: "16px",
           backgroundColor: "white",
@@ -35,13 +38,33 @@ export default function MarketIssueModal(props) {
         >
           X
         </span>
-        <span style={{ fontSize: "28px" }}>
-          {props.issue.content.split("『")[1].split("』")[0]}
-        </span>
+        <div
+          style={{
+            fontSize: "28px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "90%",
+          }}
+        >
+          <img src={cheese} style={{ width: "32px", marginRight: "8px" }} />
+          <span
+            style={{
+              borderBottom: "8px double #ffe27a",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {props.issue.content.split("『")[1].split("』")[0]}
+          </span>
+        </div>
+
         <div
           style={{
             height: "100%",
             width: "90%",
+            marginBlock: "8px",
             paddingBlock: "16px",
             boxSizing: "border-box",
             overflowY: "scroll",
@@ -49,10 +72,17 @@ export default function MarketIssueModal(props) {
             alignItems: "start",
           }}
         >
-          <span style={{ whiteSpace: "pre-line" }}>
+          <span
+            style={{
+              whiteSpace: "pre-line",
+              color: "#62616D",
+              lineHeight: "2",
+            }}
+          >
             {props.issue.content
               .substring(props.issue.content.indexOf("』") + 1)
-              .replace("&nbsp;", "")}
+              .replace("&nbsp;", "")
+              .trim()}
           </span>
         </div>
       </div>
