@@ -25,6 +25,9 @@ import { Autoplay } from "swiper/modules";
 // Modal
 import LevelUpModal from "../../components/home/LevelUpModal";
 
+// ToolTip
+import { Tooltip as ReactTooltip } from "react-tooltip";
+
 function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -116,7 +119,10 @@ function HomePage() {
                 ))}
               </Swiper>
             </div>
-            <div className="basic-info white-rounded-box">
+            <div
+              className="basic-info white-rounded-box"
+              data-tooltip-id="my-tooltip-1"
+            >
               <div className="profile-and-info">
                 <img
                   src={user?.profile_img}
@@ -224,6 +230,11 @@ function HomePage() {
           onClick={() => upCashByWork(user.user_id, 1000)}
         />
       </div>
+      <ReactTooltip
+        id="my-tooltip-1"
+        place="left"
+        content="레벨업 하기 위해서는 10,000원을 더 모아야해요!"
+      />
     </div>
   );
 }
