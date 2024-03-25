@@ -57,7 +57,7 @@
   flex-direction: row; /* 가로 방향으로 정렬 */
   font-size: 24px;
   width: 250px;
-  /* margin-right: 40px; */
+  top: -40px;
 }
 
 .navigation-buttons.vertical {
@@ -109,4 +109,29 @@ button:hover,
   justify-content: center;
   flex-direction: column;
   margin-block: 2px;
+}
+.info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* 변경된 부분 */
+  width: 100%;
+}
+
+.tip-box {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 400px;
+  height: 170px; /* 기본 높이 */
+  border-radius: 16px;
+  box-sizing: border-box;
+  padding: 16px;
+  color: white;
+  overflow: hidden;
+}
+.swiper-container {
+  font-size: 16px;
+  margin-top: 4px;
+  width: 100%;
+  height: 80%;
+  overflow: hidden;
+  white-space: normal;
 }
