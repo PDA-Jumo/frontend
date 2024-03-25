@@ -3,7 +3,7 @@ import Book from "../../assets/backgrounds/Book.png";
 import { useNavigate } from "react-router-dom";
 import "./book.css";
 import { data } from "./bookdata.js";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const levels = [
   "Lv.0 주탄생",
@@ -62,6 +62,7 @@ export default function BookLayout() {
                 const levelNum = parseInt(level.match(/\d+/)[0]);
 
                 console.log(levelNum);
+                // const isDisabled = 100 < levelNum; 테스트 코드임. 실제로는 아래줄이 맞는코드.
                 const isDisabled = user?.level < levelNum;
                 return (
                   <li

@@ -104,7 +104,7 @@
   width: 650px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 30px;
+  gap: 20px 30px;
   height: 200px;
   word-break: keep-all;
 }
