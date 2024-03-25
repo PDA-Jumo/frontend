@@ -7,7 +7,7 @@ import encyclopediaIcon from "../../assets/main/zoom.png";
 import dollarIcon from "../../assets/main/dollar.png";
 import stockIcon from "../../assets/main/stock.png";
 import clickmeIcon from "../../assets/main/clickme.png";
-import tipsIcon from "../../assets/main/tips.png";
+import tipsIcon from "../../assets/main/tips.png"; // 이거 왜있는거임 ..?
 import speaker from "../../assets/icons/speaker.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -26,9 +26,6 @@ function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user) || {};
-
-  console.log(user);
-
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -36,7 +33,7 @@ function HomePage() {
     }
     return array;
   };
-
+  // 문제 난이도기준으로 추출 + 랜덤돌리는 함수 위아래로 구현
   const [tips, setTips] = useState(() =>
     shuffleArray(tipsdata.filter((tip) => user?.level >= tip.level)).map(
       (tip) => tip.body
