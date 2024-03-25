@@ -30,6 +30,17 @@ function HomePage() {
   const dispatch = useDispatch();
   const [tips, setTips] = useState(["dfsdsf", "sdfsdfss", "32r3r2"]);
   const [isLevelUp, setIsLevelUp] = useState(false);
+  const levelName = [
+    "초보 탈출",
+    "주얼딩",
+    "주린이",
+    "주초딩",
+    "주중딩",
+    "주고딩",
+    "주대딩",
+    "주졸부",
+    "주대주주",
+  ];
 
   const user = useSelector((state) => state.user.user) || {};
   console.log(user);
@@ -115,7 +126,10 @@ function HomePage() {
                 <div className="info-text">
                   <div className="user-info">
                     <div className="level-type">
-                      <span> Lv.{user?.level}</span>
+                      <span>
+                        {" "}
+                        Lv.{user?.level} {levelName[user?.level]}
+                      </span>
                       <span> {user?.type}</span>
                     </div>
                     <div className="nickname">{user?.nickname}님</div>
