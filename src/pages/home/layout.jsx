@@ -15,11 +15,6 @@ export default function HomeLayout() {
 
   useEffect(() => {
     setBackgroundImage(selectBackgroundImage(userLevel));
-    document.body.classList.add("no-scroll");
-
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
   }, [userLevel]);
 
   return (
