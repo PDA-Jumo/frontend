@@ -23,8 +23,8 @@
 .level-type {
   color: #f9c93e;
   display: flex;
-  justify-content: flex-end; /* 오른쪽 정렬 */
-  gap: 10px; /* level과 type 사이의 간격 */
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .info-overlay {
@@ -32,7 +32,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* 오른쪽 정렬 */
+  align-items: flex-end;
 }
 
 .white-rounded-box {
@@ -43,7 +43,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* 오른쪽 정렬 */
+  align-items: flex-end;
   font-size: 24px;
 }
 
@@ -54,7 +54,7 @@
   margin: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   display: flex;
-  flex-direction: row; /* 가로 방향으로 정렬 */
+  flex-direction: row;
   font-size: 24px;
   width: 250px;
   top: -40px;
@@ -66,14 +66,12 @@
   margin-right: 16px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* 버튼들을 오른쪽 정렬 */
+  align-items: flex-end;
 }
 
 .navigation-buttons.vertical img {
-  /* margin-top: 7px; */
   width: 60px;
   height: 60px;
-  /* margin-right: 10px; */
   cursor: pointer;
 }
 
@@ -89,7 +87,7 @@ button:hover,
 .clickme img {
   width: 200px;
   height: 200px;
-  position: absolute; /* position을 relative로 변경 */
+  position: absolute;
   bottom: 100px;
   left: 80px;
 }
@@ -113,14 +111,14 @@ button:hover,
 .info-container {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start; /* 변경된 부분 */
+  align-items: flex-start;
   width: 100%;
 }
 
 .tip-box {
   background-color: rgba(0, 0, 0, 0.3);
   width: 400px;
-  height: 170px; /* 기본 높이 */
+  height: 170px;
   border-radius: 16px;
   box-sizing: border-box;
   padding: 16px;
