@@ -16,14 +16,10 @@ import { upCash } from "../../lib/apis/home";
 import "./page.css";
 import { useState } from "react";
 import { tipsdata } from "./tip";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-// import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 function HomePage() {
@@ -31,7 +27,8 @@ function HomePage() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user) || {};
 
-  // 배열을 랜덤하게 섞는 함수
+  console.log(user);
+
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -40,7 +37,6 @@ function HomePage() {
     return array;
   };
 
-  // 사용자 레벨보다 낮거나 같은 문제들만 필터링하고 랜덤하게 섞음
   const [tips, setTips] = useState(() =>
     shuffleArray(tipsdata.filter((tip) => user?.level >= tip.level)).map(
       (tip) => tip.body
@@ -79,7 +75,7 @@ function HomePage() {
               </div>
               <Swiper
                 autoplay={{
-                  delay: 2500,
+                  delay: 5000,
                   disableOnInteraction: false,
                 }}
                 direction={"vertical"}
@@ -87,7 +83,9 @@ function HomePage() {
                 className="swiper-container"
               >
                 {tips.map((item, index) => (
-                  <SwiperSlide key={index}>{item}</SwiperSlide>
+                  <SwiperSlide key={index} className="Sample">
+                    {item}
+                  </SwiperSlide>
                 ))}
               </Swiper>
             </div>
@@ -177,10 +175,10 @@ function HomePage() {
           <img
             src={messageIcon}
             style={{ height: "50px", cursor: "pointer" }}
-            alt="메시지"
-            onClick={() => navigateTo("/messages")}
+            alt="커뮤니티"
+            onClick={() => navigateTo("/community")}
           />
-          <span style={{ fontSize: "14px" }}>메시지</span>
+          <span style={{ fontSize: "14px" }}>커뮤니티</span>
         </div>
         <div className="columnCenter">
           <img

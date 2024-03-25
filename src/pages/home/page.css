@@ -135,3 +135,10 @@ button:hover,
   overflow: hidden;
   white-space: normal;
 }
+
+.Sample {
+  word-wrap: break-word;
+  white-space: pre;
+  white-space: -moz-pre-wrap;
+  white-space: pre-wrap;
+}
