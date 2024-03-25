@@ -7,7 +7,7 @@ import encyclopediaIcon from "../../assets/main/zoom.png";
 import dollarIcon from "../../assets/main/dollar.png";
 import stockIcon from "../../assets/main/stock.png";
 import clickmeIcon from "../../assets/main/clickme.png";
-import tipsIcon from "../../assets/main/tips.png";
+import tipsIcon from "../../assets/main/tips.png"; // 이거 왜있는거임 ..?
 import speaker from "../../assets/icons/speaker.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,23 +15,30 @@ import { updateFinancialsAction } from "../../store/reducers/user";
 import { upCash } from "../../lib/apis/home";
 import "./page.css";
 import { useState } from "react";
-// Import Swiper React components
+import { tipsdata } from "./tip";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-// import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [tips, setTips] = useState(["dfsdsf", "sdfsdfss", "32r3r2"]);
-
   const user = useSelector((state) => state.user.user) || {};
-  console.log(user);
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+  // 문제 난이도기준으로 추출 + 랜덤돌리는 함수 위아래로 구현
+  const [tips, setTips] = useState(() =>
+    shuffleArray(tipsdata.filter((tip) => user?.level >= tip.level)).map(
+      (tip) => tip.body
+    )
+  );
 
   const navigateTo = (path) => {
     navigate(path);
@@ -54,26 +61,8 @@ function HomePage() {
     <div className="portfolio-page">
       <div className="user-info">
         <div className="info-overlay">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "100%",
-            }}
-          >
-            <div
-              style={{
-                backgroundColor: "rgba(0, 0, 0, 0.3)",
-                width: "400px",
-                height: "130px",
-                borderRadius: "16px",
-                boxSizing: "border-box",
-                padding: "16px",
-                color: "white",
-                overflow: "hidden",
-              }}
-            >
+          <div className="info-container">
+            <div className="tip-box">
               <div style={{ display: "flex", alignItems: "center" }}>
                 <span style={{ fontSize: "24px" }}>Tips</span>
                 <img
@@ -83,23 +72,17 @@ function HomePage() {
               </div>
               <Swiper
                 autoplay={{
-                  delay: 2500,
+                  delay: 5000,
                   disableOnInteraction: false,
                 }}
                 direction={"vertical"}
                 modules={[Autoplay]}
-                style={{
-                  fontSize: "16px",
-                  marginTop: "4px",
-                  width: "100%",
-                  height: "60%",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
+                className="swiper-container"
               >
                 {tips.map((item, index) => (
-                  <SwiperSlide>{item}</SwiperSlide>
+                  <SwiperSlide key={index} className="Sample">
+                    {item}
+                  </SwiperSlide>
                 ))}
               </Swiper>
             </div>
@@ -123,7 +106,10 @@ function HomePage() {
             </div>
           </div>
 
-          <div className="white-rounded-box-row">
+          <div
+            className="white-rounded-box-row "
+            style={{ marginTop: "-20px" }}
+          >
             <img
               src={dollarIcon}
               alt="달러 아이콘"
@@ -160,7 +146,7 @@ function HomePage() {
             src={rankingIcon}
             style={{ height: "50px", cursor: "pointer" }}
             alt="랭킹"
-            onClick={() => navigateTo("/community")}
+            onClick={() => navigateTo("/ranking")}
           />
           <span style={{ fontSize: "14px" }}>랭킹</span>
         </div>
@@ -186,17 +172,17 @@ function HomePage() {
           <img
             src={messageIcon}
             style={{ height: "50px", cursor: "pointer" }}
-            alt="메시지"
-            onClick={() => navigateTo("/messages")}
+            alt="커뮤니티"
+            onClick={() => navigateTo("/community")}
           />
-          <span style={{ fontSize: "14px" }}>메시지</span>
+          <span style={{ fontSize: "14px" }}>커뮤니티</span>
         </div>
         <div className="columnCenter">
           <img
             src={encyclopediaIcon}
             style={{ cursor: "pointer" }}
             alt="주식도감"
-            onClick={() => navigateTo("/encyclopedia")}
+            onClick={() => navigateTo("/book")}
           />
           <span style={{ fontSize: "14px" }}>주식도감</span>
         </div>
