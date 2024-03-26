@@ -37,7 +37,6 @@ export default function SignUpPage() {
     },
     [navigate]
   );
-
   return (
     <div className="centered-container">
       <div className="rounded-rectangle2">
@@ -50,7 +49,6 @@ export default function SignUpPage() {
               className="profile-image-selector"
               onClick={() => setShowImages(true)}
             >
-              {/* userImage가 비어있으면 텍스트를 보여주고, 그렇지 않으면 이미지를 보여줌 */}
               {userImage === "" ? (
                 <div
                   className="selected-image-placeholder"
@@ -97,8 +95,7 @@ export default function SignUpPage() {
             >
               <h2 style={{ marginBottom: "36px", fontSize: "36px" }}>
                 프로필 사진을 선택하세요
-              </h2>{" "}
-              {/* 하단 마진 추가 */}
+              </h2>
               <div
                 className="image-options"
                 style={{
@@ -108,8 +105,6 @@ export default function SignUpPage() {
                   justifyContent: "center",
                 }}
               >
-                {" "}
-                {/* 이미지 간격 조정 */}
                 {images.map((image, index) => (
                   <img
                     key={index}
@@ -131,6 +126,7 @@ export default function SignUpPage() {
             </Modal>
           </div>
           <div className="form-area">
+            {/* 폼 입력 필드 */}
             <div className="form-group1">
               <div className="form-floating mb-3">
                 <label htmlFor="floatingNickname" className="label-custom">
@@ -180,22 +176,24 @@ export default function SignUpPage() {
                   required
                 />
               </div>
-
-              <div
-                className="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onRegisterSubmit(
-                    userEmail,
-                    userPassword,
-                    userNickname,
-                    userImage
-                  );
-                }}
-              >
-                회원가입
-              </div>
             </div>
+          </div>
+        </div>
+        {/* 회원가입 버튼을 가운데 정렬하기 위한 div */}
+        <div className="register-button-container">
+          <div
+            className="button"
+            onClick={(e) => {
+              e.preventDefault();
+              onRegisterSubmit(
+                userEmail,
+                userPassword,
+                userNickname,
+                userImage
+              );
+            }}
+          >
+            회원가입
           </div>
         </div>
       </div>

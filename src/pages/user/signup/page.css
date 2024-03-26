@@ -51,7 +51,8 @@
   height: 80%;
   background-color: #ffde6b;
   border-radius: 60px;
-  padding: 20px;
+  padding: 10px 20px 20px 20px;
+
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -104,5 +105,11 @@
 /* Container Split 스타일 */
 .container-split {
   display: flex;
-  padding-top: 16px;
+  padding-top: 8px;
+}
+.register-button-container {
+  display: flex;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+  height: 100%; /* 부모 컨테이너의 높이에 맞춤 */
 }
