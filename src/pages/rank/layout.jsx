@@ -1,27 +1,26 @@
-//TODO 페이지 넘어올때 API를 연동해서 랭킹값을 받아오도록 해야함
-
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import rankStar from "../../assets/rank/rankStar.png";
 import rankCrown from "../../assets/rank/rankCrown.png";
 import rankBluedia from "../../assets/rank/rankBluedia.png";
 import rankReddia from "../../assets/rank/rankReddia.png";
 import rankHeart from "../../assets/rank/rankHeart.png";
 import axios from "axios";
-
+import levelData from "../home/levelData";
 import "./rank.css";
 
 export default function RankLayout() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentTime, setCurrentTime] = useState("");
   const navigate = useNavigate();
   const scrollableContentRef = useRef(null);
-  const user = useSelector((state) => state.user.user) || {};
-  console.log(user);
+  const currentUser = useSelector((state) => state.user.user) || {};
+
   useEffect(() => {
-    loadMoreUsers();
+    fetchRankUsers();
     const scrollableContent = scrollableContentRef.current;
     if (scrollableContent) {
       scrollableContent.addEventListener("scroll", handleScroll);
@@ -34,40 +33,32 @@ export default function RankLayout() {
   }, []);
 
   const fetchRankUsers = async () => {
+    setIsLoading(true);
+    const now = new Date();
+    const currentTimeFormatted = `${now.getHours()}:${now
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+    setCurrentTime(currentTimeFormatted);
+
     try {
       const response = await axios.get("/users/rankUsers");
       console.log(response.data);
+      const topTenUsers = response.data.slice(0, 10).map((user) => ({
+        nickname: user.nickname,
+        level: user.level,
+        user_id: user.user_id,
+      }));
+      setUsers(topTenUsers);
     } catch (error) {
       console.error("랭킹 정보를 불러오는 중 에러가 발생했습니다.", error);
     }
+    setIsLoading(false);
   };
 
   const handleScroll = (e) => {
     const { scrollTop, clientHeight, scrollHeight } = e.target;
     if (scrollHeight - scrollTop !== clientHeight || isLoading) return;
-    loadMoreUsers();
-  };
-
-  // TODO 여기가 사용자 정보 받아오는 API가 들어갈 예정 (아마 Axios를 활용하게 되지 않을까?)
-  const loadMoreUsers = () => {
-    // 현재 유저 수가 20명 이상일 경우 더 이상 유저를 로드하지 않음
-    if (users.length >= 20) {
-      setIsLoading(false); // 로딩 상태 해제
-      return; // 함수 종료
-    }
-
-    setIsLoading(true);
-    // 여기부터 API call을 넣으면 됨
-    setTimeout(() => {
-      const newUsers = Array.from(
-        { length: 20 },
-        (_, index) => `사용자 ${index + users.length + 1}`
-      );
-      // 유저 총수가 20명을 넘지 않도록 조절
-      setUsers((prev) => [...prev, ...newUsers].slice(0, 20));
-      // 여기까지가 API call이 되어야 함 (const newUsers = 방식, 혹은 아예 다른 방식으로 받을수도 있을지도?)
-      setIsLoading(false);
-    }, 100);
   };
 
   const RankingHeader = () => {
@@ -83,13 +74,13 @@ export default function RankLayout() {
     return (
       <>
         {users.map((user, index) => (
-          <RankingButton key={index} rank={user} index={index} />
+          <RankingButton key={index} user={user} index={index} />
         ))}
       </>
     );
   };
 
-  const RankingButton = ({ rank, index }) => {
+  const RankingButton = ({ user, index }) => {
     const rankImages = {
       0: rankCrown,
       1: rankBluedia,
@@ -97,23 +88,25 @@ export default function RankLayout() {
     };
 
     const getRankImage = (index) => rankImages[index] || rankHeart;
-
     const rankImage = getRankImage(index);
 
-    //TODO: User의 정보를 각각 띄워줄수 있도록 구현해야 할 듯?
     return (
       <div className="ranking-button">
         <div className="ranking-icon-container">
           <img src={rankImage} alt="Rank Icon" className="ranking-icon" />
-          <div className="rank-title">주대주주</div>
-          {/* rank: 사용자의 이름... */} {rank}
+          <div className="rank-title">
+            Lv.{user.level} {levelData[user.level] || "알 수 없음"}
+          </div>
+          <div className="nickname">{user.nickname}</div>
         </div>
-        <button
-          className="portfolio-button"
-          onClick={() => navigate("/ranking/portfolio")} //TODO /ranking/:userId. 라우터도 나중에 수정해주기
-        >
-          포트폴리오 보기
-        </button>
+        {currentUser.user_id !== user.user_id && (
+          <button
+            className="portfolio-button"
+            onClick={() => navigate(`/ranking/portfolio`)}
+          >
+            포트폴리오 보기
+          </button>
+        )}
       </div>
     );
   };
@@ -123,17 +116,17 @@ export default function RankLayout() {
       <img src={Rank} className="background-image" alt="Rank Background" />
       <div className="ranking-header-container">
         <RankingHeader />
-        <button onClick={fetchRankUsers}>랭킹 정보 업데이트</button>
       </div>
       <div className="content-position">
-        <div className="non-scrollable-header">17:00 기준</div>
+        <div className="non-scrollable-header">
+          <button onClick={fetchRankUsers}>업데이트</button>
+          {currentTime} 기준
+        </div>
         <div className="scrollable-content" ref={scrollableContentRef}>
-          {/* TODO 유저의 랭킹을 어떤식으로, 어떤 간격으로 DB단에서 update 해줄 것인가? */}
           <RankingList users={users} />
           {isLoading && <p>로딩 중...</p>}
         </div>
       </div>
-
       <button className="back-button1" onClick={() => navigate("/home")}>
         홈으로
       </button>
