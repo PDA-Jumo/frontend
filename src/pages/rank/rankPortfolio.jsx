@@ -1,28 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
 import Coin from "../../assets/coin.png";
+import KoreaStock from "./KoreaStock";
+import WorldStock from "./WorldStock";
 import "./rank.css";
 import "./portfolio.css";
 import "./stockPortfolio.css";
-import KoreaStock from "./KoreaStock";
 
 export default function PortfolioList() {
   const navigate = useNavigate();
-  const [showKoreanStock, setShowKoreanStock] = useState(false);
-
-  const handleKoreanStockClick = () => {
-    setShowKoreanStock(true);
-  };
-
+  const [selectedTab, setSelectedTab] = useState("");
   return (
     <div className="background-style">
       <img src={Rank} className="background-image" alt="Rank Background" />
       <div className="ranking-header-container">
         <div className="ranking-header text-white">포트폴리오</div>
       </div>
+      {/* TODO ranking/:userId로 navigate 되었으니까, userId로 DB Fetch 한번 해줘야될듯*/}
       <div className="pp-position">
-        {!showKoreanStock && (
+        {selectedTab === "" && (
           <>
             <div className="ranking-content">
               <div>
@@ -37,22 +34,36 @@ export default function PortfolioList() {
               </div>
             </div>
             <div className="tabs-container">
-              <button className="tab-button" onClick={handleKoreanStockClick}>
+              <button
+                className="tab-button"
+                onClick={() => setSelectedTab("korean")}
+              >
                 국내주식
               </button>
-              <button className="tab-button">해외주식</button>
+              <button
+                className="tab-button"
+                onClick={() => setSelectedTab("world")}
+              >
+                해외주식
+              </button>
             </div>
           </>
         )}
-        {showKoreanStock && <KoreaStock />}
+        {selectedTab === "korean" && <KoreaStock />}
+        {selectedTab === "world" && <WorldStock />}
       </div>
-      <button className="back-button1" onClick={() => navigate("/home")}>
-        홈으로
-      </button>
-      {showKoreanStock && (
+
+      {selectedTab == "" && (
+        <button className="back-button1" onClick={() => navigate("/home")}>
+          홈으로
+        </button>
+      )}
+
+      {selectedTab !== "" && (
         <button
           className="back-button1"
-          onClick={() => setShowKoreanStock(false)}
+          style={{ padding: "10px 28px" }}
+          onClick={() => setSelectedTab("")}
         >
           뒤로가기
         </button>
