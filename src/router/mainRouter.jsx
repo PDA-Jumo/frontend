@@ -60,7 +60,7 @@ export const mainRouter = [
     element: <RankLayout />,
   },
   {
-    path: "/ranking/portfolio",
+    path: "/ranking/:userId",
 
     element: <PortfolioList />,
   },

@@ -102,7 +102,7 @@ export default function RankLayout() {
         {currentUser.user_id !== user.user_id && (
           <button
             className="portfolio-button"
-            onClick={() => navigate(`/ranking/portfolio`)}
+            onClick={() => navigate(`/ranking/${user.user_id}`)}
           >
             포트폴리오 보기
           </button>

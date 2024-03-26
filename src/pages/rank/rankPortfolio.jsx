@@ -17,7 +17,7 @@ export default function PortfolioList() {
       <div className="ranking-header-container">
         <div className="ranking-header text-white">포트폴리오</div>
       </div>
-      {/* TODO ranking/:userId로 navigate 되었으니까, userId로 DB Fetch 한번 해줘야될듯*/}
+      {/* TODO ranking/:userId로 navigate 되었으니까, pp-title, 닉네임, 금액을 갱신해와야 함*/}
       <div className="pp-position">
         {selectedTab === "" && (
           <>
@@ -54,8 +54,8 @@ export default function PortfolioList() {
       </div>
 
       {selectedTab == "" && (
-        <button className="back-button1" onClick={() => navigate("/home")}>
-          홈으로
+        <button className="back-button1" onClick={() => navigate("/ranking")}>
+          뒤로가기
         </button>
       )}
 

@@ -1,5 +1,3 @@
-//TODO 여기부터 유저의 정보를 받아오고 있어야 함(persist를 통해 연동되는 로그인 기능)
-
 import React, { useCallback, useState, useEffect } from "react";
 import quizBackground from "../../assets/backgrounds/quiz.png";
 import "./quiz.css";
