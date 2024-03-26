@@ -24,7 +24,10 @@ import {
   getLiveSise,
   getMarketIssue,
   getThemeRank,
+  getLiveRanking,
 } from "../../lib/apis/stock";
+
+//modal
 import MarketIssueModal from "./MarketIssueModal";
 
 export default function StockDetails() {
@@ -38,24 +41,40 @@ export default function StockDetails() {
   const [clickedIssue, setClickedIssue] = useState({});
   const [selectedTab, setSelectedTab] = useState(0);
   const [selectedMySmallTab, setSelectedMySmallTab] = useState(1);
+  const [selectedRankingTab, setSelectedRankingTab] = useState("2");
+  const [liveRanking, setLiveRanking] = useState([]);
+  //주가 그래프 관련 데이터
   useEffect(() => {
     const setData = async () => {
       const liveSise = await getLiveSise();
       const themeRankData = await getThemeRank();
       const issueData = await getMarketIssue();
+      const liveRankingData = await getLiveRanking(selectedRankingTab);
       setIssue(issueData.data);
-      setThemeRank(themeRankData.data);
+      setThemeRank(themeRankData.data.data);
       setKospiSise(liveSise.data.kospi);
       setKosdaqSise(liveSise.data.kosdaq);
+      setLiveRanking(liveRankingData.data);
     };
     setData();
   }, []);
+  useEffect(() => {
+    const setNewData = async () => {
+      const liveRankingData = await getLiveRanking(selectedRankingTab);
+      setLiveRanking(liveRankingData.data);
+    };
+    setNewData();
+  }, [selectedRankingTab]);
+  //오늘 주목받은 테마
   useEffect(() => {
     const nowDate = new Date();
     const hours = nowDate.getHours().toString().padStart(2, "0");
     const minutes = nowDate.getMinutes().toString().padStart(2, "0");
     setNow(`${hours}:${minutes}`);
   }, [isRefresh]);
+  const handleClickLiveRankingTab = (type) => {
+    setSelectedRankingTab(type);
+  };
   return (
     <div
       style={{
@@ -231,41 +250,43 @@ export default function StockDetails() {
           >
             <div style={{ display: "flex" }}>
               <div
-                style={{
-                  // border: "2px solid #6082E1",
-                  border: "2px solid black",
-                  borderRadius: "16px",
-                  padding: "4px 8px",
-                  width: "60px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className={
+                  selectedRankingTab === "2" ? "smallTabSelected" : "smallTab"
+                }
+                onClick={() => handleClickLiveRankingTab("2")}
               >
                 상승률
               </div>
               <div
+                className={
+                  selectedRankingTab === "1" ? "smallTabSelected" : "smallTab"
+                }
                 style={{
-                  // border: "2px solid #6082E1",
-                  border: "2px solid black",
-                  borderRadius: "16px",
-                  padding: "4px 8px",
                   marginInline: "16px",
-                  width: "60px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                 }}
+                onClick={() => handleClickLiveRankingTab("1")}
               >
                 인기
               </div>
             </div>
             <div>
-              <StockList />
-              <StockList />
-              <StockList />
-              <StockList />
-              <StockList />
+              {liveRanking !== [] ? (
+                liveRanking.map((item, index) => (
+                  <StockList type="rank" item={item} key={item.stock_code} />
+                ))
+              ) : (
+                <div
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  실시간 종목 랭킹이 존재하지 않아요!
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -355,10 +376,10 @@ export default function StockDetails() {
                   width: "120px",
                 }}
               >
-                {themeRank && themeRank[0] && themeRank[0].name}
+                {themeRank && themeRank[0] && themeRank[0].theme.name}
               </span>
               <span>
-                {themeRank && themeRank[0] && themeRank[0].volatility}%
+                +{themeRank && themeRank[0] && themeRank[0].stats.returns}%
               </span>
             </div>
           </div>
@@ -379,10 +400,10 @@ export default function StockDetails() {
                   width: "120px",
                 }}
               >
-                {themeRank && themeRank[1] && themeRank[1].name}
+                {themeRank && themeRank[1] && themeRank[1].theme.name}
               </span>
               <span>
-                {themeRank && themeRank[1] && themeRank[1].volatility}%
+                +{themeRank && themeRank[1] && themeRank[1].stats.returns}%
               </span>
             </div>
           </div>
@@ -403,10 +424,10 @@ export default function StockDetails() {
                   width: "120px",
                 }}
               >
-                {themeRank && themeRank[2] && themeRank[2].name}
+                {themeRank && themeRank[2] && themeRank[2].theme.name}
               </span>
               <span>
-                {themeRank && themeRank[2] && themeRank[2].volatility}%
+                +{themeRank && themeRank[2] && themeRank[2].stats.returns}%
               </span>
             </div>
           </div>
@@ -424,7 +445,7 @@ export default function StockDetails() {
         >
           <div className="MainChartView">
             {themeRank.slice(0, 5).map((item, index) => (
-              <StockList item={item} index={index} />
+              <StockList type="theme" item={item} index={index} />
             ))}
           </div>
           <div //구분선
@@ -437,7 +458,7 @@ export default function StockDetails() {
           />
           <div className="MainChartView">
             {themeRank.slice(5, 11).map((item, index) => (
-              <StockList item={item} index={index + 5} />
+              <StockList type="theme" item={item} index={index + 5} />
             ))}
           </div>
         </div>
@@ -451,30 +472,50 @@ const StockList = (props) => {
     <div className="stockListView">
       <div
         style={{
+          flex: 1,
           display: "flex",
           alignItems: "center",
-          flex: 5,
+          justifyContent: "space-around",
         }}
       >
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
+        <span>
+          {props.type === "theme"
+            ? props.item.stats.rank
+            : props.type === "rank"
+            ? props.item.rank
+            : null}
+        </span>
+        <img
+          src={
+            props.type === "theme"
+              ? props.item.theme.image
+              : props.type === "rank"
+              ? `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${props.item.stock_code}.png`
+              : Document
+          }
+          onError={(e) => {
+            e.target.src =
+              "https://file.alphasquare.co.kr/media/images/stock_logo/ETF_230706.png";
           }}
-        >
-          <span>{props.index + 1}</span>
-          <img src={Document} className="iconSmall" />
-        </div>
-
-        <span style={{ flex: 3 }}>
-          {props && props.item && props.item.name}
-        </span>
-        <span style={{ flex: 1, display: "flex", justifyContent: "center" }}>
-          {props && props.item && props.item.volatility}%
-        </span>
+          style={{ borderRadius: "16px", objectFit: "cover" }}
+          className="iconSmall"
+        />
       </div>
+
+      <span style={{ flex: 3 }}>
+        {props && props.item && props.type === "theme"
+          ? props.item.theme.name
+          : props.type === "rank"
+          ? props.item.stbd_nm
+          : null}
+      </span>
+      <span style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+        {props && props.type === "theme"
+          ? `+${props.item.stats.returns}%`
+          : props.type === "rank"
+          ? `${props.item.stock_code}`
+          : null}
+      </span>
     </div>
   );
 };

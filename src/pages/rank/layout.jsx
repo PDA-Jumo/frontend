@@ -3,23 +3,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Rank from "../../assets/backgrounds/rank.png";
+
 import rankStar from "../../assets/rank/rankStar.png";
 import rankCrown from "../../assets/rank/rankCrown.png";
 import rankBluedia from "../../assets/rank/rankBluedia.png";
 import rankReddia from "../../assets/rank/rankReddia.png";
 import rankHeart from "../../assets/rank/rankHeart.png";
+
 import "./rank.css";
 
 export default function RankLayout() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  useEffect(() => {
-    document.body.classList.add("no-scroll");
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, []);
+
   useEffect(() => {
     loadMoreUsers();
     const scrollableContent = document.querySelector(".scrollable-content");
@@ -127,6 +124,7 @@ export default function RankLayout() {
           {isLoading && <p>로딩 중...</p>}
         </div>
       </div>
+
       <button className="back-button1" onClick={() => navigate("/home")}>
         홈으로
       </button>
