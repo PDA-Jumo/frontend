@@ -6,9 +6,6 @@ import {
 } from "../../store/reducers/user";
 import LevelUpModal from "../home/LevelUpModal";
 
-// 해금되는 목록 ..?
-// DB level 업데이트 요청
-// 레벨업 모달 뜨게하기
 export default function LevelComponent() {
   const user = useSelector((state) => state.user.user);
   const [isLevelUp, setIsLevelUp] = useState(false);
@@ -16,10 +13,10 @@ export default function LevelComponent() {
 
   const openByLevel = (bonus, newLevel) => {
     dispatch(updateFinancialsAction(bonus));
-    dispatch(updateLevelAction(newLevel));
+
     if (!user.check[user.level]) {
       setIsLevelUp(true);
-      user.check[user.level] = true;
+      dispatch(updateLevelAction(newLevel));
     }
   };
 
@@ -40,9 +37,8 @@ export default function LevelComponent() {
       // 3종류 이상의 주식으로 포트폴리오 구성, 40만원 달성
       // Level 3->4
       // 퀴즈 단가 인상
-    } else if (user.level === 4 && user.cash >= 180000) {
+    } else if (user.level === 4 && user.cash >= 1000000) {
       // Level 4->5
-      openByLevel(0, 5);
       // 퀴즈 단가 인상
       // 투자 성향 테스트
     } else if (user.level === 5 && user.cash >= 10000000) {

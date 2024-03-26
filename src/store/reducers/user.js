@@ -129,11 +129,14 @@ export default function UserReducer(state = initialState, action) {
     //     },
     //   };
     case UPDATE_LEVEL:
+      const newCheck = [...state.user.check];
+      newCheck[action.payload.level] = true;
       return {
         ...state,
         user: {
           ...state.user,
           level: action.payload.level,
+          check: newCheck,
         },
       };
     default:
