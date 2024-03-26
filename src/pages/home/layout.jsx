@@ -8,6 +8,7 @@ import home4 from "../../assets/backgrounds/home4.jpg";
 import home5 from "../../assets/backgrounds/home5.jpg";
 import "./layout.css";
 import store from "../../store";
+import LevelComponent from "../../components/redux/LevelComponent";
 
 export default function HomeLayout() {
   const userLevel = useSelector((state) => state.user.user.level) || 0;
@@ -22,6 +23,7 @@ export default function HomeLayout() {
       className="background-image"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
+      <LevelComponent />
       <Outlet />
     </div>
   );

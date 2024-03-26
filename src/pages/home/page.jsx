@@ -34,7 +34,7 @@ import { tipsdata } from "./tip";
 function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isLevelUp, setIsLevelUp] = useState(false);
+  // const [isLevelUp, setIsLevelUp] = useState(false);
 
   const user = useSelector((state) => state.user.user) || {};
   const shuffleArray = (array) => {
@@ -70,7 +70,7 @@ function HomePage() {
 
   return (
     <div className="portfolio-page">
-      {isLevelUp ? <LevelUpModal setIsLevelUp={setIsLevelUp} /> : null}
+      {/* {isLevelUp ? <LevelUpModal setIsLevelUp={setIsLevelUp} /> : null} */}
       <div className="user-info">
         <div className="info-overlay">
           <div className="info-container">

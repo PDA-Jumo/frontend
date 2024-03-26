@@ -10,6 +10,7 @@ export const LOGOUT = "LOGOUT";
 export const UPDATE_CASH_TOTALASSETS = "UPDATE_CASH_TOTALASSETS";
 export const UPDATE_TYPE = "UPDATE_TYPE";
 export const UP_CASH_BY_WORK = "UP_CASH_BY_WORK";
+export const UPDATE_LEVEL = "UPDATE_LEVEL";
 
 //Action Creator
 export const loginAction = (user) => {
@@ -35,6 +36,15 @@ export const updateFinancialsAction = (cash) => {
     type: UPDATE_CASH_TOTALASSETS,
     payload: {
       cash: cash,
+    },
+  };
+};
+
+export const updateLevelAction = (level) => {
+  return {
+    type: UPDATE_LEVEL,
+    payload: {
+      level: level,
     },
   };
 };
@@ -69,27 +79,36 @@ export default function UserReducer(state = initialState, action) {
         user: null,
       };
     case UPDATE_CASH_TOTALASSETS: {
-      // cash 값을 업데이트합니다.
-      const updatedCash = (state.user.cash || 0) + action.payload.cash;
+      // // cash 값을 업데이트합니다.
+      // const updatedCash = (state.user.cash || 0) + action.payload.cash;
 
-      // 업데이트된 cash 값에 따라 level을 조정합니다.
-      let newLevel = state.user.level;
-      if (updatedCash >= 30000) {
-        newLevel = 3;
-        // redux-saga thunk promise rduxjs/toolkit 
-      } else if (updatedCash >= 20000) {
-        newLevel = 2;
-      } else if (updatedCash >= 10000) {
-        newLevel = 1;
-      }
+      // // 업데이트된 cash 값에 따라 level을 조정합니다.
+      // let newLevel = state.user.level;
+      // if (updatedCash >= 30000) {
+      //   newLevel = 3;
+      //   // redux-saga thunk promise rduxjs/toolkit
+      // } else if (updatedCash >= 20000) {
+      //   newLevel = 2;
+      // } else if (updatedCash >= 10000) {
+      //   newLevel = 1;
+      // }
+
+      // return {
+      //   ...state,
+      //   user: {
+      //     ...state.user,
+      //     cash: updatedCash,
+      //     total_assets: (state.user.total_assets || 0) + action.payload.cash,
+      //     level: newLevel, // 업데이트된 level을 상태에 반영합니다.
+      //   },
+      // };
 
       return {
         ...state,
         user: {
           ...state.user,
-          cash: updatedCash,
-          total_assets: (state.user.total_assets || 0) + action.payload.cash,
-          level: newLevel, // 업데이트된 level을 상태에 반영합니다.
+          cash: state.user.cash + action.payload.cash,
+          total_assets: state.user.total_assets + action.payload.cash,
         },
       };
     }
@@ -109,6 +128,14 @@ export default function UserReducer(state = initialState, action) {
     //       cash: (state.user.cash || 0) + action.payload.cash,
     //     },
     //   };
+    case UPDATE_LEVEL:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          level: action.payload.level,
+        },
+      };
     default:
       return state;
   }
