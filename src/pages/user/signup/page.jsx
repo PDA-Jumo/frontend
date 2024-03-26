@@ -70,41 +70,13 @@ export default function SignUpPage() {
               isOpen={showImages}
               onRequestClose={() => setShowImages(false)}
               contentLabel="프로필 사진 선택"
-              className="modal"
+              className="modal modalContent"
               overlayClassName="overlay"
-              style={{
-                content: {
-                  top: "50%",
-                  left: "50%",
-                  right: "auto",
-                  bottom: "auto",
-                  marginRight: "-50%",
-                  width: "60%",
-                  height: "50%",
-                  transform: "translate(-50%, -50%)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  backgroundColor: "white",
-                },
-                overlay: {
-                  backgroundColor: "rgba(0, 0, 0, 0.7)",
-                },
-              }}
             >
               <h2 style={{ marginBottom: "36px", fontSize: "36px" }}>
                 프로필 사진을 선택하세요
               </h2>
-              <div
-                className="image-options"
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "24px",
-                  justifyContent: "center",
-                }}
-              >
+              <div className="image-options">
                 {images.map((image, index) => (
                   <img
                     key={index}
@@ -115,18 +87,12 @@ export default function SignUpPage() {
                       setShowImages(false);
                     }}
                     className="selectable-image"
-                    style={{
-                      width: "144px",
-                      height: "144px",
-                      marginBottom: "36px",
-                    }}
                   />
                 ))}
               </div>
             </Modal>
           </div>
           <div className="form-area">
-            {/* 폼 입력 필드 */}
             <div className="form-group1">
               <div className="form-floating mb-3">
                 <label htmlFor="floatingNickname" className="label-custom">
@@ -179,7 +145,6 @@ export default function SignUpPage() {
             </div>
           </div>
         </div>
-        {/* 회원가입 버튼을 가운데 정렬하기 위한 div */}
         <div className="register-button-container">
           <div
             className="button"
