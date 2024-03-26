@@ -126,7 +126,7 @@ export default function RankLayout() {
         </div>
         <div className="scrollable-content" ref={scrollableContentRef}>
           <RankingList users={users} />
-          {isLoading && <p>로딩 중...</p>}
+          {isLoading && <p style={{ fontSize: "144px" }}>로딩 중...</p>}
         </div>
       </div>
       <button className="back-button1" onClick={() => navigate("/home")}>

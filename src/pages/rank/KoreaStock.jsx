@@ -24,6 +24,7 @@ export default function KoreaStock() {
     setData();
   }, []);*/
 
+  // 여기부터
   useEffect(() => {
     const setData = async () => {
       const resp = {
@@ -49,7 +50,7 @@ export default function KoreaStock() {
       setAssets(resp.assets);
       setChart(resp.mystock_percent);
     };
-
+    // 여기까지 : dummy로 채우는중인거임
     setData();
   }, []);
 
