@@ -34,7 +34,6 @@ import { tipsdata } from "./tip";
 function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [isLevelUp, setIsLevelUp] = useState(false);
 
   const user = useSelector((state) => state.user.user) || {};
   const shuffleArray = (array) => {
@@ -70,7 +69,6 @@ function HomePage() {
 
   return (
     <div className="portfolio-page">
-      {/* {isLevelUp ? <LevelUpModal setIsLevelUp={setIsLevelUp} /> : null} */}
       <div className="user-info">
         <div className="info-overlay">
           <div className="info-container">
@@ -168,15 +166,20 @@ function HomePage() {
           />
           <span style={{ fontSize: "14px" }}>랭킹</span>
         </div>
-        <div className="columnCenter">
-          <img
-            src={tradeIcon}
-            style={{ cursor: "pointer", marginTop: "-6px" }}
-            alt="매수매도"
-            onClick={() => navigateTo("/stock")}
-          />
-          <span style={{ fontSize: "14px", marginTop: "-6px" }}>매수매도</span>
-        </div>
+        {user.level === 0 ? null : (
+          <div className="columnCenter">
+            <img
+              src={tradeIcon}
+              style={{ cursor: "pointer", marginTop: "-6px" }}
+              alt="매수매도"
+              onClick={() => navigateTo("/stock")}
+            />
+            <span style={{ fontSize: "14px", marginTop: "-6px" }}>
+              매수매도
+            </span>
+          </div>
+        )}
+
         <div className="columnCenter">
           <img
             src={quizIcon}
@@ -186,15 +189,18 @@ function HomePage() {
           />
           <span style={{ fontSize: "14px" }}>퀴즈</span>
         </div>
-        <div className="columnCenter">
-          <img
-            src={messageIcon}
-            style={{ height: "50px", cursor: "pointer" }}
-            alt="커뮤니티"
-            onClick={() => navigateTo("/community")}
-          />
-          <span style={{ fontSize: "14px" }}>커뮤니티</span>
-        </div>
+        {user.level <= 6 ? null : (
+          <div className="columnCenter">
+            <img
+              src={messageIcon}
+              style={{ height: "50px", cursor: "pointer" }}
+              alt="커뮤니티"
+              onClick={() => navigateTo("/community")}
+            />
+            <span style={{ fontSize: "14px" }}>커뮤니티</span>
+          </div>
+        )}
+
         <div className="columnCenter">
           <img
             src={encyclopediaIcon}
@@ -209,7 +215,7 @@ function HomePage() {
         <img
           src={clickmeIcon}
           alt="노가다"
-          onClick={() => upCashByWork(user.user_id, 1000)}
+          onClick={() => upCashByWork(user.user_id, 1)}
         />
       </div>
       <ReactTooltip
