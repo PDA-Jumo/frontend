@@ -4,11 +4,12 @@ import Coin from "../../assets/stock/coin.png";
 import Chart from "../../assets/stock/Increase.png";
 import Folder from "../../assets/stock/folder.png";
 import Arrow from "../../assets/stock/arrow.png";
-// API 호출 대신 더미 데이터를 사용합니다.
 // import { getWorldPortfolio } from "../../lib/apis/portfolio";
+// KoreanStock과 동일하게 api를 받아와서 사용해도 괜찮을 것 같음.
 import { PieChartComponent } from "./PieChart.js";
+import levelData from "../home/levelData.js";
 
-export default function WorldStock() {
+export default function WorldStock({ level, nickname, userId }) {
   const [myStock, setMyStock] = useState([]);
   const [assets, setAssets] = useState("0");
   const [chart, setChart] = useState({});
@@ -52,16 +53,16 @@ export default function WorldStock() {
     <div className="koreaStockContainer">
       <div className="leftSection">
         <div style={{ textAlign: "left", marginLeft: "60px" }}>
-          <div className="title">주대주주</div>
+          <div className="title">{levelData[level] || "알 수 없음"}</div>
           <div className="xLargeText text-white" style={{ marginTop: "-10px" }}>
-            김광태가뭐야
+            {nickname}
           </div>
         </div>
 
         <div className="stockInfoSection">
           <div className="largeText text-white assetsDisplay">
             <img src={Coin} className="icon" alt="Coin" />
-            보유자산
+            평가금액
           </div>
           <div className="mediumText text-white">{assets}원</div>
           <div>

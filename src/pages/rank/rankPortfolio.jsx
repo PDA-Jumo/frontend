@@ -77,7 +77,13 @@ export default function PortfolioList() {
             userId={userId}
           />
         )}
-        {selectedTab === "world" && <WorldStock />}
+        {selectedTab === "world" && (
+          <WorldStock
+            level={userInfo?.level}
+            nickname={userInfo?.nickname}
+            userId={userId}
+          />
+        )}
       </div>
 
       {selectedTab === "" && (
