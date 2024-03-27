@@ -104,7 +104,11 @@ export const mainRouter = [
       },
     ],
   },
-
+  {
+    path: "/test",
+    element: <TestLayout />,
+    index: true,
+  },
   {
     path: "/test/result",
     element: <TestResultLayout />,
