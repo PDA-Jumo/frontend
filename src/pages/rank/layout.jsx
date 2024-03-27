@@ -7,9 +7,9 @@ import rankCrown from "../../assets/rank/rankCrown.png";
 import rankBluedia from "../../assets/rank/rankBluedia.png";
 import rankReddia from "../../assets/rank/rankReddia.png";
 import rankHeart from "../../assets/rank/rankHeart.png";
-import axios from "axios";
 import levelData from "../home/levelData";
 import "./rank.css";
+import { updateRankUsers } from "../../lib/apis/rank";
 
 export default function RankLayout() {
   const [users, setUsers] = useState([]);
@@ -18,9 +18,8 @@ export default function RankLayout() {
   const navigate = useNavigate();
   const scrollableContentRef = useRef(null);
   const currentUser = useSelector((state) => state.user.user) || {};
-
   useEffect(() => {
-    fetchRankUsers();
+    fetchRankUsersAsync();
     const scrollableContent = scrollableContentRef.current;
     if (scrollableContent) {
       scrollableContent.addEventListener("scroll", handleScroll);
@@ -32,7 +31,7 @@ export default function RankLayout() {
     };
   }, []);
 
-  const fetchRankUsers = async () => {
+  const fetchRankUsersAsync = async () => {
     setIsLoading(true);
     const now = new Date();
     const currentTimeFormatted = `${now.getHours()}:${now
@@ -42,16 +41,15 @@ export default function RankLayout() {
     setCurrentTime(currentTimeFormatted);
 
     try {
-      const response = await axios.get("/users/rankUsers");
-      console.log(response.data);
-      const topTenUsers = response.data.slice(0, 10).map((user) => ({
+      const data = await updateRankUsers();
+      const topTenUsers = data.slice(0, 10).map((user) => ({
         nickname: user.nickname,
         level: user.level,
         user_id: user.user_id,
       }));
       setUsers(topTenUsers);
     } catch (error) {
-      console.error("랭킹 정보를 불러오는 중 에러가 발생했습니다.", error);
+      console.error(error.message);
     }
     setIsLoading(false);
   };
@@ -121,12 +119,17 @@ export default function RankLayout() {
       </div>
       <div className="content-position">
         <div className="non-scrollable-header">
-          <button onClick={fetchRankUsers}>업데이트</button>
+          <button onClick={fetchRankUsersAsync} className="update-button">
+            업데이트
+          </button>
           {currentTime} 기준
         </div>
+
         <div className="scrollable-content" ref={scrollableContentRef}>
           <RankingList users={users} />
-          {isLoading && <p style={{ fontSize: "144px" }}>로딩 중...</p>}
+          {isLoading && (
+            <p style={{ fontSize: "144px", color: "white" }}>로딩 중...</p>
+          )}
         </div>
       </div>
       <button className="back-button1" onClick={() => navigate("/home")}>

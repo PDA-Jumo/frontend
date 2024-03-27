@@ -6,7 +6,7 @@ import Folder from "../../assets/stock/folder.png";
 import Arrow from "../../assets/stock/arrow.png";
 import { PieChartComponent } from "./PieChart.js";
 
-export default function KoreaStock() {
+export default function KoreaStock({ level, nickname }) {
   const [myStock, setMyStock] = useState([]);
   const [assets, setAssets] = useState("0");
   const [chart, setChart] = useState([]);
@@ -64,7 +64,7 @@ export default function KoreaStock() {
         <div style={{ textAlign: "left", marginLeft: "60px" }}>
           <div className="title">주대주주</div>
           <div className="xLargeText text-white" style={{ marginTop: "-10px" }}>
-            김광태가뭐야
+            {nickname}
           </div>
         </div>
 

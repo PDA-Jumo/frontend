@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import Rank from "../../assets/backgrounds/rank.png";
 import Coin from "../../assets/coin.png";
 import KoreaStock from "./KoreaStock";
@@ -9,6 +8,7 @@ import "./rank.css";
 import "./portfolio.css";
 import "./stockPortfolio.css";
 import levelData from "../home/levelData";
+import { letsGetUserInfo } from "../../lib/apis/user";
 
 export default function PortfolioList() {
   const navigate = useNavigate();
@@ -17,20 +17,16 @@ export default function PortfolioList() {
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
+    const getUserInfo = async () => {
       try {
-        const response = await axios.get(`/users/updateUsers/${userId}`);
-        setUserInfo({
-          level: response.data[0].level,
-          nickname: response.data[0].nickname,
-          total_assets: response.data[0].total_assets,
-        });
+        const userInfo = await letsGetUserInfo(userId);
+        setUserInfo(userInfo);
       } catch (error) {
         console.error("사용자 정보를 가져오는 데 실패했습니다.", error);
       }
     };
 
-    fetchUserInfo();
+    getUserInfo();
   }, [userId, selectedTab]);
 
   return (
@@ -74,7 +70,9 @@ export default function PortfolioList() {
             </div>
           </>
         )}
-        {selectedTab === "korean" && <KoreaStock />}
+        {selectedTab === "korean" && (
+          <KoreaStock level={userInfo?.level} nickname={userInfo?.nickname} />
+        )}
         {selectedTab === "world" && <WorldStock />}
       </div>
 
