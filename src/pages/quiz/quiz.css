@@ -67,7 +67,7 @@
   text-align: center;
 }
 .quiz-result.correct-answer {
-  color: blue;
+  color: #00bfff;
 }
 
 .quiz-result.wrong-answer {
@@ -125,13 +125,13 @@
   font-size: 192px;
   line-height: 1.2;
   color: #ffffff;
-  -webkit-text-stroke: 1px #ff98cc;
+  -webkit-text-stroke: 3px #ff98cc;
   padding: 0;
   transition: none;
 }
 
 .x-stroke {
-  -webkit-text-stroke: 1px blue;
+  -webkit-text-stroke: 3px blue;
 }
 
 .ox-quiz-button:hover {
