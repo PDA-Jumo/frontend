@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 // icons
@@ -7,9 +8,16 @@ import up from "../../assets/main/up.png";
 
 export default function LevelUpModal(props) {
   const level = useSelector((state) => state.user.user.level);
+  const navigate = useNavigate();
+  const onClickButtonFunc = () => {
+    props.setIsLevelUp(false);
+    if (level === 5) {
+      navigate("/test");
+    }
+  };
   const contents = [
     {
-      levelName: "주얼딩",
+      levelName: "[ 주얼딩 ]",
       reward: (
         <>
           보상으로{" "}
@@ -26,7 +34,7 @@ export default function LevelUpModal(props) {
       ),
     },
     {
-      levelName: "주린이",
+      levelName: "[ 주린이 ]",
       reward: (
         <>
           보상으로{" "}
@@ -45,7 +53,7 @@ export default function LevelUpModal(props) {
       ),
     },
     {
-      levelName: "주초딩",
+      levelName: "[ 주초딩 ]",
       reward: (
         <>
           보상으로{" "}
@@ -61,7 +69,7 @@ export default function LevelUpModal(props) {
       ),
     },
     {
-      levelName: "주중딩",
+      levelName: "[ 주중딩 ]",
       reward: (
         <>
           <span style={{ color: " #FF5656" }}>
@@ -81,7 +89,7 @@ export default function LevelUpModal(props) {
       ),
     },
     {
-      levelName: "주고딩",
+      levelName: "[ 주고딩 ]",
       reward: (
         <>
           <span style={{ color: " #FF5656" }}>
@@ -102,7 +110,7 @@ export default function LevelUpModal(props) {
       ),
     },
     {
-      levelName: "주대딩",
+      levelName: "[ 주대딩 ]",
       reward: (
         <>
           <span style={{ color: " #FF5656" }}>
@@ -120,7 +128,7 @@ export default function LevelUpModal(props) {
       ),
     },
     {
-      levelName: "주졸부",
+      levelName: "[ 주졸부 ]",
       reward: (
         <>
           보상으로{" "}
@@ -138,7 +146,7 @@ export default function LevelUpModal(props) {
       ),
     },
     {
-      levelName: "주대주주",
+      levelName: "[ 주대주주 ]",
       reward: (
         <>
           보상으로 <span style={{ color: " #FF5656" }}>[ UI 강화 ]</span>를
@@ -201,12 +209,12 @@ export default function LevelUpModal(props) {
         <div style={{ width: "100%", fontSize: "32px" }}>
           <p>
             <span style={{ color: "#F3322C" }}>
-              {contents[level].levelName}
+              {contents[level - 1].levelName}
             </span>
             으로 레벨업 하셨습니다!
           </p>
-          <p>{contents[level].reward}</p>
-          <p>{contents[level].available}</p>
+          <p>{contents[level - 1].reward}</p>
+          <p>{contents[level - 1].available}</p>
         </div>
         <div
           style={{
@@ -218,7 +226,7 @@ export default function LevelUpModal(props) {
           <div
             style={{
               backgroundColor: "white",
-              width: "80px",
+              // width: "80px",
               paddingInline: "32px",
               borderRadius: "24px",
               paddingBlock: "8px",
@@ -229,9 +237,9 @@ export default function LevelUpModal(props) {
               boxShadow: "0 4px 10px 0 rgba(0,0,0,0.3)",
               cursor: "pointer",
             }}
-            onClick={() => props.setIsLevelUp(false)}
+            onClick={() => onClickButtonFunc()}
           >
-            확인
+            {level === 5 ? "투자 성향 검사 하러 가기" : "확인"}
           </div>
         </div>
       </div>
