@@ -1,8 +1,110 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { stockSocket } from "../../lib/socket/socket";
+import { useSelector } from "react-redux";
+import { postBuyStock, postSellStock } from "../../lib/apis/stock";
 
 export default function TradeModal(props) {
+  const user = useSelector((state) => state.user.user) || {};
+  console.log(user);
+
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
+  const [stockData, setStockData] = useState([
+    "6000",
+    "60",
+    "7000",
+    "70",
+    "8000",
+    "80",
+    "9000",
+    "90",
+    "10000",
+    "100",
+    "5000",
+    "50",
+    "4000",
+    "40",
+    "3000",
+    "30",
+    "2000",
+    "20",
+    "1000",
+    "10",
+    "0",
+    "0",
+  ]);
+
+  const [priceData, setPriceData] = useState(["0", "0", "0", "0"]);
+
+  const clickBuy = async (user_id, stock_code, quantity, transaction_price) => {
+    try {
+      const resp = await postBuyStock(
+        user_id,
+        stock_code,
+        quantity,
+        transaction_price
+      );
+
+      console.log("매수쪽", resp);
+
+      if (resp === "성공") {
+        console.log("매수 주문 성공");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const clickSell = async (
+    user_id,
+    stock_code,
+    quantity,
+    transaction_price
+  ) => {
+    try {
+      const resp = await postSellStock(
+        user_id,
+        stock_code,
+        quantity,
+        transaction_price
+      );
+
+      console.log("매도쪽", resp);
+
+      if (resp === "성공") {
+        console.log("매도 주문 성공");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log(user.user_id, "005930", quantity, price);
+    const handleStockData = (data) => {
+      console.log(data);
+      setStockData(data);
+      // 데이터를 상태에 저장하거나 화면에 출력하는 로직 추가
+    };
+
+    const handlePriceData = (data) => {
+      console.log(data);
+      setPriceData(data);
+      // 데이터를 상태에 저장하거나 화면에 출력하는 로직 추가
+    };
+
+    // 'stockData' 이벤트를 받을 때 실행될 핸들러 등록
+    stockSocket.on("stockData", handleStockData);
+    // 'stockData' 이벤트를 받을 때 실행될 핸들러 등록
+    stockSocket.on("priceData", handlePriceData);
+
+    // 컴포넌트가 언마운트될 때 이벤트 핸들러 해제
+    // return () => {
+    //   stockSocket.off("stockData", handleStockData);
+    //   stockSocket.off("priceData", handlePriceData);
+    // };
+  }, []);
+
   return (
     <div
       style={{
@@ -63,63 +165,83 @@ export default function TradeModal(props) {
             <LivePrice color="white" price="호가" left="잔량" />
             <LivePrice
               color="#ECF2FF"
-              price="92,100"
+              price={stockData[8]}
               percentage="0.33"
-              left="106"
+              left={stockData[9]}
+              totalLeft={stockData[20]}
+              click={setPrice}
             />
             <LivePrice
               color="#ECF2FF"
-              price="92,100"
+              price={stockData[6]}
               percentage="0.22"
-              left="643"
+              left={stockData[7]}
+              totalLeft={stockData[20]}
+              click={setPrice}
             />
             <LivePrice
               color="#ECF2FF"
-              price="92,000"
+              price={stockData[4]}
               percentage="0.11"
-              left="1,687"
+              left={stockData[5]}
+              totalLeft={stockData[20]}
+              click={setPrice}
             />
             <LivePrice
               color="#ECF2FF"
-              price="91,900"
+              price={stockData[2]}
               percentage="0.00"
-              left="729"
+              left={stockData[3]}
+              totalLeft={stockData[20]}
+              click={setPrice}
             />
             <LivePrice
               color="#ECF2FF"
-              price="91,800"
+              price={stockData[0]}
               percentage="-0.11"
-              left="3,659"
+              left={stockData[1]}
+              totalLeft={stockData[20]}
+              click={setPrice}
             />
             <LivePrice
               color="#FFEAE9"
-              price="91,700"
+              price={stockData[10]}
               percentage="-0.22"
-              left="224"
+              left={stockData[11]}
+              totalLeft={stockData[21]}
+              click={setPrice}
             />
             <LivePrice
               color="#FFEAE9"
-              price="91,600"
+              price={stockData[12]}
               percentage="-0.33"
-              left="1,078"
+              left={stockData[13]}
+              totalLeft={stockData[21]}
+              click={setPrice}
             />
             <LivePrice
               color="#FFEAE9"
-              price="91,500"
+              price={stockData[14]}
               percentage="-0.44"
-              left="636"
+              left={stockData[15]}
+              totalLeft={stockData[21]}
+              click={setPrice}
             />
             <LivePrice
               color="#FFEAE9"
-              price="91,400"
+              price={stockData[16]}
               percentage="-0.54"
-              left="1,133"
+              left={stockData[17]}
+              totalLeft={stockData[21]}
+              click={setPrice}
             />
             <LivePrice
               color="#FFEAE9"
-              price="91,300"
+              price={stockData[18]}
               percentage="-0.65"
-              left="2,085"
+              left={stockData[19]}
+              totalLeft={stockData[21]}
+              click={setPrice}
             />
           </div>
           <div
@@ -165,8 +287,10 @@ export default function TradeModal(props) {
                 alignItems: "center",
               }}
             >
-              <span style={{ fontSize: "32px" }}>46,000</span>
-              <span style={{ fontSize: "12px" }}>+ 600(1.3%)</span>
+              <span style={{ fontSize: "32px" }}>{priceData[0]}</span>
+              <span style={{ fontSize: "12px" }}>
+                {priceData[1]} {priceData[2]} {priceData[3]}%
+              </span>
             </div>
             <div
               style={{
@@ -354,6 +478,9 @@ export default function TradeModal(props) {
                   boxSizing: "border-box",
                   cursor: "pointer",
                 }}
+                onClick={() =>
+                  clickBuy(user.user_id, "005930", quantity, price)
+                }
               >
                 매수(살래요)
               </div>
@@ -372,6 +499,9 @@ export default function TradeModal(props) {
                   boxSizing: "border-box",
                   cursor: "pointer",
                 }}
+                onClick={() =>
+                  clickSell(user.user_id, "005930", quantity, price)
+                }
               >
                 매도(팔래요)
               </div>
@@ -381,7 +511,7 @@ export default function TradeModal(props) {
       </div>
     </div>
   );
-}
+} //
 
 const LivePrice = (props) => {
   return (
@@ -393,6 +523,7 @@ const LivePrice = (props) => {
         display: "flex",
         borderBottom: "1px solid white",
       }}
+      onClick={() => props.click(props.price)}
     >
       <div
         style={{
@@ -428,7 +559,8 @@ const LivePrice = (props) => {
           style={{
             backgroundColor: props.color === "#ECF2FF" ? "#D2E8FF" : "#FFD8D9",
             justifySelf: "start",
-            width: `${parseInt(props.left.replace(/,/g, "")) / 100}%`,
+            // width: `${parseInt(props.left.replace(/,/g, "")) / 100}%`,
+            width: `${(parseInt(props.left) / props.totalLeft) * 100}%`,
             height: "100%",
             margin: "-8px",
           }}

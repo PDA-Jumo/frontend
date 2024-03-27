@@ -9,6 +9,8 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import { store, persistor } from "./store/store";
 
+// const levelUpEvent = CustomEvent("levelUp", );
+
 function App() {
   return (
     <Provider store={store}>
