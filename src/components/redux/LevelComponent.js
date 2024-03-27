@@ -32,7 +32,6 @@ export default function LevelComponent() {
     if (user.cash >= 10000 && user.level === 0) {
       // level 0->1
       openByLevel(100000, 1);
-      // 한 종목 주식 거래 가능 -> 매수매도 아이콘 블러 처리 해야함
     } else if (user.level === 1 && myStockLen >= 1) {
       // Level 1->2
       openByLevel(0, 2);
