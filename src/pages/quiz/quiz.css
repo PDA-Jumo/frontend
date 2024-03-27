@@ -143,9 +143,33 @@
   -webkit-text-stroke: 1px grey;
 }
 
-/* quiz.css에 추가 */
 .center-button-container {
   display: flex;
   justify-content: center;
-  margin-top: 20px; /* 버튼과 위 요소 사이의 간격 조정 */
+  margin-top: 10px;
+}
+
+.quiz-finished-message > div:first-child {
+  color: white;
+  font-size: 72px;
+  text-align: center;
+}
+
+.quiz-finished-message > div:not(:first-child):not(.quiz-button-container) {
+  color: white;
+  font-size: 48px;
+  text-align: center;
+}
+
+.quiz-button-container {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.quiz-button.selected-option-animation {
+  pointer-events: none;
+}
+
+.quiz-button.unselected-option-animation {
+  pointer-events: none;
 }

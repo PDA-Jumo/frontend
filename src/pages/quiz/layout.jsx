@@ -12,6 +12,7 @@ export default function QuizLayout() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user) || {};
   const [showQuiz, setShowQuiz] = useState(false);
+  const [quizFinished, setQuizFinished] = useState(false);
   const [quizList, setQuizList] = useState([]);
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
@@ -69,16 +70,13 @@ export default function QuizLayout() {
       setIsCorrect(false);
     }
   };
-
   const handleNextQuestion = () => {
     if (currentQuizIndex < quizList.length - 1) {
       setCurrentQuizIndex(currentQuizIndex + 1);
       setIsCorrect(null);
       setSelectedOption("");
     } else {
-      alert(`퀴즈가 끝났습니다. 확인을 누르시면 홈으로 이동해요.
-맞은 개수: ${correctCount}, 틀린 개수: ${5 - correctCount}`);
-      navigate("/home");
+      setQuizFinished(true);
     }
   };
 
@@ -86,13 +84,12 @@ export default function QuizLayout() {
     console.log("뒤로가기 버튼이 클릭되었습니다.");
     navigate("/home");
   };
-
   return (
     <div
       className="quiz-layout"
       style={{ backgroundImage: `url(${quizBackground})` }}
     >
-      {!showQuiz ? (
+      {!showQuiz && !quizFinished ? (
         <>
           <div className="welcome-text">뿅뿅 주식오락실</div>
           <div className="welcome-text-exp">
@@ -105,6 +102,25 @@ export default function QuizLayout() {
             뒤로가기
           </button>
         </>
+      ) : quizFinished ? (
+        <div className="quiz-finished-message">
+          <div>퀴즈가 끝났습니다!</div>
+          <div>
+            맞은 개수: {correctCount}, 틀린 개수: {5 - correctCount}
+          </div>
+          <div className="quiz-button-container">
+            <button
+              className="quiz-button"
+              onClick={() => {
+                setShowQuiz(false);
+                setQuizFinished(false);
+                navigate("/home");
+              }}
+            >
+              홈으로
+            </button>
+          </div>
+        </div>
       ) : quizList.length > 0 && currentQuizIndex < quizList.length ? (
         <div style={{ marginTop: "100px" }}>
           <div className="quiz-question">
@@ -126,10 +142,8 @@ export default function QuizLayout() {
                 className={`quiz-button ${option === "X" ? "x-stroke" : ""} ${
                   selectedOption
                     ? selectedOption === option
-                      ? "quiz-button-selected"
-                      : quizList[currentQuizIndex].type === "OX"
-                      ? "unselected-text-stroke"
-                      : "unselected"
+                      ? "selected-option-animation"
+                      : "unselected-option-animation" // 선택되지 않은 옵션에 대한 새로운 클래스 추가
                     : ""
                 } ${
                   quizList[currentQuizIndex].type === "OX"
@@ -158,8 +172,6 @@ export default function QuizLayout() {
                 )}
               </div>
               <div className="center-button-container">
-                {" "}
-                {/* 이 div를 추가함으로써 버튼을 가운데 정렬 */}
                 <button
                   className="quiz-button next-question-button"
                   onClick={handleNextQuestion}
