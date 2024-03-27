@@ -5,54 +5,25 @@ import Chart from "../../assets/stock/Increase.png";
 import Folder from "../../assets/stock/folder.png";
 import Arrow from "../../assets/stock/arrow.png";
 import { PieChartComponent } from "./PieChart.js";
+import { getKoreaPortfolio } from "../../lib/apis/portfolio";
+import levelData from "../home/levelData.js";
 
-export default function KoreaStock({ level, nickname }) {
+export default function KoreaStock({ level, nickname, userId }) {
   const [myStock, setMyStock] = useState([]);
   const [assets, setAssets] = useState("0");
   const [chart, setChart] = useState([]);
   const [hoverdata, setHoverdata] = useState("");
 
-  /* API 오면 현재 코드 폐기하고 아래의 방식으로 유저데이터를 받을수 있지 않을까?. rankPortfolio.jsx에는 이미 userId가 존재한다.
- useEffect(() => {
-    const setData = async () => {
-      const resp = await getKoreaPortfolio(2);
-      setMyStock(resp.myStock);
-      setAssets(resp.assets);
-      setChart(resp.mystock_percent);
-    };
-
-    setData();
-  }, []);*/
-
-  // 여기부터
   useEffect(() => {
     const setData = async () => {
-      const resp = {
-        myStock: [
-          "삼성전자",
-          "LG화학",
-          "현대자동차",
-          "KT&G",
-          "오브젠",
-          "프로티아",
-        ],
-        assets: "100,000,000",
-        mystock_percent: [
-          { stock_name: "삼성전자", percent: 10 },
-          { stock_name: "LG화학", percent: 20 },
-          { stock_name: "현대자동차", percent: 10 },
-          { stock_name: "KT&G", percent: 10 },
-          { stock_name: "오브젠", percent: 20 },
-          { stock_name: "프로티아", percent: 20 },
-        ],
-      };
+      const resp = await getKoreaPortfolio(userId);
       setMyStock(resp.myStock);
       setAssets(resp.assets);
       setChart(resp.mystock_percent);
     };
-    // 여기까지 : dummy로 채우는중인거임
+
     setData();
-  }, []);
+  }, [userId]);
 
   function handleHover(data) {
     setHoverdata(data.stock_name);
@@ -62,7 +33,7 @@ export default function KoreaStock({ level, nickname }) {
     <div className="koreaStockContainer">
       <div className="leftSection">
         <div style={{ textAlign: "left", marginLeft: "60px" }}>
-          <div className="title">주대주주</div>
+          <div className="title">{levelData[level] || "알 수 없음"}</div>
           <div className="xLargeText text-white" style={{ marginTop: "-10px" }}>
             {nickname}
           </div>
@@ -71,7 +42,7 @@ export default function KoreaStock({ level, nickname }) {
         <div className="stockInfoSection">
           <div className="largeText text-white assetsDisplay">
             <img src={Coin} className="icon" alt="Coin" />
-            보유자산
+            평가금액
           </div>
           <div className="mediumText text-white">{assets}원</div>
           <div>

@@ -71,7 +71,11 @@ export default function PortfolioList() {
           </>
         )}
         {selectedTab === "korean" && (
-          <KoreaStock level={userInfo?.level} nickname={userInfo?.nickname} />
+          <KoreaStock
+            level={userInfo?.level}
+            nickname={userInfo?.nickname}
+            userId={userId}
+          />
         )}
         {selectedTab === "world" && <WorldStock />}
       </div>
