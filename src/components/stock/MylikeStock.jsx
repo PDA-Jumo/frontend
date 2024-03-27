@@ -7,10 +7,12 @@ import Arrow from "../../assets/stock/arrow.png";
 import "../../styles/stock.css";
 import { getLikePortfolio } from "../../lib/apis/portfolio";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 export default function MyLikeStock() {
   const [likestock, setLikeStock] = useState([]);
   const user = useSelector((state) => state.user.user) || {};
+  const navigate = useNavigate();
 
   useEffect(() => {
     const setData = async () => {
@@ -41,7 +43,7 @@ export default function MyLikeStock() {
       >
         <div>
           <div style={{ fontSize: "18px", color: "#F9C93E" }}>주대주주</div>
-          <div class="mediumText">김광태가뭐야</div>
+          <div class="mediumText">{user.nickname}</div>
         </div>
 
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -72,7 +74,15 @@ export default function MyLikeStock() {
           {likestock.map((stock, id) => {
             return (
               <div key={id} className="likestock">
-                <div>
+                <div
+                  onClick={() => {
+                    navigate(
+                      `/stock/detail/${stock.stock_code}/${encodeURIComponent(
+                        stock.stock_name
+                      )}`
+                    );
+                  }}
+                >
                   <img src={Folder} />
                   {stock.stock_name}
                 </div>

@@ -1,22 +1,23 @@
 .profile-and-info {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%; /* 컨테이너 전체 너비 사용 */
+  width: 300px;
+  font-size: 24px;
+  padding: 10px 10px;
 }
 
 .profile-img {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  margin-right: 20px; /* 이미지와 텍스트 사이의 간격 */
+  margin-right: 20px;
   border: 1px solid black;
+  margin-top: 5px;
 }
 
 .info-text {
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* 오른쪽 정렬 */
+  align-items: flex-start;
 }
 
 .level-type {
@@ -34,23 +35,27 @@
 
 .white-rounded-box {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 10px 20px;
   margin: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: flex-end; /* 오른쪽 정렬 */
+  font-size: 24px;
 }
 
 .white-rounded-box-row {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 100px;
   padding: 10px 20px;
   margin: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: row; /* 가로 방향으로 정렬 */
+  font-size: 24px;
+  width: 250px;
+  margin-right: 40px;
 }
 
 .navigation-buttons.vertical {
@@ -60,9 +65,10 @@
 }
 
 .navigation-buttons.vertical img {
-  width: 40px; /* 이미지 너비를 40px로 설정 */
-  height: 40px; /* 이미지 높이를 40px로 설정 */
-  margin: 5px 0;
+  margin-top: 7px;
+  width: 60px; /* 이미지 너비를 40px로 설정 */
+  height: 60px; /* 이미지 높이를 40px로 설정 */
+  margin-right: 10px;
   cursor: pointer;
 }
 
@@ -78,9 +84,21 @@ button:hover,
 .clickme img {
   width: 200px;
   height: 200px;
+  position: relative; /* position을 relative로 변경 */
+  top: -200px; /* 원래 위치에서 위로 200px */
+  margin-left: 80px;
   transition: transform 0.25s ease;
 }
 
 .clickme img:active {
   transform: scale(1.2);
+}
+
+.level-type {
+  font-size: 18px;
+  justify-content: flex-start;
+}
+
+.nickname {
+  font-size: 36px;
 }

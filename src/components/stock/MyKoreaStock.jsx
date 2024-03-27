@@ -7,22 +7,26 @@ import Arrow from "../../assets/stock/arrow.png";
 import { getKoreaPortfolio } from "../../lib/apis/portfolio";
 import { PieChartComponent } from "./PieChart";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 export default function MyKoreaStock() {
-  const [myStock, setMyStock] = useState([]);
   const [assets, setAssets] = useState("0");
-  const [chart, setChart] = useState({});
+  const [chart, setChart] = useState([]);
   const [hoverdata, setHoverdata] = useState("");
   const user = useSelector((state) => state.user.user) || {};
+  const [yieldrate, setYieldrate] = useState("0")
+  const [yieldmoney, setYieldmoney] = useState("0")
+  const navigate = useNavigate();
 
   console.log(user.user_id);
 
   useEffect(() => {
     const setData = async () => {
       const resp = await getKoreaPortfolio(user.user_id);
-      setMyStock(resp.myStock);
       setAssets(resp.assets);
       setChart(resp.mystock_percent);
+      setYieldrate(resp.yield_rate)
+      setYieldmoney(resp.yield_money)
     };
 
     setData();
@@ -32,6 +36,8 @@ export default function MyKoreaStock() {
     console.log(data.stock_name);
     setHoverdata(data.stock_name);
   }
+
+  console.log(chart);
 
   return (
     <div
@@ -54,7 +60,7 @@ export default function MyKoreaStock() {
       >
         <div>
           <div style={{ fontSize: "18px", color: "#F9C93E" }}>주대주주</div>
-          <div class="mediumText">김광태가뭐야</div>
+          <div class="mediumText">{user.nickname}</div>
         </div>
 
         <div
@@ -93,7 +99,7 @@ export default function MyKoreaStock() {
                 justifyContent: "space-between",
               }}
             >
-              전체 수익률<div style={{ color: "red" }}>19.37%</div>
+              전체 수익률<div style={{ color: "red" }}>{yieldrate}%</div>
             </div>
             <div
               style={{
@@ -102,7 +108,7 @@ export default function MyKoreaStock() {
                 justifyContent: "space-between",
               }}
             >
-              평가 수익 금액 <div style={{ color: "red" }}>7,040,204</div>
+              평가 수익 금액 <div style={{ color: "red" }}>{yieldmoney}</div>
             </div>
           </div>
         </div>
@@ -125,8 +131,8 @@ export default function MyKoreaStock() {
         </div>
 
         <div style={{ height: "35%", overflow: "auto" }}>
-          {myStock.map((stock, id) => {
-            const isHovered = stock === hoverdata;
+          {chart.map((stock, id) => {
+            const isHovered = stock.stock_name === hoverdata;
             return (
               <div
                 key={id}
@@ -142,9 +148,17 @@ export default function MyKoreaStock() {
                   backgroundColor: isHovered ? "#FCD8D4" : "white",
                 }}
               >
-                <div>
+                <div
+                  onClick={() => {
+                    navigate(
+                      `/stock/detail/${stock.stock_code}/${encodeURIComponent(
+                        stock.stock_name
+                      )}`
+                    );
+                  }}
+                >
                   <img src={Folder} />
-                  {stock}
+                  {stock.stock_name}
                 </div>
                 <img
                   src={Arrow}
