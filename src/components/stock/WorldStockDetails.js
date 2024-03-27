@@ -13,8 +13,6 @@ import refresh from "../../assets/icons/refresh.png";
 import gold from "../../assets/stock/medal_gold.png";
 import silver from "../../assets/stock/medal_silver.png";
 import bronze from "../../assets/stock/medal_bronze.png";
-import Folder from "../../assets/stock/folder.png";
-import Trash from "../../assets/icons/Trash.png";
 
 //library
 import SliderComponent from "./SliderComponent";
@@ -97,26 +95,44 @@ export default function StockDetails() {
         <MainChartNumberComponent sise={kospiSise} />
         <MainChartNumberComponent sise={kosdaqSise} />
       </div>
-      {user.level <= 1 ? (
-        <div style={{ width: "100%", height: "30px" }} />
-      ) : (
+      <div
+        style={{
+          marginTop: "42px",
+          height: "280px",
+        }}
+      >
         <div
-          style={{
-            marginTop: "42px",
-            height: "280px",
-          }}
+          className="textShadow"
+          style={{ display: "flex", alignItems: "center", fontSize: "24px" }}
         >
+          <img
+            src={Document}
+            className="iconSmall"
+            style={{ marginRight: "8px" }}
+          />
+          마켓 이슈
+        </div>
+        {user.level <= 1 ? (
           <div
-            className="textShadow"
-            style={{ display: "flex", alignItems: "center", fontSize: "24px" }}
+            style={{
+              width: "100%",
+              height: "130px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            <img
-              src={Document}
-              className="iconSmall"
-              style={{ marginRight: "8px" }}
-            />
-            마켓 이슈
+            <span style={{ fontSize: "20px" }}>
+              마켓 이슈는{" "}
+              <span
+                style={{ fontSize: "20px", borderBottom: "6px double #71A3FF" }}
+              >
+                Lv 2.주린이
+              </span>{" "}
+              부터 조회 가능해요!
+            </span>
           </div>
+        ) : (
           <div
             style={{
               display: "flex",
@@ -130,8 +146,8 @@ export default function StockDetails() {
               setClickedIssue={setClickedIssue}
             />
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ width: "45%" }}>

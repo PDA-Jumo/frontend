@@ -11,6 +11,7 @@ export const UPDATE_CASH_TOTALASSETS = "UPDATE_CASH_TOTALASSETS";
 export const UPDATE_TYPE = "UPDATE_TYPE";
 export const UP_CASH_BY_WORK = "UP_CASH_BY_WORK";
 export const UPDATE_LEVEL = "UPDATE_LEVEL";
+export const INIT_LEVEL_CHECK = "INIT_LEVEL_CHECK";
 
 //Action Creator
 export const loginAction = (user) => {
@@ -129,14 +130,11 @@ export default function UserReducer(state = initialState, action) {
     //     },
     //   };
     case UPDATE_LEVEL:
-      const newCheck = [...state.user.check];
-      newCheck[action.payload.level] = true;
       return {
         ...state,
         user: {
           ...state.user,
           level: action.payload.level,
-          check: newCheck,
         },
       };
     default:

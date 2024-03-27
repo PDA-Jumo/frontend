@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import home1 from "../../assets/backgrounds/home1.png";
 import home2 from "../../assets/backgrounds/home2.jpg";
@@ -13,6 +13,7 @@ import LevelComponent from "../../components/redux/LevelComponent";
 export default function HomeLayout() {
   const userLevel = useSelector((state) => state.user.user.level) || 0;
   const [backgroundImage, setBackgroundImage] = useState(home1);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setBackgroundImage(selectBackgroundImage(userLevel));
