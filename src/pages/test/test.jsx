@@ -4,8 +4,6 @@ import character1 from "../../assets/backgrounds/character1.png";
 import testData from "./testData";
 import { useNavigate } from "react-router-dom";
 
-//TODO 여기부터 user의 정보를 받아올 수 있어야 함 (quiz 와 동일)
-
 export default function TestLayout() {
   const navigate = useNavigate();
   const [startTest, setStartTest] = useState(false);
@@ -14,7 +12,7 @@ export default function TestLayout() {
 
   const handleBack = () => {
     console.log("뒤로가기 버튼이 클릭되었습니다.");
-    navigate("/");
+    navigate("/home");
   };
 
   const calculateProgress = () => {

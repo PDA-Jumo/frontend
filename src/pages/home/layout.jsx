@@ -11,17 +11,11 @@ import store from "../../store";
 
 export default function HomeLayout() {
   const userLevel = useSelector((state) => state.user.user.level) || 0;
-  const [backgroundImage, setBackgroundImage] = useState(home1); // 초기 배경 이미지 설정
-
-  store.subscribe(() => {
-    if (store.getState().action.indexOf("messanger") !== -1) {
-      console.log("subscribed for counter actions", store.getState());
-    }
-  });
+  const [backgroundImage, setBackgroundImage] = useState(home1);
 
   useEffect(() => {
-    setBackgroundImage(selectBackgroundImage(userLevel)); // 사용자 레벨에 따른 배경 이미지 업데이트
-  }, [userLevel]); // userLevel이 변경될 때마다 useEffect 내의 코드 실행
+    setBackgroundImage(selectBackgroundImage(userLevel));
+  }, [userLevel]);
 
   return (
     <div
@@ -33,11 +27,10 @@ export default function HomeLayout() {
   );
 }
 
-// 선택된 이미지를 반환하는 함수
 const selectBackgroundImage = (level) => {
   if (level >= 0 && level <= 3) return home1;
   else if (level >= 4 && level <= 5) return home2;
   else if (level === 6) return home3;
   else if (level === 7) return home4;
-  else return home5; // level이 8 이상인 경우를 처리
+  else return home5;
 };

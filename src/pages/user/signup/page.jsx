@@ -8,9 +8,13 @@ import character2 from "./character2.png";
 import character3 from "./character3.png";
 import character4 from "./character4.png";
 import character5 from "./character5.png";
+import hat from "../../../assets/user/Title.png";
 
-// 예시 이미지 주소 배열
+import { useEffect } from "react";
+
 const images = [character1, character2, character3, character4, character5];
+
+Modal.setAppElement("#root");
 
 export default function SignUpPage() {
   const [userEmail, setUserEmail] = useState("");
@@ -26,98 +30,137 @@ export default function SignUpPage() {
 
   const onRegisterSubmit = useCallback(
     (email, password, nickname, profile_img) => {
-      // signup 함수 로직 구현 필요
       signup({ email, password, nickname, profile_img }).then((data) => {
         console.log(data);
       });
       navigate("/signin");
-      // 예시로 console.log를 사용했으나, 실제로는 여기에 회원가입 로직을 구현해야 합니다.
     },
-    []
+    [navigate]
   );
-
   return (
-    <div className="container">
-      <Modal
-        isOpen={showImages}
-        onRequestClose={() => setShowImages(false)}
-        contentLabel="프로필 사진 선택"
-        className="modal"
-        overlayClassName="overlay"
-      >
-        <h2>프로필 사진을 입력하세요</h2>
-        <div className="image-options">
-          {images.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt={`Profile ${index + 1}`}
-              onClick={() => {
-                setUserImage(image);
-                setShowImages(false);
-              }}
-            />
-          ))}
+    <div className="centered-container">
+      <div className="rounded-rectangle2">
+        <div className="hat-section">
+          <img src={hat} alt="Hat" className="hat-image" />
         </div>
-      </Modal>
+        <div className="container-split">
+          <div className="image-selection-area">
+            <div
+              className="profile-image-selector"
+              onClick={() => setShowImages(true)}
+            >
+              {userImage === "" ? (
+                <div
+                  className="selected-image-placeholder"
+                  style={{ textAlign: "center", color: "#a5a5a5" }}
+                >
+                  프로필 캐릭터를 설정하려면
+                  <br />
+                  클릭해주세요
+                </div>
+              ) : (
+                <img
+                  src={userImage}
+                  alt="Selected profile"
+                  className="selected-image"
+                />
+              )}
+            </div>
+            <Modal
+              isOpen={showImages}
+              onRequestClose={() => setShowImages(false)}
+              contentLabel="프로필 사진 선택"
+              className="modal modalContent"
+              overlayClassName="overlay"
+            >
+              <h2 style={{ marginBottom: "36px", fontSize: "36px" }}>
+                프로필 사진을 선택하세요
+              </h2>
+              <div className="image-options">
+                {images.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`Profile ${index + 1}`}
+                    onClick={() => {
+                      setUserImage(image);
+                      setShowImages(false);
+                    }}
+                    className="selectable-image"
+                  />
+                ))}
+              </div>
+            </Modal>
+          </div>
+          <div className="form-area">
+            <div className="form-group1">
+              <div className="form-floating mb-3">
+                <label htmlFor="floatingNickname" className="label-custom">
+                  닉네임
+                </label>
+                <input
+                  type="text"
+                  className="form-control custom-input2"
+                  id="floatingNickname"
+                  placeholder="닉네임을 입력해주세요.(최대 6글자)"
+                  onChange={(e) =>
+                    onInputChange(e.target.value, setUserNickname)
+                  }
+                  value={userNickname}
+                  required
+                />
+              </div>
 
-      <div className="form-container">
-        <h3>Register</h3>
+              <div className="form-floating mb-3">
+                <label htmlFor="floatingInput" className="label-custom">
+                  이메일
+                </label>
+                <input
+                  type="email"
+                  className="form-control custom-input2"
+                  id="floatingInput"
+                  placeholder="이메일을 입력해주세요."
+                  onChange={(e) => onInputChange(e.target.value, setUserEmail)}
+                  value={userEmail}
+                  required
+                />
+              </div>
 
-        {/* 프로필 사진 선택 */}
-        <div
-          className="profile-image-selector"
-          onClick={() => setShowImages(true)}
-        >
-          {userImage ? (
-            <img
-              src={userImage}
-              alt="Selected profile"
-              className="selected-image"
-            />
-          ) : (
-            <button className="image-select-button">
-              프로필 사진을 선택하세요
-            </button>
-          )}
+              <div className="form-floating mb-3">
+                <label htmlFor="floatingPassword" className="label-custom">
+                  비밀번호
+                </label>
+                <input
+                  type="password"
+                  className="form-control custom-input2"
+                  id="floatingPassword"
+                  placeholder="비밀번호를 입력해주세요."
+                  onChange={(e) =>
+                    onInputChange(e.target.value, setUserPassword)
+                  }
+                  value={userPassword}
+                  required
+                />
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* 기본 회원가입 양식 */}
-        <label htmlFor="emailInput">Email address</label>
-        <input
-          id="emailInput"
-          type="email"
-          onChange={(e) => onInputChange(e.target.value, setUserEmail)}
-          placeholder="name@example.com"
-          required
-        />
-
-        <label htmlFor="passwordInput">Password</label>
-        <input
-          id="passwordInput"
-          type="password"
-          onChange={(e) => onInputChange(e.target.value, setUserPassword)}
-          placeholder="Password"
-          required
-        />
-
-        <label htmlFor="nicknameInput">Nickname</label>
-        <input
-          id="nicknameInput"
-          type="text"
-          onChange={(e) => onInputChange(e.target.value, setUserNickname)}
-          placeholder="별명을 입력하여 주세요."
-          required
-        />
-
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            onRegisterSubmit(userEmail, userPassword, userNickname, userImage);
-          }}
-        >
-          회원가입
-        </button>
+        <div className="register-button-container">
+          <div
+            className="button"
+            onClick={(e) => {
+              e.preventDefault();
+              onRegisterSubmit(
+                userEmail,
+                userPassword,
+                userNickname,
+                userImage
+              );
+            }}
+          >
+            회원가입
+          </div>
+        </div>
       </div>
     </div>
   );
