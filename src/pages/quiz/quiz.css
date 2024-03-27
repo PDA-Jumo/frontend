@@ -60,7 +60,6 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* 여기: 결과*/
 .quiz-result {
   margin-top: 20px;
   font-size: 28px;
@@ -74,7 +73,6 @@
   color: red;
 }
 
-/* 배별하님 피드백으로 수정.*/
 .quiz-explanation {
   font-size: 28px;
   text-align: center;
@@ -143,4 +141,11 @@
 }
 .unselected-text-stroke {
   -webkit-text-stroke: 1px grey;
+}
+
+/* quiz.css에 추가 */
+.center-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* 버튼과 위 요소 사이의 간격 조정 */
 }
