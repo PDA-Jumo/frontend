@@ -24,7 +24,7 @@ import persistReducer from "redux-persist/es/persistReducer";
 const rootPersistConfig = {
   key: "root",
   storage: storageSession,
-  whitelist: ["search"],
+  whitelist: ["search", "user"],
 };
 
 const rootReducer = persistReducer(
