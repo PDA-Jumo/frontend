@@ -9,6 +9,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 //css
 import "../../styles/stockDetails.css";
@@ -29,6 +30,9 @@ import {
   postLikeStock,
   deleteLikeStock,
 } from "../../lib/apis/portfolio";
+import { createCommunity, checkCommunity } from "../../lib/apis/community";
+
+import socketEvent from "../../lib/socket/StockSocketEvents";
 
 export default function StockDetail() {
   const [isTrade, setIsTrade] = useState(false);
@@ -37,8 +41,11 @@ export default function StockDetail() {
   const [stocknews, setStockNews] = useState([{}]);
   const [isLike, setIsLike] = useState("empty");
   const [graph, setGraph] = useState([]);
+  const [prices, setPrices] = useState([]);
   const params = useParams();
   const user = useSelector((state) => state.user.user) || {};
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const setData = async () => {
@@ -58,6 +65,39 @@ export default function StockDetail() {
   console.log(isLike);
   console.log(graph);
   const maxYValue = Math.max(...graph.map((item) => item.close));
+
+  useEffect(() => {
+    // 종목 상세 페이지 입장
+    socketEvent.joinRoom(params.stockId, user.user_id);
+
+    setPrices([]);
+
+    // 현재가 데이터 로드
+    socketEvent.currentStockPrice((currentprice) => {
+      console.log(currentprice);
+      setPrices((price) => [...price, currentprice]);
+    });
+
+    return () => {
+      socketEvent.leaveRoom(params.stockId, user.user_id);
+    };
+  }, [params.stockId, user.user_id]); // 종목 ID나 사용자 ID가 변경되면 이 useEffect가 다시 실행됩니다.
+
+  const handleCommunityClick = async () => {
+    try {
+      const data = await checkCommunity(params.stockId);
+      if (data.length === 0) {
+        await createCommunity(params.stockId, params.stockName);
+      }
+      navigate(`/community/`);
+    } catch (error) {
+      console.error("커뮤니티 생성 중 오류 발생", error);
+    }
+  };
+
+  console.log(stockd);
+
+  console.log(stocknews);
 
   return (
     <div
@@ -113,6 +153,7 @@ export default function StockDetail() {
               }}
             />
           )}
+          {prices}
           <span className="largeText">{params.stockName}</span>
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
@@ -135,6 +176,7 @@ export default function StockDetail() {
           boxSizing: "border-box",
         }}
       >
+        {/* 종목 차트 */}
         <div
         // style={{
         //   width: "60%",
@@ -186,7 +228,12 @@ export default function StockDetail() {
           />
 
           <div style={{ display: "flex", gap: "8px" }}>
-            <div className="stockDetailTradeButton">커뮤니티</div>
+            <div
+              className="stockDetailTradeButton"
+              onClick={handleCommunityClick}
+            >
+              커뮤니티
+            </div>
             <div className="stockDetailTradeButton">소수점 거래하기</div>
             <div
               className="stockDetailTradeButton"

@@ -101,4 +101,9 @@ button:hover,
 
 .nickname {
   font-size: 36px;
+  transition: transform 0.25s ease;
+}
+
+.clickme img:active {
+  transform: scale(1.2);
 }
