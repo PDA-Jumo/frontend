@@ -60,7 +60,7 @@ export default function StockDetail() {
     };
 
     setData();
-  }, [isLike]);
+  }, [isLike, params]);
 
   console.log(isLike);
   console.log(graph);
