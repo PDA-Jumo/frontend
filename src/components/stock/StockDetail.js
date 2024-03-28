@@ -9,6 +9,7 @@ import character from "../../assets/character/shinhan_computer.png";
 import TradeModal from "./TradeModal";
 
 import { getStockDetail, getStockNews } from "../../lib/apis/stock";
+import { stockSocket } from "../../lib/socket/socket";
 
 export default function StockDetail() {
   const [isTrade, setIsTrade] = useState(false);
@@ -16,6 +17,13 @@ export default function StockDetail() {
   const [stockd, setStockD] = useState([]);
   const [stocknews, setStockNews] = useState([{}]);
   const params = useParams();
+
+  // // 버튼 클릭 이벤트 핸들러
+  const handleRequestData = () => {
+    // 서버에 "requestData" 메시지를 보내 데이터 요청
+    // stockSocket.emit("requestData", "005930");
+    stockSocket.emit("requestPrice", "199800");
+  };
 
   useEffect(() => {
     const setData = async () => {
@@ -120,7 +128,10 @@ export default function StockDetail() {
             <div className="stockDetailTradeButton">소수점 거래하기</div>
             <div
               className="stockDetailTradeButton"
-              onClick={() => setIsTrade(true)}
+              onClick={() => {
+                setIsTrade(true);
+                handleRequestData();
+              }}
             >
               주식 거래하기
             </div>
