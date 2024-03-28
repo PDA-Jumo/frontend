@@ -104,13 +104,13 @@ export default function QuizLayout() {
         </>
       ) : quizFinished ? (
         <div className="quiz-finished-message">
-          <div>퀴즈가 끝났습니다!</div>
+          <div style={{ marginBottom: "24px" }}>퀴즈가 끝났습니다!</div>
           <div>
             맞은 개수: {correctCount}, 틀린 개수: {5 - correctCount}
           </div>
           <div className="quiz-button-container">
             <button
-              className="quiz-button"
+              className="quiz-end-button"
               onClick={() => {
                 setShowQuiz(false);
                 setQuizFinished(false);
@@ -123,6 +123,11 @@ export default function QuizLayout() {
         </div>
       ) : quizList.length > 0 && currentQuizIndex < quizList.length ? (
         <div style={{ marginTop: "100px" }}>
+          {isCorrect === null && (
+            <div className="current-quiz-info">
+              문제 {currentQuizIndex + 1} / {quizList.length}
+            </div>
+          )}
           <div className="quiz-question">
             {quizList[currentQuizIndex].question}
           </div>

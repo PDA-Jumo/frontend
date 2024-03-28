@@ -149,6 +149,10 @@
   margin-top: 10px;
 }
 
+.quiz-finished-message {
+  margin-top: 50px;
+}
+
 .quiz-finished-message > div:first-child {
   color: white;
   font-size: 72px;
@@ -192,4 +196,24 @@
 
 .unselected-text-stroke {
   border: transparent;
+}
+
+.current-quiz-info {
+  font-size: 48px;
+  color: white;
+}
+.quiz-end-button {
+  width: 200px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background-color: #ff00fe;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 36px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
