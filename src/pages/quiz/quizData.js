@@ -1,4 +1,4 @@
-// TODO 사용자 DB 나오면 문제에 레벨 달아보기. 사용자의 레벨보다 높은 문제는 출제되지 않도록 하기
+
 const quizData = [
   {
     "type": "OX",
@@ -14,6 +14,14 @@ const quizData = [
     "options": ["O", "X"],
     "answer": "X",
     "explanation": "주식 시장이 열렸을때만 거래가 가능해요.",
+    "level": "0", 
+  },
+  {
+    "type": "OX",
+    "question": "주식 구매나 판매를 예약하는게 가능한가요?",
+    "options": ["O", "X"],
+    "answer": "O",
+    "explanation": "원하는 가격에 사거나 팔겠다고 예약해두는게 가능해요.",
     "level": "0", 
   },
   {
@@ -34,6 +42,24 @@ const quizData = [
   },
   {
     "type": "multipleChoice",
+    "question": "주식을 팔아 얻은 돈은 무엇일까요?",
+    "options": ["예금", "매도금", "이자", "물가상승"],
+    "answer": "매도금",
+    "explanation": "주식을 팔아서 얻는 금액은 매도금이며, 이는 주식 매도 후 증권사 계좌에 입금돼요.",
+    "level": "0"
+  },
+  {
+    "type": "multipleChoice",
+    "question": "주식을 보유하고 있는 동안 주가가 내리면 무엇이 발생할까요?",
+    "options": ["이자", "배당금", "수수료", "손실"],
+    "answer": "손실",
+    "explanation": "주가가 하락하면 손실이 나겠죠?",
+    "level": "0"
+  }
+,  
+    
+  {
+    "type": "multipleChoice",
     "question": "주식을 현재 가격에 바로 구매하고 싶으면 어떤 주문을 해야 할까??",
     "options": ["지정가 주문", "시장가 주문", "무조건 주문", "시간외 주문"],
     "answer": "시장가 주문",
@@ -51,7 +77,7 @@ const quizData = [
   {
     "type": "multipleChoice",
     "question": "주식을 가지고 있는 사람을 뭐라고 할까?",
-    "options": ["공모주", "신규상장주", "주주", "예금주"],
+    "options": ["공모주", "신규상장주", "주주", "시크릿쥬쥬"],
     "answer": "주주",
     "explanation": "공모주: 기업공개를 통해 신규 상장하는 주식을 의미해요.",
     "level": "0",  
@@ -82,12 +108,86 @@ const quizData = [
   },
   {
     "type": "OX",
+    "question": "삼성전자와 삼성전자우는 다른 회사인가요?",
+    "options": ["O", "X"],
+    "answer": "X",
+    "explanation": "주식의 형태가 다를 뿐, 같은 회사에요.",
+    "level": "0", 
+  },
+  {
+    "type": "OX",
     "question": "충분한 돈이 있다면, 무한정으로 주식을 살 수 있을까요?",
     "options": ["O", "X"],
     "answer": "X",
     "explanation": "주식을 팔려는 사람이 있어야 살 수 있어요.",
     "level": "0", 
   },
+  {
+    "type": "OX",
+    "question": "주식을 구매하면 그 회사의 소유권을 일부 얻게 되나요?",
+    "options": ["O", "X"],
+    "answer": "O",
+    "explanation": "주식을 구매하면 해당 회사의 주주가 되며, 회사 소유권의 일부를 얻게 돼요.",
+    "level": "0"
+  },
+{
+  "type": "OX",
+  "question": "회사의 주식 가격이 하루에도 여러 번 변할 수 있나요?",
+  "options": ["O", "X"],
+  "answer": "O",
+  "explanation": "바뀌니까 주식이죠!",
+  "level": "0"
+},
+{
+  "type": "multipleChoice",
+  "question": "주식 거래를 하려면 어떤 계좌를 개설해야 하나요?",
+  "options": ["예금 계좌", "적금 계좌", "증권 계좌", "대출 계좌"],
+  "answer": "증권 계좌",
+  "explanation": "주식 거래를 위해서는 증권사에서 증권 계좌를 개설해야 합니다.",
+  "level": "0"
+},
+{
+  "type": "multipleChoice",
+  "question": "기업의 주가가 상승할 것으로 예측되는 경우가 아닌 것은?",
+  "options": ["대박 실적", "외부의 많은 투자", "사업 확장", "빚이 많이 생김"],
+  "answer": "빚이 많이 생김",
+  "explanation": "재무상태가 좋지 않은 기업에 투자해서는 안 돼요.",
+  "level": "0"
+},
+
+{
+  "type": "OX",
+  "question": "주식을 매도할 때는 항상 이익을 얻을 수 있나요?",
+  "options": ["O", "X"],
+  "answer": "X",
+  "explanation": "주식을 매수한 가격보다 높은 가격에 매도할 때만 이익을 얻을 수 있어요.",
+  "level": "2"
+},
+{
+  "type": "OX",
+  "question": "주식을 사고 팔 때 내야 하는 세금이 있나요?",
+  "options": ["O", "X"],
+  "answer": "O",
+  "explanation": "증권거래세가 존재해요.",
+  "level": "2"
+},
+{
+  "type": "multipleChoice",
+  "question": "주식 시장에서 거래되는 회사의 지분을 나타내는 단위를 무엇이라고 하나요?",
+  "options": ["주식증권", "주식파일", "주식테이프", "주식단위"],
+  "answer": "주식증권",
+  "explanation": "주식증권은 회사의 지분을 나타내는 단위이에요.",
+  "level": "2"
+},
+
+{
+  "type": "OX",
+  "question": "주식을 구매하면 바로 팔 수 있나요?",
+  "options": ["O", "X"],
+  "answer": "O",
+  "explanation": "네, 그러나 수수료가 많이 들 수 있어요.",
+  "level": "2"
+},
   {
     "type": "multipleChoice",
     "question": "한국 증권시장의 투자 주체가 아닌 것은?",
@@ -118,6 +218,14 @@ const quizData = [
     "options": ["배당수익률", "순이익", "시가총액", "액면가"],
     "answer": "시가총액",
     "explanation": "배당수익률: 배당금/주가*100, 액면가: '회계적으로 명시된' 주식 1주의 가격",
+    "level": "2", 
+  },
+  {
+    "type": "multipleChoice",
+    "question": "시가총액을 계산하는 방법은?",
+    "options": ["주가 * 주식 수", "주가 * 주당순이익", "주가 * 수수료", "액면가 * 주가"],
+    "answer": "주가 * 주식 수",
+    "explanation": "시가총액은 주가를 총 주식 수에 곱한 값이에요.",
     "level": "2", 
   },
   {
@@ -168,6 +276,15 @@ const quizData = [
     "explanation": "'계란을 한 바구니에 담지 마라'와 동일한 의미에요.",
     "level": "2", 
   },
+
+  {
+    "type": "multipleChoice",
+    "question": "'포트폴리오'란 무엇을 의미하나요?",
+    "options": ["단일 주식", "다양한 상품의 조합", "거래 방법", "거래 시간"],
+    "answer": "다양한 상품의 조합",
+    "explanation": "'포트폴리오'는 위험 분산과 수익 극대화를 목적으로 구성돼요.",
+    "level": "2", 
+  },
   {
     "type": "OX",
     "question": "증권사에서 돈을 빌려서 주식을 살 수 있나요?",
@@ -193,6 +310,40 @@ const quizData = [
     "level": "2", 
   },
   {
+    "type": "OX",
+    "question": "배당률과 배당수익률은 같은가요?",
+    "options": ["O", "X"],
+    "answer": "O",
+    "explanation": "배당률은 액면가, 배당수익률은 현재 주가 기준으로 계산해요.",
+    "level": "2", 
+  },
+  {
+    "type": "OX",
+    "question": "주식을 잘 모르니까, 아무 종목이나 사도 괜찮을까요?",
+    "options": ["O", "X"],
+    "answer": "X",
+    "explanation": "기업 가치에 대한 평가가 필수적이에요.",
+    "level": "2", 
+  },
+  {
+    "type": "OX",
+    "question": "주식 분할은 회사의 시가총액에는 변화를 주지 않나요?",
+    "options": ["O", "X"],
+    "answer": "O",
+    "explanation": "회사의 시가총액은 변하지 않으며, 이로 인해 주식의 개별 가치는 줄어들어요.",
+    "level": "4"
+  },
+  
+  {
+    "type": "OX",
+    "question": "모든 주식은 배당금을 하나요?",
+    "options": ["O", "X"],
+    "answer": "X",
+    "explanation": "배당금 지급 여부는 회사의 정책에 따라 다르고, 일부 회사는 배당금을 지급하지 않을 수 있어요.",
+    "level": "4"
+  },
+
+  {
     "type": "multipleChoice",
     "question": "주가 지수 등, 특정 지수를 추종하여 상장되어 있는 상품은?",
     "options": ["선물", "채권", "ETF", "예금"],
@@ -202,10 +353,27 @@ const quizData = [
   },
   {
     "type": "multipleChoice",
+    "question": "ETF 구매 시 고려해야 할 요소가 아닌 것은?",
+    "options": ["관리 비용", "거래량", "색깔", "추종 지수"],
+    "answer": "색깔",
+    "explanation": "색깔을 보고 주식을 사신다고요?",
+    "level": "4"
+  }
+,  
+  {
+    "type": "multipleChoice",
     "question": "현재의 기업 가치보다 미래 성장할 잠재력이 있는 회사의 주식은?",
     "options": ["성장주", "가치주", "배당주", "테마주"],
     "answer": "성장주",
     "explanation": "잠재력으로 인해, 기업의 가치에 비해 높은 평가를 받곤 해요.",
+    "level": "4", 
+  },
+  {
+    "type": "multipleChoice",
+    "question": "특정 테마의 인기에 관련되어 있는 주식은?",
+    "options": ["성장주", "가치주", "배당주", "테마주"],
+    "answer": "테마주",
+    "explanation": "테마의 힘이 줄어들면 급락할 수도 있으니 유의해야 해요.",
     "level": "4", 
   },
   {
@@ -234,6 +402,14 @@ const quizData = [
   },
   {
     "type": "OX",
+    "question": "새로 상장된 주식은 바로 구매할 수 있나요?",
+    "options": ["O", "X"],
+    "answer": "O",
+    "explanation": "신규 상장주는 상장 당일부터 구매할 수 있어요.",
+    "level": "4", 
+  },
+  {
+    "type": "OX",
     "question": "모든 주식은 30% 상/하한가의 적용을 받나요?",
     "options": ["O", "X"],
     "answer": "X",
@@ -257,6 +433,14 @@ const quizData = [
     "level": "4", 
   },
   {
+    "type": "multipleChoice",
+    "question": "주가 선물지수가 갑작스럽게 상승 혹은 하락 시, 잠시 프로그램 매도를 제한하는 것은?",
+    "options": ["상장폐지", "사이드카", "휴장", "서킷브레이커"],
+    "answer": "사이드카",
+    "explanation": "서킷브레이커는 사이드카보다 강한 조치로, 매매를 전부 제한해요.",
+    "level": "4", 
+  },
+  {
     "type": "OX",
     "question": "증권 시장의 전체적인 지수가 폭락하면, 그날 장이 조기종료될 수도 있을까요?",
     "options": ["O", "X"],
@@ -270,6 +454,14 @@ const quizData = [
     "options": ["체결강도", "거래비율", "매수우위", "매도우위"],
     "answer": "체결강도",
     "explanation": "주식을 매수하고자 하는 힘을 나타내는 값이에요.",
+    "level": "4", 
+  },
+  {
+    "type": "OX",
+    "question": "체결강도가 높은 주식은 무조건 주가가 상승하나요?",
+    "options": ["O", "X"],
+    "answer": "X",
+    "explanation": "체결강도가 100% 이상이더라도 주가가 하락중일 수도 있어요.",
     "level": "4", 
   },
   {
@@ -432,6 +624,32 @@ const quizData = [
     "explanation": "주가의 움직임은 다양한 요인에 영향을 받기 때문에, 미래를 정확히 예측할 순 없어요.",
     "level": "5", 
   },
+  {
+    "type": "multipleChoice",
+    "question": "미국의 주요 주식 지수가 아닌 것은?",
+    "options": ["S&P 500", "NASDAQ", "FTSE 100", "RUSSEL"],
+    "answer": "FTSE 100",
+    "explanation": "FTSE 100은 영국의 주요 주식 지수입니다.",
+    "level": "6"
+  },
+
+  {
+    "type": "multipleChoice",
+    "question": "S&P 500 지수가 대표하는 것은?",
+    "options": ["미국 소규모 기업", "미국의 500대 기업", "전 세계 기술 기업", "유럽 주식 시장"],
+    "answer": "미국의 500대 기업",
+    "explanation": "S&P 500 지수는 미국의 500대 대형 기업을 대표해요.",
+    "level": "6"
+  },
+  {
+    "type": "multipleChoice",
+    "question": "레버리지 ETF의 주요 특징 중 하나가 아닌 것은?",
+    "options": ["큰 수익을 목표로 함", "장기 투자에 적합", "높은 변동성", "일일 리밸런싱"],
+    "answer": "장기 투자에 적합",
+    "explanation": "레버리지 ETF는 장기 투자에 적합하지 않아요.",
+    "level": "6"
+  },
+  
   {
     "type": "multipleChoice",
     "question": "이동평균선을 기반으로 하는 기술적 분석 지표는 무엇인가요?",
