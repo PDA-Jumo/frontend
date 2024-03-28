@@ -187,7 +187,7 @@ export default function StockDetail() {
         >
           {" "}
           <LineChart
-            width={800}
+            width={750}
             height={250}
             data={graph}
             margin={{
