@@ -47,6 +47,13 @@ export default function StockDetail() {
 
   const navigate = useNavigate();
 
+  // // 버튼 클릭 이벤트 핸들러
+  const handleRequestData = () => {
+    // 서버에 "requestData" 메시지를 보내 데이터 요청
+    // stockSocket.emit("requestData", "005930");
+    //stockSocket.emit("requestPrice", "199800");
+  };
+
   useEffect(() => {
     const setData = async () => {
       const resp = await getStockDetail(params.stockId); //종목 정보 (시가총액, per ...)
@@ -235,7 +242,10 @@ export default function StockDetail() {
             <div className="stockDetailTradeButton">소수점 거래하기</div>
             <div
               className="stockDetailTradeButton"
-              onClick={() => setIsTrade(true)}
+              onClick={() => {
+                setIsTrade(true);
+                handleRequestData();
+              }}
             >
               주식 거래하기
             </div>
