@@ -15,6 +15,7 @@ export default function TradeModal(props) {
         position: "absolute",
         top: 0,
         left: 0,
+        zIndex:100
       }}
     >
       <div

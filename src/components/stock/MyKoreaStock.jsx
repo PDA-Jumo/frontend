@@ -32,6 +32,7 @@ export default function MyKoreaStock() {
     setData();
   }, []);
 
+  console.log()
   function handleHover(data) {
     console.log(data.stock_name);
     setHoverdata(data.stock_name);

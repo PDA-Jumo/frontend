@@ -44,6 +44,7 @@ export default function StockDetail() {
   const [prices, setPrices] = useState([]);
   const params = useParams();
   const user = useSelector((state) => state.user.user) || {};
+  const [day, setDay] = useState("month");
 
   const navigate = useNavigate();
 
@@ -65,6 +66,7 @@ export default function StockDetail() {
   console.log(isLike);
   console.log(graph);
   const maxYValue = Math.max(...graph.map((item) => item.close));
+  const minYValue = Math.min(...graph.map((item) => item.close));
 
   useEffect(() => {
     // 종목 상세 페이지 입장
@@ -72,14 +74,24 @@ export default function StockDetail() {
 
     // 현재가 데이터 로드
     socketEvent.getStockdata((currentprice) => {
-      console.log(currentprice.data.output2.stck_prpr);
-      // setPrices((price) => [...price, currentprice]);
+      const stock_prpr = currentprice.output2.stck_prpr;
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+      const newDataPoint = {
+        time: String(hours + ":" + minutes + ":" + seconds),
+        stock: stock_prpr,
+      };
+      setPrices((prevPrices) => [...prevPrices, newDataPoint]);
     });
 
     return () => {
       socketEvent.leaveRoom(params.stockId, user.user_id);
     };
   }, [params.stockId, user.user_id]);
+
+  console.log("지금까지의 가격이야!!", prices);
 
   const handleCommunityClick = async () => {
     try {
@@ -151,7 +163,6 @@ export default function StockDetail() {
               }}
             />
           )}
-          {prices}
           <span className="largeText">{params.stockName}</span>
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
@@ -159,12 +170,6 @@ export default function StockDetail() {
             {params.stockId}
           </span>
         </div>
-        <span
-          className="largeText"
-          style={{ color: "white", marginRight: "16px" }}
-        >
-          {stockd.prpr}
-        </span>
       </div>
       <div
         style={{
@@ -183,29 +188,57 @@ export default function StockDetail() {
         //   marginBlock: "16px",
         // }}
         >
-          {" "}
-          <LineChart
-            width={750}
-            height={250}
-            data={graph}
-            margin={{
-              top: 30,
-              right: 0,
-              left: 0,
-              bottom: 30,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis domain={[0, maxYValue + 100]} />
-            <Tooltip />
-            <Line
-              type="monotone"
-              dataKey="close"
-              stroke="#8884d8"
-              dot={{ r: 1 }}
-            />
-          </LineChart>
+          <div style={{ display: "flex", gap: "20px", marginLeft: "8px" }}>
+            <div onClick={() => setDay("month")}>3개월</div>
+            <div onClick={() => setDay("day")}>1일</div>
+          </div>
+          {day === "month" ? (
+            <LineChart
+              width={750}
+              height={250}
+              data={graph}
+              margin={{
+                top: 30,
+                right: 0,
+                left: 10,
+                bottom: 30,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis domain={[minYValue, maxYValue + 10000]} />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="close"
+                stroke="#8884d8"
+                dot={{ r: 1 }}
+              />
+            </LineChart>
+          ) : (
+            <LineChart
+              width={750}
+              height={250}
+              data={prices}
+              margin={{
+                top: 30,
+                right: 0,
+                left: 10,
+                bottom: 30,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="time" />
+              <YAxis />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="stock"
+                stroke="#8884d8"
+                dot={{ r: 1 }}
+              />
+            </LineChart>
+          )}
         </div>
         <div
           style={{
