@@ -12,8 +12,8 @@
 .character-image {
   width: 25vw;
   position: fixed;
-  left: 80px;
-  top: calc(170px - 1.2vw);
+  left: calc(280px - 15vw);
+  top: calc(180px - 0.5vw);
 }
 
 .test-content {
