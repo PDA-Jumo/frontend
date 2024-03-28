@@ -123,7 +123,7 @@ export default function QuizLayout() {
           </div>
         </div>
       ) : quizList.length > 0 && currentQuizIndex < quizList.length ? (
-        <div style={{ marginTop: "100px" }}>
+        <div>
           {isCorrect === null && (
             <div className="current-quiz-info">
               문제 {currentQuizIndex + 1} / {quizList.length}
