@@ -31,7 +31,7 @@ export default function SearchDrop({ keyword }) {
     }
   }, [keyword]);
 
-  console.log(search)
+  console.log(search);
 
   return (
     <div
@@ -52,17 +52,20 @@ export default function SearchDrop({ keyword }) {
                     display: "flex",
                     justifyContent: "space-between",
                   }}
+                  onClick={() => {
+                    navigate(`detail/${item.stock_code}`, { state: item });
+                  }} // 페이지 이동
                 >
-                  {item.content}
+                  <span style={{ cursor: "pointer" }}>{item.stock_name}</span>
                   <img
                     src={Trash}
                     style={{ width: "25px", cursor: "pointer" }}
                     onClick={() => {
-                      const action = deletesearch(item.id);
+                      const action = deletesearch(item.stock_code);
                       dispatch(action);
                       console.log(action);
                     }}
-                  ></img>
+                  />
                 </div>
               ))}
             </div>
@@ -73,20 +76,17 @@ export default function SearchDrop({ keyword }) {
             <div
               key={index}
               onClick={() => {
-                navigate(
-                  `detail/${item.stock_code}/${encodeURIComponent(
-                    item.stock_name
-                  )}` // 페이지 이동
-                );
+                navigate(`detail/${item.stock_code}`, { state: item });
+
                 const action = addsearch({
                   id: uuidv4(),
-                  content: item.stock_name,
+                  content: item,
                 });
                 dispatch(action);
                 console.log(action); //검색 기록 저장
               }}
             >
-              {item.stock_name}
+              <span style={{ cursor: "pointer" }}>{item.stock_name}</span>
             </div>
           ))}
       </div>

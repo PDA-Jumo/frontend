@@ -23,9 +23,6 @@ import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
-// Modal
-import LevelUpModal from "../../components/home/LevelUpModal";
-
 // ToolTip
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
@@ -34,7 +31,16 @@ import { tipsdata } from "./tip";
 function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isLevelUp, setIsLevelUp] = useState(false);
+  const levelUpCondition = [
+    "Lv.1 주얼딩이 되기 위해서는 현금 10,000원이 필요해요!",
+    "Lv.2 주린이가 되기 위해서는 주식 종목 하나를 가지고 있어야해요!",
+    "Lv.3 주초딩이 되기 위해서는 현금 200,000원을 달성해야해요!",
+    `Lv.4 주중딩이 되기 위해서는 3종류 이상의 주식으로 포트폴리오와 현금 400,000원이 필요해요!`,
+    "Lv.5 주고딩이 되기 위해서는 현금 1,000,000원을 달성해야해요!",
+    "Lv.6 주대딩이 되기 위해서는 현금 10,000,000원을 달성해야해요!",
+    "Lv.7 주졸부가 되기 위해서는 현금 50,000,000원을 달성해야해요!",
+    "Lv.8 주대주주가 되기 위해서는 랭킹 중 상위 5% 안에 들어야해요!",
+  ];
 
   const user = useSelector((state) => state.user.user) || {};
   const shuffleArray = (array) => {
@@ -70,7 +76,6 @@ function HomePage() {
 
   return (
     <div className="portfolio-page">
-      {isLevelUp ? <LevelUpModal setIsLevelUp={setIsLevelUp} /> : null}
       <div className="user-info">
         <div className="info-overlay">
           <div className="info-container">
@@ -168,15 +173,19 @@ function HomePage() {
           />
           <span style={{ fontSize: "14px" }}>랭킹</span>
         </div>
-        <div className="columnCenter">
+        <div
+          className="columnCenter"
+          data-tooltip-id={user.level >= 1 ? null : "my-tooltip-2"}
+        >
           <img
             src={tradeIcon}
             style={{ cursor: "pointer", marginTop: "-6px" }}
             alt="매수매도"
-            onClick={() => navigateTo("/stock")}
+            onClick={() => (user.level !== 0 ? navigateTo("/stock") : null)}
           />
           <span style={{ fontSize: "14px", marginTop: "-6px" }}>매수매도</span>
         </div>
+
         <div className="columnCenter">
           <img
             src={quizIcon}
@@ -186,15 +195,19 @@ function HomePage() {
           />
           <span style={{ fontSize: "14px" }}>퀴즈</span>
         </div>
-        <div className="columnCenter">
+        <div
+          className="columnCenter"
+          data-tooltip-id={user.level >= 7 ? null : "my-tooltip-3"}
+        >
           <img
             src={messageIcon}
             style={{ height: "50px", cursor: "pointer" }}
             alt="커뮤니티"
-            onClick={() => navigateTo("/community")}
+            onClick={() => (user.level >= 7 ? navigateTo("/community") : null)}
           />
           <span style={{ fontSize: "14px" }}>커뮤니티</span>
         </div>
+
         <div className="columnCenter">
           <img
             src={encyclopediaIcon}
@@ -209,13 +222,23 @@ function HomePage() {
         <img
           src={clickmeIcon}
           alt="노가다"
-          onClick={() => upCashByWork(user.user_id, 1000)}
+          onClick={() => upCashByWork(user.user_id, 1)}
         />
       </div>
       <ReactTooltip
         id="my-tooltip-1"
         place="left"
-        content="레벨업 하기 위해서는 10,000원을 더 모아야해요!"
+        content={levelUpCondition[user.level]}
+      />
+      <ReactTooltip
+        id="my-tooltip-2"
+        place="left"
+        content="Lv.1 주얼딩부터 이용할 수 있어요!"
+      />
+      <ReactTooltip
+        id="my-tooltip-3"
+        place="left"
+        content="Lv.7 주졸부부터 이용할 수 있어요!"
       />
     </div>
   );

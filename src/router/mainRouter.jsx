@@ -60,7 +60,7 @@ export const mainRouter = [
     element: <RankLayout />,
   },
   {
-    path: "/ranking/portfolio",
+    path: "/ranking/:userId",
 
     element: <PortfolioList />,
   },
@@ -98,13 +98,17 @@ export const mainRouter = [
         index: true,
       },
       {
-        path: "detail/:stockId/:stockName",
+        path: "detail/:stockId",
         element: <StockDetail />,
         index: true,
       },
     ],
   },
-
+  {
+    path: "/test",
+    element: <TestLayout />,
+    index: true,
+  },
   {
     path: "/test/result",
     element: <TestResultLayout />,
@@ -113,6 +117,14 @@ export const mainRouter = [
   {
     path: "/stock/detail",
     element: <StockDetail />,
+  },
+  {
+    path: "/test",
+    element: <TestLayout />,
+  },
+  {
+    path: "/test/result",
+    element: <TestResultLayout />,
   },
 ];
 const router = createBrowserRouter(mainRouter);

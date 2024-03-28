@@ -26,7 +26,7 @@
 }
 
 .non-scrollable-header {
-  height: 60px;
+  height: 52px;
   color: white;
   text-align: right;
   padding-right: 10%;
@@ -34,6 +34,8 @@
   align-items: flex-end;
   justify-content: flex-end;
   font-size: 18px;
+  margin-bottom: 8px;
+  gap: 8px;
 }
 
 .scrollable-content {
@@ -131,18 +133,17 @@
   border: none;
   border-radius: 30px;
   border: 3px solid #ff98cc;
-
   cursor: pointer;
   font-size: 24px;
   transition: background-color 0.3s;
 }
 
 .ranking-button:hover {
-  border: 10px solid #6899fe; /* 하늘색으로 변경 */
+  border: 10px solid #6899fe;
 }
 
 .ranking-button:hover .portfolio-button {
-  background-color: #6899fe; /* 하늘색으로 변경 */
+  background-color: #6899fe;
 }
 .rank-title {
   font-style: normal;
@@ -152,4 +153,24 @@
   position: absolute;
   top: 5px;
   left: 145px;
+}
+.nickname {
+  position: relative;
+  top: 6px;
+  font-size: 32px;
+}
+/* App.css */
+.update-button {
+  padding: 3px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-bottom: 1px;
+}
+
+.update-button:hover {
+  background-color: #45a049;
 }

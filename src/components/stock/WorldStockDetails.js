@@ -4,48 +4,40 @@ import React, { useEffect, useState } from "react";
 import "../../styles/globalStyle.css";
 import "../../styles/stockDetails.css";
 
+//redux
+import { useSelector } from "react-redux";
+
 //assets
-import Flag from "../../assets/icons/flag.png";
 import Document from "../../assets/icons/Document.png";
-import shinhan_heart_chatbox from "../../assets/stock/shinhan_heart_chatbox.png";
-import shinhan_singing_chatbox from "../../assets/stock/shinhan_singing_chatbox.png";
-import refresh from "../../assets/icons/refresh.png";
-import gold from "../../assets/stock/medal_gold.png";
-import silver from "../../assets/stock/medal_silver.png";
-import bronze from "../../assets/stock/medal_bronze.png";
-import Folder from "../../assets/stock/folder.png";
-import Trash from "../../assets/icons/Trash.png";
 
 //library
 import SliderComponent from "./SliderComponent";
 
 //utils
-import {
-  getLiveSise,
-  getMarketIssue,
-  getThemeRank,
-  getLiveRanking,
-} from "../../lib/apis/stock";
+import { getLiveSise, getMarketIssue } from "../../lib/apis/stock";
 
 //modal
 import MarketIssueModal from "./MarketIssueModal";
 
+//components
+import { MainChartComponent, MainChartNumberComponent } from "./ChartComponent";
+import StockPrice from "./StockPrice";
+import LiveStockRanking from "./LiveStockRanking";
+import HotThemes from "./HotThemes";
+
 export default function StockDetails() {
   const [kospiSise, setKospiSise] = useState({});
   const [kosdaqSise, setKosdaqSise] = useState({});
-  const [themeRank, setThemeRank] = useState([]);
-  const [isRefresh, setIsRefresh] = useState(false);
-  const [now, setNow] = useState("");
   const [isModal, setIsModal] = useState(false);
   const [issue, setIssue] = useState([]);
   const [clickedIssue, setClickedIssue] = useState({});
-  const [selectedTab, setSelectedTab] = useState(0);
-  const [selectedMySmallTab, setSelectedMySmallTab] = useState(1);
-  const [selectedRankingTab, setSelectedRankingTab] = useState("2");
-  const [liveRanking, setLiveRanking] = useState([]);
+
+  const user = useSelector((state) => state.user.user);
+
   //주가 그래프 관련 데이터
   useEffect(() => {
     const setData = async () => {
+<<<<<<< HEAD
       // const liveSise = await getLiveSise();
       // const themeRankData = await getThemeRank();
       // const issueData = await getMarketIssue();
@@ -75,6 +67,17 @@ export default function StockDetails() {
   const handleClickLiveRankingTab = (type) => {
     setSelectedRankingTab(type);
   };
+=======
+      const liveSise = await getLiveSise();
+      const issueData = await getMarketIssue();
+      setIssue(issueData.data);
+      setKospiSise(liveSise.data.kospi);
+      setKosdaqSise(liveSise.data.kosdaq);
+    };
+    setData();
+  }, []);
+
+>>>>>>> a69af9fc04613bc811471af59cc9525601a76fba
   return (
     <div
       style={{
@@ -95,7 +98,6 @@ export default function StockDetails() {
         <MainChartNumberComponent sise={kospiSise} />
         <MainChartNumberComponent sise={kosdaqSise} />
       </div>
-
       <div
         style={{
           marginTop: "42px",
@@ -113,131 +115,41 @@ export default function StockDetails() {
           />
           마켓 이슈
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            position: "relative",
-          }}
-        >
-          <SliderComponent
-            issue={issue}
-            setIsModal={setIsModal}
-            setClickedIssue={setClickedIssue}
-          />
-        </div>
-      </div>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div style={{ width: "45%" }}>
-          <div style={{ display: "flex" }}>
-            <img
-              src={Flag}
-              className="iconSmall"
-              style={{ marginRight: "8px" }}
-            />
-            <div
-              className="myStockTab"
-              style={{
-                backgroundColor: selectedTab === 0 ? "#ffe27a" : "white",
-              }}
-              onClick={() => setSelectedTab(0)}
-            >
-              나의 종목 시세
-            </div>
-            <div
-              className="myStockTab"
-              style={{
-                backgroundColor: selectedTab === 1 ? "#ffe27a" : "white",
-              }}
-              onClick={() => setSelectedTab(1)}
-            >
-              추천 종목
-            </div>
-          </div>
+        {user.level <= 1 ? (
           <div
             style={{
               width: "100%",
-              marginLeft: "3px",
-              // border: "3px solid #6082E1",
-              borderRadius: "16px",
-              boxShadow: "2px 0px 5px 0px rgba(0,0,0,0.2)",
-              padding: "8px",
+              height: "130px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            <div style={{ display: "flex", gap: "2%" }}>
-              <div
-                className={
-                  selectedMySmallTab === 0 ? "smallTabSelected" : "smallTab"
-                }
-                onClick={() => setSelectedMySmallTab(0)}
+            <span style={{ fontSize: "20px" }}>
+              마켓 이슈는{" "}
+              <span
+                style={{ fontSize: "20px", borderBottom: "6px double #71A3FF" }}
               >
-                최근종목
-              </div>
-              <div
-                className={
-                  selectedMySmallTab === 1 ? "smallTabSelected" : "smallTab"
-                }
-                onClick={() => setSelectedMySmallTab(1)}
-              >
-                보유종목
-              </div>
-              <div
-                className={
-                  selectedMySmallTab === 2 ? "smallTabSelected" : "smallTab"
-                }
-                onClick={() => setSelectedMySmallTab(2)}
-              >
-                관심종목
-              </div>
-            </div>
-            <div>
-              <StockList />
-              <StockList />
-              <StockList />
-              <StockList />
-              <StockList />
-            </div>
+                Lv 2.주린이
+              </span>{" "}
+              부터 조회 가능해요!
+            </span>
           </div>
-        </div>
-        <div
-          style={{
-            width: "45%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-          }}
-        >
-          <img
-            src={shinhan_heart_chatbox}
-            style={{ width: "300px", height: "300px" }}
-          />
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBlock: "32px",
-        }}
-      >
-        <div style={{ width: "45%" }}>
+        ) : (
           <div
-            className="textShadow"
             style={{
               display: "flex",
-              fontSize: "24px",
-              marginRight: "8px",
-              marginBottom: "8px",
+              justifyContent: "center",
+              position: "relative",
             }}
           >
-            <img
-              src={Flag}
-              className="iconSmall"
-              style={{ marginRight: "8px" }}
+            <SliderComponent
+              issue={issue}
+              setIsModal={setIsModal}
+              setClickedIssue={setClickedIssue}
             />
-            실시간 종목 순위
           </div>
+<<<<<<< HEAD
           <div
             style={{
               width: "100%",
@@ -462,233 +374,13 @@ export default function StockDetails() {
             ))}
           </div>
         </div>
+=======
+        )}
+>>>>>>> a69af9fc04613bc811471af59cc9525601a76fba
       </div>
+      <StockPrice />
+      <LiveStockRanking />
+      <HotThemes />
     </div>
   );
 }
-
-const StockList = (props) => {
-  return (
-    <div className="stockListView">
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-around",
-        }}
-      >
-        <span>
-          {props.type === "theme"
-            ? props.item.stats.rank
-            : props.type === "rank"
-            ? props.item.rank
-            : null}
-        </span>
-        <img
-          src={
-            props.type === "theme"
-              ? props.item.theme.image
-              : props.type === "rank"
-              ? `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${props.item.stock_code}.png`
-              : Document
-          }
-          onError={(e) => {
-            e.target.src =
-              "https://file.alphasquare.co.kr/media/images/stock_logo/ETF_230706.png";
-          }}
-          style={{ borderRadius: "16px", objectFit: "cover" }}
-          className="iconSmall"
-        />
-      </div>
-
-      <span style={{ flex: 3 }}>
-        {props && props.item && props.type === "theme"
-          ? props.item.theme.name
-          : props.type === "rank"
-          ? props.item.stbd_nm
-          : null}
-      </span>
-      <span style={{ flex: 1, display: "flex", justifyContent: "center" }}>
-        {props && props.type === "theme"
-          ? `+${props.item.stats.returns}%`
-          : props.type === "rank"
-          ? `${props.item.stock_code}`
-          : null}
-      </span>
-    </div>
-  );
-};
-
-const MainChartNumberComponent = (props) => {
-  return (
-    <div className="MainChartNumberView">
-      <div className="MainChartNumber">
-        <span>개인</span>
-        <span
-          style={{
-            color:
-              props.sise && props.sise.person && props.sise.person[0] === "0"
-                ? "black"
-                : props.sise &&
-                  props.sise.person &&
-                  props.sise.person[0] === "+"
-                ? "#F3322C"
-                : "#2B83F6",
-          }}
-        >
-          {props.sise.person}
-        </span>
-      </div>
-      <div
-        className="MainChartNumber"
-        style={{
-          // borderRight: "2px solid #6082E1",
-          // borderLeft: "2px solid #6082E1",
-          borderRight: "2px solid lightgray",
-          borderLeft: "2px solid lightgray",
-        }}
-      >
-        <span>외국인</span>
-        <span
-          style={{
-            color:
-              props.sise &&
-              props.sise.foreigner &&
-              props.sise.foreigner[0] === "0"
-                ? "black"
-                : props.sise &&
-                  props.sise.foreigner &&
-                  props.sise.foreigner[0] === "+"
-                ? "#F3322C"
-                : "#2B83F6",
-          }}
-        >
-          {props.sise.foreigner}
-        </span>
-      </div>
-      <div className="MainChartNumber">
-        <span>기관</span>
-        <span
-          style={{
-            color:
-              props.sise && props.sise.company && props.sise.company[0] === "0"
-                ? "black"
-                : props.sise &&
-                  props.sise.company &&
-                  props.sise.company[0] === "+"
-                ? "#F3322C"
-                : "#2B83F6",
-          }}
-        >
-          {props.sise.company}
-        </span>
-      </div>
-    </div>
-  );
-};
-
-const MainChartComponent = (props) => {
-  return (
-    <div
-      style={{ display: "flex", alignItems: "center", flexDirection: "column" }}
-    >
-      <div
-        className="textShadow"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignSelf: "start",
-          fontSize: "24px",
-          marginBottom: "8px",
-          marginTop: "8px",
-        }}
-      >
-        <img src={Flag} className="iconSmall" style={{ marginRight: "8px" }} />
-        주요 지수
-      </div>
-      <div
-        style={{
-          borderRadius: "16px",
-          display: "flex",
-          // border: "3px solid #6082E1",
-          width: "98%",
-          // boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.2)",
-        }}
-      >
-        <MainChart
-          category={"코스피"}
-          src={
-            "https://ssl.pstatic.net/imgfinance/chart/main/KOSPI.png?sidcode=1710227822049"
-          }
-          sise={props.kospi}
-        />
-        <div //구분선
-          style={{
-            width: "3px",
-            height: "250px",
-            backgroundColor: "#D9D9D9",
-            alignSelf: "center",
-          }}
-        />
-        <MainChart
-          category={"코스닥"}
-          src={
-            "https://ssl.pstatic.net/imgfinance/chart/main/KOSDAQ.png?sidcode=1710227822051"
-          }
-          sise={props.kosdaq}
-        />
-      </div>
-    </div>
-  );
-};
-
-const MainChart = (props) => {
-  return (
-    <div className="MainChartView">
-      <p>{props.category}</p>
-      <div className="MainChartDiv">
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            position: "absolute",
-            top: "2%",
-            left: "3%",
-          }}
-        >
-          <span style={{ fontSize: "24px" }}>
-            {props.sise && props.sise.num3 && props.sise.num3[0] === "0"
-              ? "개장 전"
-              : props.sise.num1}
-          </span>
-          <div>
-            <span
-              style={{ fontSize: "12px", marginRight: "4px", color: "#8B95A1" }}
-            >
-              어제보다
-            </span>
-            <span
-              style={{
-                fontSize: "12px",
-                color:
-                  props.sise && props.sise.num3 && props.sise.num3[0] === "0"
-                    ? "black"
-                    : props.sise &&
-                      props.sise.num3 &&
-                      props.sise.num3[0] === "+"
-                    ? "#F3322C"
-                    : "#2B83F6",
-              }}
-            >
-              {props.sise.num3 && props.sise.num3[0]}
-              {props.sise.num2}({props.sise.num3})
-            </span>
-          </div>
-        </div>
-        <img src={props.src} className="MainChart" />
-      </div>
-    </div>
-  );
-};

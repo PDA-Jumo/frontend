@@ -1,23 +1,23 @@
-//TODO 여기부터 유저의 정보를 받아오고 있어야 함(persist를 통해 연동되는 로그인 기능)
-
 import React, { useCallback, useState, useEffect } from "react";
 import quizBackground from "../../assets/backgrounds/quiz.png";
 import "./quiz.css";
 import quizData from "./quizData";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { quizSuccess } from "../../lib/apis/quiz";
 import { updateFinancialsAction } from "../../store/reducers/user";
-import { useDispatch } from "react-redux";
 
 export default function QuizLayout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user) || {};
   const [showQuiz, setShowQuiz] = useState(false);
-  const [currentQuiz, setCurrentQuiz] = useState({});
+  const [quizFinished, setQuizFinished] = useState(false);
+  const [quizList, setQuizList] = useState([]);
+  const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
   const [isCorrect, setIsCorrect] = useState(null);
+  const [correctCount, setCorrectCount] = useState(0);
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -28,7 +28,7 @@ export default function QuizLayout() {
   };
 
   useEffect(() => {
-    if (!showQuiz || isCorrect !== null) return; // isCorrect가 null이 아니면, 즉 정답을 맞추었거나 틀렸으면 새로운 문제를 불러오지 않습니다.
+    if (!showQuiz) return;
 
     const userLevel = parseInt(user.level, 10);
 
@@ -36,20 +36,13 @@ export default function QuizLayout() {
       const quizLevel = parseInt(quiz.level, 10);
       return userLevel >= quizLevel;
     });
-
-    if (suitableQuizzes.length === 0) return;
-
-    const randomIndex = Math.floor(Math.random() * suitableQuizzes.length);
-    const quiz = suitableQuizzes[randomIndex];
-
-    const shuffledOptions =
-      quiz.type === "OX" ? [...quiz.options] : shuffleArray([...quiz.options]);
-
-    const shuffledQuiz = { ...quiz, options: shuffledOptions };
-    setCurrentQuiz(shuffledQuiz);
+    const shuffledQuizzes = shuffleArray(suitableQuizzes);
+    setQuizList(shuffledQuizzes.slice(0, 5));
+    setCurrentQuizIndex(0);
     setIsCorrect(null);
     setSelectedOption("");
-  }, [showQuiz, user.level, quizData, isCorrect]);
+    setCorrectCount(0);
+  }, [showQuiz, user.level]);
 
   const upCash = useCallback(async (user_id, level) => {
     try {
@@ -68,12 +61,22 @@ export default function QuizLayout() {
     if (isCorrect !== null) return;
 
     setSelectedOption(selected);
-    if (selected === currentQuiz.answer) {
+    if (selected === quizList[currentQuizIndex].answer) {
       setIsCorrect(true);
+      setCorrectCount(correctCount + 1);
 
       await upCash(user.user_id, user.level);
     } else {
       setIsCorrect(false);
+    }
+  };
+  const handleNextQuestion = () => {
+    if (currentQuizIndex < quizList.length - 1) {
+      setCurrentQuizIndex(currentQuizIndex + 1);
+      setIsCorrect(null);
+      setSelectedOption("");
+    } else {
+      setQuizFinished(true);
     }
   };
 
@@ -81,17 +84,16 @@ export default function QuizLayout() {
     console.log("뒤로가기 버튼이 클릭되었습니다.");
     navigate("/home");
   };
-
   return (
     <div
       className="quiz-layout"
       style={{ backgroundImage: `url(${quizBackground})` }}
     >
-      {!showQuiz ? (
+      {!showQuiz && !quizFinished ? (
         <>
           <div className="welcome-text">뿅뿅 주식오락실</div>
           <div className="welcome-text-exp">
-            똑똑한 대주주가 되기 위해 차근차근 문제를 풀어보자 !
+            똑똑한 대주주가 되기 위해 차근차근 문제를 풀어보자!
           </div>
           <button className="quiz-button" onClick={() => setShowQuiz(true)}>
             문제 풀러 가기
@@ -100,36 +102,75 @@ export default function QuizLayout() {
             뒤로가기
           </button>
         </>
-      ) : currentQuiz.question ? (
-        <div>
-          <div className="quiz-question">{currentQuiz.question}</div>
+      ) : quizFinished ? (
+        <div className="quiz-finished-message">
+          <div style={{ marginBottom: "24px" }}>퀴즈가 끝났습니다!</div>
+          <div>
+            맞은 개수: {correctCount}, 틀린 개수: {5 - correctCount}
+          </div>
+          <div className="quiz-button-container">
+            <button
+              className="quiz-end-button"
+              onClick={() => {
+                setShowQuiz(false);
+                setQuizFinished(false);
+                navigate("/home");
+              }}
+            >
+              홈으로
+            </button>
+          </div>
+        </div>
+      ) : quizList.length > 0 && currentQuizIndex < quizList.length ? (
+        <div style={{ marginTop: "100px" }}>
+          {isCorrect === null && (
+            <div className="current-quiz-info">
+              문제 {currentQuizIndex + 1} / {quizList.length}
+            </div>
+          )}
+          <div className="quiz-question">
+            {quizList[currentQuizIndex].question}
+          </div>
           <div
             className={`quiz-options-container ${
-              currentQuiz.options.length === 4
+              quizList[currentQuizIndex].options.length === 4
                 ? "grid-container"
-                : currentQuiz.type === "OX"
+                : quizList[currentQuizIndex].type === "OX"
                 ? "flex-container"
                 : ""
             }`}
           >
-            {currentQuiz.options.map((option, index) => (
+            {quizList[currentQuizIndex].options.map((option, index) => (
               <button
                 key={index}
                 onClick={() => checkAnswer(option)}
                 className={`quiz-button ${option === "X" ? "x-stroke" : ""} ${
                   selectedOption
                     ? selectedOption === option
-                      ? "quiz-button-selected"
-                      : currentQuiz.type === "OX"
-                      ? "unselected-text-stroke"
-                      : "unselected"
+                      ? "selected-option-animation"
+                      : "unselected-option-animation"
                     : ""
-                } ${currentQuiz.type === "OX" ? "ox-quiz-button" : ""}`}
+                } ${
+                  quizList[currentQuizIndex].type === "OX"
+                    ? "ox-quiz-button"
+                    : ""
+                }`}
+                style={
+                  quizList[currentQuizIndex].type === "OX" &&
+                  selectedOption &&
+                  selectedOption !== option
+                    ? {
+                        border: "transparent",
+                        WebkitTextStroke: "3px gray",
+                      }
+                    : {}
+                }
               >
                 {option}
               </button>
             ))}
           </div>
+
           {isCorrect !== null && (
             <div>
               <div
@@ -139,20 +180,31 @@ export default function QuizLayout() {
               >
                 {isCorrect
                   ? "정답입니다!"
-                  : `틀렸습니다. 정답은: ${currentQuiz.answer}`}
+                  : `틀렸습니다. 정답은: ${quizList[currentQuizIndex].answer}`}
                 {!isCorrect && (
                   <div className="quiz-explanation">
-                    {currentQuiz.explanation}
+                    {quizList[currentQuizIndex].explanation}
                   </div>
                 )}
               </div>
-              <button className="quiz-button back-button" onClick={handleBack}>
-                뒤로가기
-              </button>
+              <div className="center-button-container">
+                <button
+                  className="quiz-button next-question-button"
+                  onClick={handleNextQuestion}
+                >
+                  다음 문제로
+                </button>
+              </div>
             </div>
           )}
         </div>
-      ) : null}
+      ) : (
+        <div>
+          <button className="quiz-button back-button" onClick={handleBack}>
+            뒤로가기
+          </button>
+        </div>
+      )}
     </div>
   );
 }

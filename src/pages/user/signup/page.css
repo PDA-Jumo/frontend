@@ -21,6 +21,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1001;
 }
 
 .profile-image-selector {
@@ -45,13 +46,15 @@
 .selectable-image {
   width: 144px;
   height: 144px;
+  margin-bottom: 36px;
 }
 .rounded-rectangle2 {
   width: 80%;
   height: 80%;
   background-color: #ffde6b;
   border-radius: 60px;
-  padding: 20px;
+  padding: 10px 20px 20px 20px;
+
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -79,9 +82,6 @@
   z-index: 1000;
 }
 
-.modal {
-  z-index: 1001;
-}
 .custom-signup {
   font-size: 24px;
   border-radius: 50px;
@@ -104,5 +104,37 @@
 /* Container Split 스타일 */
 .container-split {
   display: flex;
-  padding-top: 16px;
+  padding-top: 8px;
+}
+.register-button-container {
+  display: flex;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+  height: 100%; /* 부모 컨테이너의 높이에 맞춤 */
+}
+
+.image-option {
+  display: flex;
+  flex-wrap: wrap;
+  gap: "24px";
+  justify-content: "center";
+}
+.modalContent {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  width: 60%;
+  height: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.7);
 }
