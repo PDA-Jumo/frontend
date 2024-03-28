@@ -37,6 +37,7 @@ export default function QuizLayout() {
       return userLevel >= quizLevel;
     });
     const shuffledQuizzes = shuffleArray(suitableQuizzes);
+
     setQuizList(shuffledQuizzes.slice(0, 5));
     setCurrentQuizIndex(0);
     setIsCorrect(null);
