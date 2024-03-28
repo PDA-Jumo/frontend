@@ -41,18 +41,16 @@ export default function StockDetail() {
     // 종목 상세 페이지 입장
     socketEvent.joinRoom(params.stockId, user.user_id);
 
-    setPrices([]);
-
     // 현재가 데이터 로드
-    socketEvent.currentStockPrice((currentprice) => {
-      console.log(currentprice);
-      setPrices((price) => [...price, currentprice]);
+    socketEvent.getStockdata((currentprice) => {
+      console.log(currentprice.data.output2.stck_prpr);
+      // setPrices((price) => [...price, currentprice]);
     });
 
     return () => {
       socketEvent.leaveRoom(params.stockId, user.user_id);
     };
-  }, [params.stockId, user.user_id]); // 종목 ID나 사용자 ID가 변경되면 이 useEffect가 다시 실행됩니다.
+  }, [params.stockId, user.user_id]);
 
   const handleCommunityClick = async () => {
     try {
@@ -136,10 +134,7 @@ export default function StockDetail() {
             marginBlock: "16px",
             color: "white",
           }}
-        >
-          종목차트!!
-          {prices}
-        </div>
+        ></div>
         <div
           style={{
             width: "40%",
