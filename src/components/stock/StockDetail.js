@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
 import { useNavigate } from "react-router-dom";
 
 //css
@@ -9,8 +17,19 @@ import "../../styles/stockDetails.css";
 //assets
 import character from "../../assets/character/shinhan_computer.png";
 import TradeModal from "./TradeModal";
+import Heart from "../../assets/icons/Heart.png";
+import EHeart from "../../assets/icons/emptyHeart.png";
 
-import { getStockDetail, getStockNews } from "../../lib/apis/stock";
+import {
+  getStockDetail,
+  getStockNews,
+  getStockGraph,
+} from "../../lib/apis/stock";
+import {
+  checkLikeStock,
+  postLikeStock,
+  deleteLikeStock,
+} from "../../lib/apis/portfolio";
 import { createCommunity, checkCommunity } from "../../lib/apis/community";
 
 import socketEvent from "../../lib/socket/StockSocketEvents";
@@ -20,22 +39,32 @@ export default function StockDetail() {
   const [activeTab, setActiveTab] = useState("info");
   const [stockd, setStockD] = useState([]);
   const [stocknews, setStockNews] = useState([{}]);
+  const [isLike, setIsLike] = useState("empty");
+  const [graph, setGraph] = useState([]);
   const [prices, setPrices] = useState([]);
   const params = useParams();
-
   const user = useSelector((state) => state.user.user) || {};
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const setData = async () => {
       const resp = await getStockDetail(params.stockId); //종목 정보 (시가총액, per ...)
       const res = await getStockNews(params.stockId); // 종목 뉴스
+      const re = await getStockGraph(params.stockId); // 종목 그래프(3개월)
+      const response = await checkLikeStock(user.user_id, params.stockId); // 관심종목 확인
       setStockD(resp);
       setStockNews(res);
+      setIsLike(response);
+      setGraph(re);
     };
 
     setData();
-  }, []);
+  }, [isLike, params]);
+
+  console.log(isLike);
+  console.log(graph);
+  const maxYValue = Math.max(...graph.map((item) => item.close));
 
   useEffect(() => {
     // 종목 상세 페이지 입장
@@ -103,6 +132,26 @@ export default function StockDetail() {
             paddingInline: "8px",
           }}
         >
+          {isLike === "in" ? (
+            <img
+              style={{ width: "60px" }}
+              src={Heart}
+              onClick={() => {
+                deleteLikeStock(user.user_id, params.stockId);
+                setIsLike("empty");
+              }}
+            />
+          ) : (
+            <img
+              style={{ width: "60px" }}
+              src={EHeart}
+              onClick={() => {
+                postLikeStock(user.user_id, params.stockId, params.stockName);
+                setIsLike("in");
+              }}
+            />
+          )}
+          {prices}
           <span className="largeText">{params.stockName}</span>
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
@@ -127,14 +176,37 @@ export default function StockDetail() {
       >
         {/* 종목 차트 */}
         <div
-          style={{
-            width: "60%",
-            backgroundColor: "black",
-            borderRadius: "16px",
-            marginBlock: "16px",
-            color: "white",
-          }}
-        ></div>
+        // style={{
+        //   width: "60%",
+        //   backgroundColor: "black",
+        //   borderRadius: "16px",
+        //   marginBlock: "16px",
+        // }}
+        >
+          {" "}
+          <LineChart
+            width={750}
+            height={250}
+            data={graph}
+            margin={{
+              top: 30,
+              right: 0,
+              left: 0,
+              bottom: 30,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis domain={[0, maxYValue + 100]} />
+            <Tooltip />
+            <Line
+              type="monotone"
+              dataKey="close"
+              stroke="#8884d8"
+              dot={{ r: 1 }}
+            />
+          </LineChart>
+        </div>
         <div
           style={{
             width: "40%",
