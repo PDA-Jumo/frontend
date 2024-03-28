@@ -11,7 +11,7 @@ export default function SliderComponent(props) {
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 1,
-    arrows: true,
+    // arrows: true,
     centerMode: true,
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,

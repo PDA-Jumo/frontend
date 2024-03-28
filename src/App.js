@@ -15,7 +15,7 @@ function App() {
   return (
     <Provider store={store}>
       <AuthProvider>
-        <RouterProvider router={router} />;
+        <RouterProvider router={router} />
       </AuthProvider>
     </Provider>
   );

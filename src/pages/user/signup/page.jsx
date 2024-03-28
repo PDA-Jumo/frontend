@@ -23,12 +23,7 @@ export default function SignUpPage() {
   const [userImage, setUserImage] = useState("");
   const [showImages, setShowImages] = useState(false);
   const navigate = useNavigate();
-  useEffect(() => {
-    document.body.classList.add("no-scroll");
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, []);
+
   const onInputChange = useCallback((inputText, setFn) => {
     setFn(inputText);
   }, []);
