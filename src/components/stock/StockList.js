@@ -7,9 +7,23 @@ import "../../styles/stockDetails.css";
 //assets
 import Document from "../../assets/icons/Document.png";
 
+// navigation
+import { useNavigate } from "react-router-dom";
+
 const StockList = (props) => {
+  const navigate = useNavigate();
   return (
-    <div className="stockListView">
+    <div
+      className="stockListView"
+      style={{ cursor: props.type !== "theme" ? "pointer" : "" }}
+      onClick={() =>
+        props.type !== "theme"
+          ? navigate(
+              `/stock/detail/${props.item.stock_code}/${props.item.stbd_nm}`
+            )
+          : null
+      }
+    >
       <div
         style={{
           flex: 1,

@@ -92,7 +92,7 @@ export default function LiveStockRanking() {
             </div>
           </div>
           <div>
-            {liveRanking !== [] ? (
+            {liveRanking.length !== 0 ? (
               liveRanking.map((item, index) => (
                 <StockList type="rank" item={item} key={item.stock_code} />
               ))
