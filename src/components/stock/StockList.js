@@ -1,10 +1,10 @@
 import React from "react";
 
-//css
+// css
 import "../../styles/globalStyle.css";
 import "../../styles/stockDetails.css";
 
-//assets
+// assets
 import Document from "../../assets/icons/Document.png";
 
 // navigation

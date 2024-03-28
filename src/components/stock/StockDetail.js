@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 //css
 import "../../styles/stockDetails.css";
@@ -15,16 +15,16 @@ export default function StockDetail() {
   const [activeTab, setActiveTab] = useState("info");
   const [stockd, setStockD] = useState([]);
   const [stocknews, setStockNews] = useState([{}]);
-  const params = useParams();
+  const location = useLocation();
 
   useEffect(() => {
     const setData = async () => {
-      const resp = await getStockDetail(params.stockId); //종목 정보 (시가총액, per ...)
-      const res = await getStockNews(params.stockId); // 종목 뉴스
+      const resp = await getStockDetail(location.state.stock_code); //종목 정보 (시가총액, per ...)
+      const res = await getStockNews(location.state.stock_code); // 종목 뉴스
       setStockD(resp);
       setStockNews(res);
     };
-
+    console.log();
     setData();
   }, []);
 
@@ -67,11 +67,11 @@ export default function StockDetail() {
             paddingInline: "8px",
           }}
         >
-          <span className="largeText">{params.stockName}</span>
+          <span className="largeText">{location.state.stock_name}</span>
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
           >
-            {params.stockId}
+            {location.state.stock_code}
           </span>
         </div>
         <span
