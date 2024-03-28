@@ -46,22 +46,22 @@ export default function StockDetails() {
   //주가 그래프 관련 데이터
   useEffect(() => {
     const setData = async () => {
-      const liveSise = await getLiveSise();
-      const themeRankData = await getThemeRank();
-      const issueData = await getMarketIssue();
-      const liveRankingData = await getLiveRanking(selectedRankingTab);
-      setIssue(issueData.data);
-      setThemeRank(themeRankData.data.data);
-      setKospiSise(liveSise.data.kospi);
-      setKosdaqSise(liveSise.data.kosdaq);
-      setLiveRanking(liveRankingData.data);
+      // const liveSise = await getLiveSise();
+      // const themeRankData = await getThemeRank();
+      // const issueData = await getMarketIssue();
+      // const liveRankingData = await getLiveRanking(selectedRankingTab);
+      // setIssue(issueData.data);
+      // setThemeRank(themeRankData.data.data);
+      // setKospiSise(liveSise.data.kospi);
+      // setKosdaqSise(liveSise.data.kosdaq);
+      // setLiveRanking(liveRankingData.data);
     };
     setData();
   }, []);
   useEffect(() => {
     const setNewData = async () => {
-      const liveRankingData = await getLiveRanking(selectedRankingTab);
-      setLiveRanking(liveRankingData.data);
+      // const liveRankingData = await getLiveRanking(selectedRankingTab);
+      // setLiveRanking(liveRankingData.data);
     };
     setNewData();
   }, [selectedRankingTab]);
@@ -270,7 +270,7 @@ export default function StockDetails() {
               </div>
             </div>
             <div>
-              {liveRanking !== [] ? (
+              {/* {liveRanking !== [] ? (
                 liveRanking.map((item, index) => (
                   <StockList type="rank" item={item} key={item.stock_code} />
                 ))
@@ -286,7 +286,7 @@ export default function StockDetails() {
                 >
                   실시간 종목 랭킹이 존재하지 않아요!
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>
