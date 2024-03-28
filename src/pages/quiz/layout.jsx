@@ -143,18 +143,29 @@ export default function QuizLayout() {
                   selectedOption
                     ? selectedOption === option
                       ? "selected-option-animation"
-                      : "unselected-option-animation" // 선택되지 않은 옵션에 대한 새로운 클래스 추가
+                      : "unselected-option-animation"
                     : ""
                 } ${
                   quizList[currentQuizIndex].type === "OX"
                     ? "ox-quiz-button"
                     : ""
                 }`}
+                style={
+                  quizList[currentQuizIndex].type === "OX" &&
+                  selectedOption &&
+                  selectedOption !== option
+                    ? {
+                        border: "transparent",
+                        WebkitTextStroke: "3px gray",
+                      }
+                    : {}
+                }
               >
                 {option}
               </button>
             ))}
           </div>
+
           {isCorrect !== null && (
             <div>
               <div

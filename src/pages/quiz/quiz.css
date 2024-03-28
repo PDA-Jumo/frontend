@@ -171,5 +171,25 @@
 }
 
 .quiz-button.unselected-option-animation {
+  border: 10px solid gray;
   pointer-events: none;
+}
+
+.next-question-button {
+  width: 200px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background-color: #ff00fe;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.unselected-text-stroke {
+  border: transparent;
 }
