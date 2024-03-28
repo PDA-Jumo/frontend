@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { stockSocket } from "../../lib/socket/socket";
 import { useSelector } from "react-redux";
-import { postBuyStock, postSellStock } from "../../lib/apis/stock";
+import {
+  postBuyStock,
+  postSellStock,
+  getSellQuantityStock,
+} from "../../lib/apis/stock";
+import { useParams } from "react-router-dom";
 
 export default function TradeModal(props) {
   const user = useSelector((state) => state.user.user) || {};
+  const params = useParams();
+
+  const stockId = params.stockId;
+  const stockName = params.stockName;
+  console.log(stockId, stockName);
+
+  // Note
+  // 1. 매수 가능 금액 필요 -> 성공시 DB, Redux store 수정
+  //     1.1 매수, 매도 초기 주문 가격은 현재가로 설정
+  // 2. 매도 가능 종목수 필요 -> 성공시 DB 수정, 처음에 get해서 가져오도록
   console.log(user);
 
   const [quantity, setQuantity] = useState(0);
@@ -35,6 +50,8 @@ export default function TradeModal(props) {
   ]);
 
   const [priceData, setPriceData] = useState(["0", "0", "0", "0"]);
+  const [sellQuantity, setSellQuantity] = useState(0);
+  const [buyPrice, setBuyPrice] = useState(0);
 
   const clickBuy = async (user_id, stock_code, quantity, transaction_price) => {
     try {
@@ -73,14 +90,25 @@ export default function TradeModal(props) {
 
       if (resp === "성공") {
         console.log("매도 주문 성공");
+        getSellQuantity(user.user_id, stockId);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
+  const getSellQuantity = async (user_id, stock_code) => {
+    try {
+      const resp = await getSellQuantityStock(user_id, stock_code);
+      console.log("매도쪽", resp);
+      setSellQuantity(resp);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    console.log(user.user_id, "005930", quantity, price);
+    console.log(user.user_id, stockId, quantity, price);
     const handleStockData = (data) => {
       console.log(data);
       setStockData(data);
@@ -92,6 +120,12 @@ export default function TradeModal(props) {
       setPriceData(data);
       // 데이터를 상태에 저장하거나 화면에 출력하는 로직 추가
     };
+
+    getSellQuantity(user.user_id, stockId);
+    console.log("user 캐시", user.cash);
+    console.log("주문 가격", price);
+
+    setBuyPrice(parseInt(user.cash) % parseInt(price));
 
     // 'stockData' 이벤트를 받을 때 실행될 핸들러 등록
     stockSocket.on("stockData", handleStockData);
@@ -268,7 +302,7 @@ export default function TradeModal(props) {
                 marginBottom: "8px",
               }}
             >
-              <span style={{ fontSize: "24px" }}>신한 지주</span>
+              <span style={{ fontSize: "24px" }}>{stockName}</span>
               <span
                 style={{
                   fontSize: "12px",
@@ -276,7 +310,7 @@ export default function TradeModal(props) {
                   color: "#62616D",
                 }}
               >
-                A05550
+                {stockId}
               </span>
             </div>
             <div
@@ -455,6 +489,36 @@ export default function TradeModal(props) {
                 </div>
               </div>
             </div>
+
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
+              }}
+            >
+              <div
+                style={{
+                  marginBottom: "10px", // 버튼과의 간격
+                  color: "black",
+                  fontSize: "16px",
+                }}
+              >
+                매수 가능 수량: {buyPrice}
+              </div>
+
+              <div
+                style={{
+                  marginBottom: "10px", // 버튼과의 간격
+                  color: "black",
+                  fontSize: "16px",
+                }}
+              >
+                매도 가능 수량: {sellQuantity}
+              </div>
+            </div>
+
             <div
               style={{
                 width: "100%",
@@ -478,9 +542,7 @@ export default function TradeModal(props) {
                   boxSizing: "border-box",
                   cursor: "pointer",
                 }}
-                onClick={() =>
-                  clickBuy(user.user_id, "005930", quantity, price)
-                }
+                onClick={() => clickBuy(user.user_id, stockId, quantity, price)}
               >
                 매수(살래요)
               </div>
@@ -500,7 +562,7 @@ export default function TradeModal(props) {
                   cursor: "pointer",
                 }}
                 onClick={() =>
-                  clickSell(user.user_id, "005930", quantity, price)
+                  clickSell(user.user_id, stockId, quantity, price)
                 }
               >
                 매도(팔래요)
