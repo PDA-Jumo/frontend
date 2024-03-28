@@ -18,9 +18,9 @@ const StockList = (props) => {
       style={{ cursor: props.type !== "theme" ? "pointer" : "" }}
       onClick={() =>
         props.type !== "theme"
-          ? navigate(
-              `/stock/detail/${props.item.stock_code}/${props.item.stbd_nm}`
-            )
+          ? navigate(`/stock/detail/${props.item.stock_code}`, {
+              state: props.item,
+            })
           : null
       }
     >

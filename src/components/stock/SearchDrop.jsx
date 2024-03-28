@@ -53,12 +53,7 @@ export default function SearchDrop({ keyword }) {
                     justifyContent: "space-between",
                   }}
                   onClick={() => {
-                    navigate(
-                      `detail/${item.stock_code}/${encodeURIComponent(
-                        item.stock_name
-                      )}`,
-                      { state: item }
-                    );
+                    navigate(`detail/${item.stock_code}`, { state: item });
                   }} // 페이지 이동
                 >
                   <span style={{ cursor: "pointer" }}>{item.stock_name}</span>
@@ -81,12 +76,7 @@ export default function SearchDrop({ keyword }) {
             <div
               key={index}
               onClick={() => {
-                navigate(
-                  `detail/${item.stock_code}/${encodeURIComponent(
-                    item.stock_name
-                  )}`,
-                  { state: item }
-                );
+                navigate(`detail/${item.stock_code}`, { state: item });
 
                 const action = addsearch({
                   id: uuidv4(),

@@ -23,8 +23,8 @@ export default function StockDetail() {
       const res = await getStockNews(location.state.stock_code); // 종목 뉴스
       setStockD(resp);
       setStockNews(res);
+      console.log(location);
     };
-    console.log();
     setData();
   }, []);
 
@@ -67,7 +67,9 @@ export default function StockDetail() {
             paddingInline: "8px",
           }}
         >
-          <span className="largeText">{location.state.stock_name}</span>
+          <span className="largeText">
+            {location.state.stock_name || location.state.stbd_nm}
+          </span>
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
           >
