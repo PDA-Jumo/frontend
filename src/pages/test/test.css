@@ -10,10 +10,10 @@
 }
 
 .character-image {
-  width: 420px;
+  width: 25vw;
   position: fixed;
   left: 80px;
-  top: 25%;
+  top: calc(170px - 1.2vw);
 }
 
 .test-content {
