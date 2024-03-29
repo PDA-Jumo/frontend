@@ -12,8 +12,8 @@ export default function TradeModal(props) {
   const user = useSelector((state) => state.user.user) || {};
   const params = useParams();
 
-  const stockId = params.stockId;
-  const stockName = params.stockName;
+  const stockId = props.item.stock_code;
+  const stockName = props.item.stock_name || props.item.stbd_nm;
   console.log(stockId, stockName);
 
   // Note
@@ -140,6 +140,19 @@ export default function TradeModal(props) {
   }, []);
 
   return (
+    // <div
+    //   style={{
+    //     width: "100%",
+    //     height: "100%",
+    //     backgroundColor: "rgba(0,0,0,0.5)",
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    //     position: "absolute",
+    //     top: 0,
+    //     left: 0,
+    //   }}
+    // >
     <div
       style={{
         width: "100%",
@@ -491,88 +504,86 @@ export default function TradeModal(props) {
               </div>
             </div>
 
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
+            }}
+          >
             <div
               style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-around",
+                marginBottom: "10px", // 버튼과의 간격
+                color: "black",
+                fontSize: "16px",
               }}
             >
-              <div
-                style={{
-                  marginBottom: "10px", // 버튼과의 간격
-                  color: "black",
-                  fontSize: "16px",
-                }}
-              >
-                매수 가능 수량: {buyPrice}
-              </div>
-
-              <div
-                style={{
-                  marginBottom: "10px", // 버튼과의 간격
-                  color: "black",
-                  fontSize: "16px",
-                }}
-              >
-                매도 가능 수량: {sellQuantity}
-              </div>
+              매수 가능 수량: {buyPrice}
             </div>
 
             <div
               style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-around",
+                marginBottom: "10px", // 버튼과의 간격
+                color: "black",
+                fontSize: "16px",
               }}
             >
-              <div
-                style={{
-                  width: "150px",
-                  height: "60px",
-                  borderRadius: "16px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "#F3322C",
-                  color: "white",
-                  fontSize: "20px",
-                  padding: "8px",
-                  boxSizing: "border-box",
-                  cursor: "pointer",
-                }}
-                onClick={() => clickBuy(user.user_id, stockId, quantity, price)}
-              >
-                매수(살래요)
-              </div>
-              <div
-                style={{
-                  width: "150px",
-                  height: "60px",
-                  borderRadius: "16px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "#254EFB",
-                  color: "white",
-                  fontSize: "20px",
-                  padding: "8px",
-                  boxSizing: "border-box",
-                  cursor: "pointer",
-                }}
-                onClick={() =>
-                  clickSell(user.user_id, stockId, quantity, price)
-                }
-              >
-                매도(팔래요)
-              </div>
+              매도 가능 수량: {sellQuantity}
+            </div>
+          </div>
+
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
+            }}
+          >
+            <div
+              style={{
+                width: "150px",
+                height: "60px",
+                borderRadius: "16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#F3322C",
+                color: "white",
+                fontSize: "20px",
+                padding: "8px",
+                boxSizing: "border-box",
+                cursor: "pointer",
+              }}
+              onClick={() => clickBuy(user.user_id, stockId, quantity, price)}
+            >
+              매수(살래요)
+            </div>
+            <div
+              style={{
+                width: "150px",
+                height: "60px",
+                borderRadius: "16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#254EFB",
+                color: "white",
+                fontSize: "20px",
+                padding: "8px",
+                boxSizing: "border-box",
+                cursor: "pointer",
+              }}
+              onClick={() => clickSell(user.user_id, stockId, quantity, price)}
+            >
+              매도(팔래요)
             </div>
           </div>
         </div>
       </div>
     </div>
+    // </div>
   );
 } //
 
@@ -586,7 +597,9 @@ const LivePrice = (props) => {
         display: "flex",
         borderBottom: "1px solid white",
       }}
-      onClick={() => props.click(props.price)}
+      onClick={() =>
+        props.color !== "white" ? props.click(parseInt(props.price)) : null
+      }
     >
       <div
         style={{

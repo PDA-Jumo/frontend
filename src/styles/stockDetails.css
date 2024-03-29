@@ -6,7 +6,7 @@
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
   border-radius: 16px;
   display: flex;
-  margin-top: 40px;
+  margin-top: 12px;
 }
 
 .MainChartNumber {
@@ -19,7 +19,7 @@
 .MainChartView {
   width: 50%;
   height: 100%;
-  margin-inline: 56px;
+  /* margin-inline: 56px; */
   padding-bottom: 16px;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@
 }
 
 .MainChartDiv:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
   transition: transform 0.5s ease;
 }
 

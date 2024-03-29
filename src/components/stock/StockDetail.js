@@ -103,6 +103,7 @@ export default function StockDetail() {
         stock: stock_prpr,
       };
       setPrices((prevPrices) => [...prevPrices, newDataPoint]);
+
     });
 
     return () => {

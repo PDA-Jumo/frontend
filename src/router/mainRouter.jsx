@@ -113,19 +113,6 @@ export const mainRouter = [
     path: "/test/result",
     element: <TestResultLayout />,
   },
-
-  {
-    path: "/stock/detail",
-    element: <StockDetail />,
-  },
-  {
-    path: "/test",
-    element: <TestLayout />,
-  },
-  {
-    path: "/test/result",
-    element: <TestResultLayout />,
-  },
 ];
 const router = createBrowserRouter(mainRouter);
 export default router;

@@ -219,6 +219,7 @@ export default function HotThemes() {
                 height: "250px",
                 backgroundColor: "#D9D9D9",
                 alignSelf: "center",
+                marginInline: "16px",
               }}
             />
             <div className="MainChartView">
