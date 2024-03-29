@@ -87,9 +87,58 @@ button:hover,
 .clickme img {
   width: 200px;
   height: 200px;
-  transition: transform 0.25s ease;
+  position: absolute;
+  bottom: 100px;
+  left: 80px;
 }
 
-.clickme img:active {
-  transform: scale(1.2);
+.level-type {
+  font-size: 18px;
+  justify-content: flex-start;
+}
+
+.nickname {
+  font-size: 36px;
+}
+
+.columnCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-block: 2px;
+  cursor: pointer;
+}
+.info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.tip-box {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 400px;
+  height: 170px;
+  border-radius: 16px;
+  box-sizing: border-box;
+  padding: 16px;
+  color: white;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.swiper-container {
+  font-size: 16px;
+  margin-top: 4px;
+  width: 100%;
+  height: 80%;
+  overflow: hidden;
+  white-space: normal;
+}
+
+.Sample {
+  word-wrap: break-word;
+  white-space: pre;
+  white-space: -moz-pre-wrap;
+  white-space: pre-wrap;
 }

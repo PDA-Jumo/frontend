@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   LineChart,
@@ -10,7 +9,7 @@ import {
   Tooltip,
 } from "recharts";
 import { useNavigate } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 //css
 import "../../styles/stockDetails.css";
 
@@ -33,6 +32,7 @@ import {
 import { createCommunity, checkCommunity } from "../../lib/apis/community";
 
 import socketEvent from "../../lib/socket/StockSocketEvents";
+import { setHours } from "date-fns";
 
 export default function StockDetail() {
   const [isTrade, setIsTrade] = useState(false);
@@ -42,35 +42,54 @@ export default function StockDetail() {
   const [isLike, setIsLike] = useState("empty");
   const [graph, setGraph] = useState([]);
   const [prices, setPrices] = useState([]);
-  const params = useParams();
+  const location = useLocation();
   const user = useSelector((state) => state.user.user) || {};
   const [day, setDay] = useState("month");
 
   const navigate = useNavigate();
 
+  // // 버튼 클릭 이벤트 핸들러
+  const handleRequestData = () => {
+    // 서버에 "requestData" 메시지를 보내 데이터 요청
+    // stockSocket.emit("requestData", "005930");
+    //stockSocket.emit("requestPrice", "199800");
+  };
+
   useEffect(() => {
     const setData = async () => {
-      const resp = await getStockDetail(params.stockId); //종목 정보 (시가총액, per ...)
-      const res = await getStockNews(params.stockId); // 종목 뉴스
-      const re = await getStockGraph(params.stockId); // 종목 그래프(3개월)
-      const response = await checkLikeStock(user.user_id, params.stockId); // 관심종목 확인
+      const resp = await getStockDetail(location.state.stock_code); //종목 정보 (시가총액, per ...)
+      const res = await getStockNews(location.state.stock_code); // 종목 뉴스
+      const re = await getStockGraph(location.state.stock_codd); // 종목 그래프(3개월)
+      const response = await checkLikeStock(
+        user.user_id,
+        location.state.stock_cod
+      ); // 관심종목 확인
       setStockD(resp);
       setStockNews(res);
       setIsLike(response);
       setGraph(re);
     };
-
     setData();
-  }, [isLike, params]);
+  }, [isLike, location.state.stock_code]);
 
   console.log(isLike);
   console.log(graph);
   const maxYValue = Math.max(...graph.map((item) => item.close));
   const minYValue = Math.min(...graph.map((item) => item.close));
 
+  function hour(date) {
+    const starttime = new Date(date);
+    starttime.setHours(9, 0, 0);
+
+    const endtime = new Date(date);
+    endtime = setHours(15, 30, 0);
+
+    return date >= starttime && date <= endtime;
+  }
+
   useEffect(() => {
     // 종목 상세 페이지 입장
-    socketEvent.joinRoom(params.stockId, user.user_id);
+    socketEvent.joinRoom(location.state.stock_code, user.user_id);
 
     // 현재가 데이터 로드
     socketEvent.getStockdata((currentprice) => {
@@ -87,17 +106,18 @@ export default function StockDetail() {
     });
 
     return () => {
-      socketEvent.leaveRoom(params.stockId, user.user_id);
+      socketEvent.leaveRoom(location.state.stock_code, user.user_id);
     };
-  }, [params.stockId, user.user_id]);
-
-  console.log("지금까지의 가격이야!!", prices);
+  }, [location.state.stock_code, user.user_id]);
 
   const handleCommunityClick = async () => {
     try {
-      const data = await checkCommunity(params.stockId);
+      const data = await checkCommunity(location.state.stock_code);
       if (data.length === 0) {
-        await createCommunity(params.stockId, params.stockName);
+        await createCommunity(
+          location.state.stock_code,
+          location.state.stock_name
+        );
       }
       navigate(`/community/`);
     } catch (error) {
@@ -149,7 +169,7 @@ export default function StockDetail() {
               style={{ width: "60px" }}
               src={Heart}
               onClick={() => {
-                deleteLikeStock(user.user_id, params.stockId);
+                deleteLikeStock(user.user_id, location.state.stock_code);
                 setIsLike("empty");
               }}
             />
@@ -158,16 +178,21 @@ export default function StockDetail() {
               style={{ width: "60px" }}
               src={EHeart}
               onClick={() => {
-                postLikeStock(user.user_id, params.stockId, params.stockName);
+                postLikeStock(
+                  user.user_id,
+                  location.state.stock_code,
+                  location.state.stock_name
+                );
                 setIsLike("in");
               }}
             />
           )}
-          <span className="largeText">{params.stockName}</span>
+          {prices}
+          <span className="largeText">{location.state.stock_name}</span>
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
           >
-            {params.stockId}
+            {location.state.stock_code}
           </span>
         </div>
       </div>
@@ -192,6 +217,7 @@ export default function StockDetail() {
             <div onClick={() => setDay("month")}>3개월</div>
             <div onClick={() => setDay("day")}>1일</div>
           </div>
+
           {day === "month" ? (
             <LineChart
               width={750}
@@ -268,7 +294,10 @@ export default function StockDetail() {
             <div className="stockDetailTradeButton">소수점 거래하기</div>
             <div
               className="stockDetailTradeButton"
-              onClick={() => setIsTrade(true)}
+              onClick={() => {
+                setIsTrade(true);
+                handleRequestData();
+              }}
             >
               주식 거래하기
             </div>

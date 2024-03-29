@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 //assets
 import Folder from "../../assets/stock/folder.png";
@@ -48,7 +48,11 @@ export default function StockPage() {
         >
           <SearchTab />
 
-          <img src={Hat} style={{ width: "180px" }} />
+          <img
+            src={Hat}
+            style={{ width: "180px", cursor: "pointer" }}
+            onClick={() => (window.location.href = "/home")}
+          />
           <div
             style={{
               display: "flex",

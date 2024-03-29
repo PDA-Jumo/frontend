@@ -68,7 +68,7 @@
   padding: 4px 8px;
   display: flex;
   align-items: center;
-  box-shadow: 2px 2px 3px rgba(225, 204, 236, 0.5);
+  box-shadow: 2px 2px 3px rgba(163, 163, 163, 0.5);
 }
 
 .stockDetailTradeButton {
