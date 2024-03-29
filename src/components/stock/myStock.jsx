@@ -4,10 +4,13 @@ import Character from "../../assets/stock/character.png";
 import Coin from "../../assets/stock/coin.png";
 import { MyStockPageContext } from "../../pages/Stock/Stock";
 import "../../styles/myStock.css";
+import { useSelector } from "react-redux";
 
 export default function MyStock() {
   const { setMyStockPage } = useContext(MyStockPageContext);
+  const user = useSelector((state) => state.user.user) || {};
 
+  console.log(user);
   return (
     <div
       style={{
@@ -25,7 +28,7 @@ export default function MyStock() {
           display: "flex",
           width: "50%",
           justifyContent: "space-between",
-          padding:"4% 5%"
+          padding: "4% 5%",
         }}
       >
         <img src={Character}></img>
@@ -33,7 +36,7 @@ export default function MyStock() {
           <div class="smallText" style={{ color: "#F9C93E" }}>
             주대주주
           </div>
-          <div class="xxxLargeText">김광태가뭐야</div>
+          <div class="xxxLargeText">{user.nickname}</div>
           <div
             style={{
               display: "flex",
@@ -45,7 +48,7 @@ export default function MyStock() {
               <img src={Coin} style={{ height: "56px", width: "56px" }} />총
               보유자산
             </div>
-            <div class="largeText">1,000,000,000원</div>
+            <div class="largeText">{user.total_assets}</div>
           </div>
         </div>
       </div>
