@@ -116,6 +116,7 @@ export const MainChartComponent = (props) => {
             height: "250px",
             backgroundColor: "#D9D9D9",
             alignSelf: "center",
+            marginInline: "32px",
           }}
         />
         <MainChart
