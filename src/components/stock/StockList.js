@@ -70,6 +70,13 @@ const StockList = (props) => {
           ? `${props.item.stock_code}`
           : null}
       </span>
+      <span style={{ flex: 2, display: "flex", justifyContent: "center" }}>
+        {props && props.type === "theme"
+          ? `+${props.item.stats.returns}%`
+          : props.type === "rank"
+          ? `${props.item.current_price}`
+          : null}
+      </span>
     </div>
   );
 };
