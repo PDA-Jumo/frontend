@@ -35,7 +35,6 @@ import { createCommunity, checkCommunity } from "../../lib/apis/community";
 import socketEvent from "../../lib/socket/StockSocketEvents";
 
 export default function StockDetail() {
-  const [isTrade, setIsTrade] = useState(false);
   const [activeTab, setActiveTab] = useState("info");
   const [stockd, setStockD] = useState([]);
   const [stocknews, setStockNews] = useState([{}]);
@@ -114,8 +113,6 @@ export default function StockDetail() {
         backgroundColor: "white",
       }}
     >
-      {isTrade ? <TradeModal setIsTrade={setIsTrade} /> : null}
-
       <div
         style={{
           height: "70px",
@@ -304,7 +301,7 @@ export default function StockDetail() {
           </div>
         </div>
         <div style={{ width: "50%", height: "100%" }}>
-          <TradeModal />
+          <TradeModal item={location.state} />
         </div>
         {/* <div
         style={{

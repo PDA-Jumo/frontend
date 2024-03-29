@@ -12,8 +12,8 @@ export default function TradeModal(props) {
   const user = useSelector((state) => state.user.user) || {};
   const params = useParams();
 
-  const stockId = params.stockId;
-  const stockName = params.stockName;
+  const stockId = props.item.stock_code;
+  const stockName = props.item.stock_name || props.item.stbd_nm;
   console.log(stockId, stockName);
 
   // Note
