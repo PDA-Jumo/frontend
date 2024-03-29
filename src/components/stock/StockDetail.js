@@ -161,7 +161,9 @@ export default function StockDetail() {
             />
           )}
           {prices}
-          <span className="largeText">{location.state.stock_name}</span>
+          <span className="largeText">
+            {location.state.stock_name || location.state.stbd_nm}
+          </span>
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
           >
