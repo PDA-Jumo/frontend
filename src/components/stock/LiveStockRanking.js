@@ -20,13 +20,22 @@ export default function LiveStockRanking() {
   const handleClickLiveRankingTab = (type) => {
     setSelectedRankingTab(type);
   };
+
+  // live Ranking 10초마다 실행
   useEffect(() => {
     const setData = async () => {
       const liveRankingData = await getLiveRanking(selectedRankingTab);
       setLiveRanking(liveRankingData.data);
     };
+
     setData();
-  }, []);
+    // 60초에 한번씩
+    const intervalId = setInterval(() => {
+      setData();
+    }, 600000);
+
+    return () => clearInterval(intervalId);
+  }, [selectedRankingTab]);
 
   useEffect(() => {
     const setNewData = async () => {

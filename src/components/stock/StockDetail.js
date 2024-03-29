@@ -73,7 +73,7 @@ export default function StockDetail() {
 
     // 현재가 데이터 로드
     socketEvent.getStockdata((currentprice) => {
-      console.log(currentprice.data.output2.stck_prpr);
+      console.log(currentprice.output2.stck_prpr);
       // setPrices((price) => [...price, currentprice]);
     });
 
