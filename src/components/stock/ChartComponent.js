@@ -133,7 +133,7 @@ export const MainChartComponent = (props) => {
 export const MainChart = (props) => {
   return (
     <div className="MainChartView">
-      <p>{props.category}</p>
+      <span style={{ marginBottom: "8px" }}>{props.category}</span>
       <div className="MainChartDiv">
         <div
           style={{
