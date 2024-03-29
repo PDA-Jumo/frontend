@@ -6,6 +6,11 @@ export const getKoreaPortfolio = async (id) => {
   return res.data;
 };
 
+export const getWorldPortfolio = async (id) => {
+  const res = await instance.get(`portfolio/2?user_id=${id}&market_location=1`);
+  console.log(res.data);
+  return res.data;
+};
 /* 
 export const getWorldPortfolio = async (id) => {
 const res = await instance.get(`portfolio?user_id=${id}&market_location=1`);

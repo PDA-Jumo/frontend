@@ -14,8 +14,8 @@ export default function MyKoreaStock() {
   const [chart, setChart] = useState([]);
   const [hoverdata, setHoverdata] = useState("");
   const user = useSelector((state) => state.user.user) || {};
-  const [yieldrate, setYieldrate] = useState("0")
-  const [yieldmoney, setYieldmoney] = useState("0")
+  const [yieldrate, setYieldrate] = useState("0");
+  const [yieldmoney, setYieldmoney] = useState("0");
   const navigate = useNavigate();
 
   console.log(user.user_id);
@@ -25,14 +25,14 @@ export default function MyKoreaStock() {
       const resp = await getKoreaPortfolio(user.user_id);
       setAssets(resp.assets);
       setChart(resp.mystock_percent);
-      setYieldrate(resp.yield_rate)
-      setYieldmoney(resp.yield_money)
+      setYieldrate(resp.yield_rate);
+      setYieldmoney(resp.yield_money);
     };
 
     setData();
   }, []);
 
-  console.log()
+  console.log();
   function handleHover(data) {
     console.log(data.stock_name);
     setHoverdata(data.stock_name);
@@ -60,7 +60,9 @@ export default function MyKoreaStock() {
         }}
       >
         <div>
-          <div style={{ fontSize: "18px", color: "#F9C93E" }}>주대주주</div>
+          <div style={{ fontSize: "18px", color: "#F9C93E" }}>
+            {user.level_name}
+          </div>
           <div class="mediumText">{user.nickname}</div>
         </div>
 

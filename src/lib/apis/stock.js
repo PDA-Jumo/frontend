@@ -102,3 +102,12 @@ export const getSellQuantityStock = async (user_id, stock_code) => {
   );
   return resp.data;
 };
+
+export const kospiTop5 = async () => {
+  const resp = await instance.get(`/stock/kospitop5`);
+  return resp.data;
+};
+export const kosdaqTop5 = async () => {
+  const resp = await instance.get(`/stock/kosdaqtop5`);
+  return resp.data;
+};
