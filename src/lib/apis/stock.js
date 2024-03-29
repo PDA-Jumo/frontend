@@ -44,3 +44,12 @@ export const getStockNews = async (code) => {
   const resp = await instance.get(`/stock/news/${code}`);
   return resp.data;
 };
+
+export const kospiTop5 = async () => {
+  const resp = await instance.get(`/stock/kospitop5`);
+  return resp.data;
+}
+export const kosdaqTop5 = async () => {
+  const resp = await instance.get(`/stock/kosdaqtop5`);
+  return resp.data;
+}

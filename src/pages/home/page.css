@@ -143,13 +143,20 @@ button:hover,
   white-space: pre-wrap;
 }
 .navigation-buttons .items {
-  display: none;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.5s, transform 0.5s;
 }
 
 .navigation-buttons .items.show {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
   display: flex;
   z-index: 1000;
 }
+
 .navigation-container {
   position: relative;
   display: flex;
@@ -161,18 +168,22 @@ button:hover,
 }
 .show-buttons {
   margin-top: 24px;
-  margin-right: 26px;
+  margin-right: 25px;
+  font-size: 24px;
+  border-radius: 15px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 .new-area {
   position: absolute;
   top: 0;
   right: 0;
-  width: 25%;
+  width: 360px;
   height: 70%;
-  margin-right: 20px;
+  margin-right: 26px;
   background-color: #f0f0f0; /* 배경색 예시 */
   text-align: center;
-  border-radius: 16px;
+  border-radius: 20px;
   box-sizing: border-box;
   padding: 8px;
   background-color: rgba(0, 0, 0, 0.3);
@@ -218,15 +229,9 @@ button:hover,
   text-align: start;
 }
 
-.navigation-buttons .items {
-  display: none;
-}
-
-.navigation-buttons .items.show {
-  display: flex;
-  z-index: 1000;
-}
 /* CSS */
 .tabs-button {
   flex: 1; /* 모든 버튼이 균등한 크기를 가지도록 설정 */
+}
+.basic-info {
 }

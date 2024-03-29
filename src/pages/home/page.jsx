@@ -16,6 +16,7 @@ import { upCash } from "../../lib/apis/home";
 import "./page.css";
 import levelData from "./levelData";
 import { getKoreaPortfolio } from "../../lib/apis/portfolio";
+import { kospiTop5, kosdaqTop5 } from "../../lib/apis/stock";
 
 // Swiper
 import "swiper/css";
@@ -41,17 +42,24 @@ function HomePage() {
   const [myStock, setMyStock] = useState([]);
   const [tabsData, setTabsData] = useState({
     보유종목: [],
-    코스피200: ["코스피1", "코스피2", "코스피3", "코스피4", "코스피5"], // 더미 데이터
-    코스닥: ["코스닥1", "코스닥2", "코스닥3", "코스닥4", "코스닥5"], // 더미 데이터
+    코스피200: [],
+    코스닥: [],
   });
   const user = useSelector((state) => state.user.user) || {};
 
   useEffect(() => {
     const setData = async () => {
       const resp = await getKoreaPortfolio(user.user_id);
+      const resp1 = await kospiTop5();
+      const resp2 = await kosdaqTop5();
+      const kospiTop5StockNames = resp1.map((item) => item.stock_name);
+      const kosdaqTop5StockNames = resp2.map((item) => item.stock_name);
+
       setTabsData((prevTabsData) => ({
         ...prevTabsData,
         보유종목: resp.myStock.slice(0, 5),
+        코스피200: kospiTop5StockNames,
+        코스닥: kosdaqTop5StockNames,
       }));
     };
     setData();
@@ -183,10 +191,6 @@ function HomePage() {
         <div
           className={`navigation-buttons vertical ${showItems ? "show" : ""}`}
         >
-          <div
-            className="placeholder"
-            style={{ display: showItems ? "none" : "block" }}
-          ></div>
           <div className={`columnCenter items ${showItems ? "show" : ""}`}>
             <img
               src={rankingIcon}
@@ -230,7 +234,7 @@ function HomePage() {
           className="show-buttons"
           onClick={() => setShowItems(!showItems)}
         >
-          버튼 보기
+          메뉴
         </button>
       </div>
 
