@@ -115,9 +115,9 @@ export default function StockDetail() {
       }}
     >
       {isTrade ? <TradeModal setIsTrade={setIsTrade} /> : null}
+
       <div
         style={{
-          // backgroundColor: "#FFDE6B",
           height: "70px",
           width: "100%",
           display: "flex",
@@ -165,7 +165,11 @@ export default function StockDetail() {
             {location.state.stock_name || location.state.stbd_nm}
           </span>
           <span
-            style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
+            style={{
+              marginBottom: "5px",
+              color: "#B9B9B9",
+              marginLeft: "8px",
+            }}
           >
             {location.state.stock_code}
           </span>
@@ -177,7 +181,132 @@ export default function StockDetail() {
           {stockd.prpr}
         </span>
       </div>
-      <div
+      <div style={{ display: "flex" }}>
+        <div
+          style={{
+            width: "50%",
+            height: "100%",
+            flexDirection: "column",
+          }}
+        >
+          {/* 종목 차트 */}
+          <div
+          // style={{
+          //   width: "60%",
+          //   backgroundColor: "black",
+          //   borderRadius: "16px",
+          //   marginBlock: "16px",
+          // }}
+          >
+            <LineChart
+              width={750}
+              height={250}
+              data={graph}
+              margin={{
+                top: 30,
+                right: 0,
+                left: 0,
+                bottom: 30,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis domain={[0, maxYValue + 100]} />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="close"
+                stroke="#8884d8"
+                dot={{ r: 1 }}
+              />
+            </LineChart>
+          </div>
+          <div style={{ display: "flex", marginLeft: "20px" }}>
+            <div
+              className={
+                "stockDetailTab" + (activeTab === "info" ? " active" : "")
+              }
+              style={{ marginLeft: "10px", cursor: "pointer" }}
+              onClick={() => setActiveTab("info")}
+            >
+              종목 정보
+            </div>
+            <div
+              className={
+                "stockDetailTab" + (activeTab === "news" ? " active" : "")
+              }
+              style={{ cursor: "pointer" }}
+              onClick={() => setActiveTab("news")}
+            >
+              뉴스
+            </div>
+          </div>
+          <div
+            style={{
+              border: "3px solid #ffde6b",
+              height: "200px",
+              borderRadius: "16px",
+              marginInline: "16px",
+              marginBottom: "16px",
+            }}
+          >
+            {activeTab === "info" && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "30vh",
+                  gap: "5%",
+                }}
+              >
+                <div>
+                  <div class="info">
+                    시가 총액<div>{stockd.hts_avls}</div>
+                  </div>
+                  <hr />
+                  <div class="info">
+                    pbr <div>{stockd.pbr}</div>
+                  </div>
+                  <hr />
+                </div>
+
+                <div>
+                  <div class="info">
+                    per<div>{stockd.per}</div>
+                  </div>
+                  <hr />
+                  <div class="info">
+                    외국인 소진율<div>{stockd.hts_frgn_ehrt}</div>
+                  </div>
+                  <hr />
+                </div>
+              </div>
+            )}
+
+            {activeTab === "news" && (
+              <div style={{ height: "200px", overflowY: "scroll" }}>
+                <div style={{ margin: "2% 2%" }}>
+                  {stocknews.map((item, id) => (
+                    <div
+                      key={id}
+                      onClick={() => {
+                        window.location.href = item.url;
+                      }}
+                      style={{ cursor: "pointer", marginTop: "1%" }}
+                    >
+                      {item.title}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div style={{ width: "50%", height: "100%" }}>
+          <TradeModal />
+        </div>
+        {/* <div
         style={{
           display: "flex",
           height: "300px",
@@ -185,39 +314,6 @@ export default function StockDetail() {
           boxSizing: "border-box",
         }}
       >
-        {/* 종목 차트 */}
-        <div
-        // style={{
-        //   width: "60%",
-        //   backgroundColor: "black",
-        //   borderRadius: "16px",
-        //   marginBlock: "16px",
-        // }}
-        >
-          {" "}
-          <LineChart
-            width={750}
-            height={250}
-            data={graph}
-            margin={{
-              top: 30,
-              right: 0,
-              left: 0,
-              bottom: 30,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis domain={[0, maxYValue + 100]} />
-            <Tooltip />
-            <Line
-              type="monotone"
-              dataKey="close"
-              stroke="#8884d8"
-              dot={{ r: 1 }}
-            />
-          </LineChart>
-        </div>
         <div
           style={{
             width: "40%",
@@ -255,83 +351,7 @@ export default function StockDetail() {
             </div>
           </div>
         </div>
-      </div>
-
-      <div style={{ display: "flex", marginLeft: "20px" }}>
-        <div
-          className={"stockDetailTab" + (activeTab === "info" ? " active" : "")}
-          style={{ marginLeft: "10px", cursor: "pointer" }}
-          onClick={() => setActiveTab("info")}
-        >
-          종목 정보
-        </div>
-        <div
-          className={"stockDetailTab" + (activeTab === "news" ? " active" : "")}
-          style={{ cursor: "pointer" }}
-          onClick={() => setActiveTab("news")}
-        >
-          뉴스
-        </div>
-      </div>
-      <div
-        style={{
-          border: "3px solid #ffde6b",
-          height: "200px",
-          borderRadius: "16px",
-          marginInline: "16px",
-          marginBottom: "16px",
-        }}
-      >
-        {activeTab === "info" && (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "30vh",
-              gap: "5%",
-            }}
-          >
-            <div>
-              <div class="info">
-                시가 총액<div>{stockd.hts_avls}</div>
-              </div>
-              <hr />
-              <div class="info">
-                pbr <div>{stockd.pbr}</div>
-              </div>
-              <hr />
-            </div>
-
-            <div>
-              <div class="info">
-                per<div>{stockd.per}</div>
-              </div>
-              <hr />
-              <div class="info">
-                외국인 소진율<div>{stockd.hts_frgn_ehrt}</div>
-              </div>
-              <hr />
-            </div>
-          </div>
-        )}
-        {activeTab === "news" && (
-          <div style={{ height: "200px", overflowY: "scroll" }}>
-            <div style={{ margin: "2% 2%" }}>
-              {stocknews.map((item, id) => (
-                <div
-                  key={id}
-                  onClick={() => {
-                    window.location.href = item.url;
-                  }}
-                  style={{ cursor: "pointer", marginTop: "1%" }}
-                >
-                  {item.title}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+      </div> */}
       </div>
     </div>
   );
