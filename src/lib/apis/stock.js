@@ -35,7 +35,6 @@ export const getLiveRanking = async (type) => {
   return liveRanking;
 };
 
-
 export const getStockDetail = async (code, name) => {
   const resp = await instance.get(`/stock/detail/${code}/${name}`);
   return resp.data;
@@ -48,6 +47,12 @@ export const getStockNews = async (code) => {
 
 export const getStockGraph = async (code) => {
   const resp = await instance.get(`/stock/graph/${code}`);
+  return resp.data;
+};
+
+//메인에서 최근 검색 종목 가격
+export const getStockPrice = async (code) => {
+  const resp = await instance.get(`/stock/initial/${code}`);
   return resp.data;
 };
 
@@ -66,6 +71,11 @@ export const postBuyStock = async (
     quantity,
     transaction_price,
   });
+  return resp.data;
+};
+
+export const getRecommend = async () => {
+  const resp = await instance.get(`/stock/recommend`);
   return resp.data;
 };
 
