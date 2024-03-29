@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import rankingIcon from "../../assets/main/star.png";
 import tradeIcon from "../../assets/main/cash.png";
 import quizIcon from "../../assets/main/pen.png";
@@ -7,7 +7,7 @@ import encyclopediaIcon from "../../assets/main/zoom.png";
 import dollarIcon from "../../assets/main/dollar.png";
 import stockIcon from "../../assets/main/stock.png";
 import clickmeIcon from "../../assets/main/clickme.png";
-import tipsIcon from "../../assets/main/tips.png"; // 이거 왜있는거임 ..?
+import tipsIcon from "../../assets/main/tips.png";
 import speaker from "../../assets/icons/speaker.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,6 +15,7 @@ import { updateFinancialsAction } from "../../store/reducers/user";
 import { upCash } from "../../lib/apis/home";
 import "./page.css";
 import levelData from "./levelData";
+import { getKoreaPortfolio } from "../../lib/apis/portfolio";
 
 // Swiper
 import "swiper/css";
@@ -35,8 +36,27 @@ function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLevelUp, setIsLevelUp] = useState(false);
-
+  const [showItems, setShowItems] = useState(false);
+  const [activeTab, setActiveTab] = useState("보유종목");
+  const [myStock, setMyStock] = useState([]);
+  const [tabsData, setTabsData] = useState({
+    보유종목: [],
+    코스피200: ["코스피1", "코스피2", "코스피3", "코스피4", "코스피5"], // 더미 데이터
+    코스닥: ["코스닥1", "코스닥2", "코스닥3", "코스닥4", "코스닥5"], // 더미 데이터
+  });
   const user = useSelector((state) => state.user.user) || {};
+
+  useEffect(() => {
+    const setData = async () => {
+      const resp = await getKoreaPortfolio(user.user_id);
+      setTabsData((prevTabsData) => ({
+        ...prevTabsData,
+        보유종목: resp.myStock.slice(0, 5),
+      }));
+    };
+    setData();
+  }, []);
+
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -118,93 +138,102 @@ function HomePage() {
                       <span> {user?.type}</span>
                     </div>
                     <div className="nickname">{user?.nickname}님</div>
+                    <div style={{ marginTop: "6px" }}>
+                      <img
+                        src={dollarIcon}
+                        alt="달러 아이콘"
+                        style={{
+                          width: "24px",
+                          height: "24px",
+                          marginRight: "10px",
+                          marginTop: "6px",
+                          verticalAlign: "top",
+                        }}
+                      />
+                      {user?.cash?.toLocaleString()}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="navigation-container">
+        <div className="new-area">
+          <div className="tabs">
+            {Object.keys(tabsData).map((tabName) => (
+              <button
+                key={tabName}
+                onClick={() => setActiveTab(tabName)}
+                className={activeTab === tabName ? "active" : ""}
+              >
+                {tabName}
+              </button>
+            ))}
+          </div>
+          <div className="tab-content">
+            {tabsData[activeTab] &&
+              tabsData[activeTab].map((item, index) => (
+                <div key={index}>{item}</div>
+                // 각각의 ITEM의 주가를 받아와서 달 수 있도록 코드를 수정해야 함.
+              ))}
+          </div>
+        </div>
+        <div
+          className={`navigation-buttons vertical ${showItems ? "show" : ""}`}
+        >
+          <div
+            className="placeholder"
+            style={{ display: showItems ? "none" : "block" }}
+          ></div>
+          <div className={`columnCenter items ${showItems ? "show" : ""}`}>
+            <img
+              src={rankingIcon}
+              style={{ height: "50px", cursor: "pointer" }}
+              alt="랭킹"
+              onClick={() => navigateTo("/ranking")}
+            />
+            <span style={{ fontSize: "14px" }}>랭킹</span>
+          </div>
+          <div className={`columnCenter items ${showItems ? "show" : ""}`}>
+            <img
+              src={tradeIcon}
+              style={{ cursor: "pointer", marginTop: "-6px" }}
+              alt="매수매도"
+              onClick={() => navigateTo("/stock")}
+            />
+            <span style={{ fontSize: "14px", marginTop: "-6px" }}>
+              매수매도
+            </span>
+          </div>
+          <div className={`columnCenter items ${showItems ? "show" : ""}`}>
+            <img
+              src={quizIcon}
+              alt="퀴즈"
+              style={{ height: "50px", cursor: "pointer" }}
+              onClick={() => navigateTo("/quiz")}
+            />
+            <span style={{ fontSize: "14px" }}>퀴즈</span>
+          </div>
+          <div className={`columnCenter items ${showItems ? "show" : ""}`}>
+            <img
+              src={messageIcon}
+              style={{ height: "50px", cursor: "pointer" }}
+              alt="커뮤니티"
+              onClick={() => navigateTo("/community")}
+            />
+            <span style={{ fontSize: "14px" }}>커뮤니티</span>
+          </div>
+        </div>
+        <button
+          className="show-buttons"
+          onClick={() => setShowItems(!showItems)}
+        >
+          버튼 보기
+        </button>
+      </div>
 
-          <div
-            className="white-rounded-box-row "
-            style={{ marginTop: "-20px" }}
-          >
-            <img
-              src={dollarIcon}
-              alt="달러 아이콘"
-              style={{
-                width: "24px",
-                height: "24px",
-                marginRight: "10px",
-                marginTop: "6px",
-              }}
-            />
-            <div>{user?.cash?.toLocaleString()}</div>
-          </div>
-          <div
-            className="white-rounded-box-row"
-            onClick={() => navigateTo("/holdings")}
-          >
-            <img
-              src={stockIcon}
-              alt="보유 종목"
-              style={{
-                width: "24px",
-                height: "24px",
-                marginRight: "10px",
-                marginTop: "6px",
-              }}
-            />
-            <span>보유종목</span>
-          </div>
-        </div>
-      </div>
-      <div className="navigation-buttons vertical">
-        <div className="columnCenter">
-          <img
-            src={rankingIcon}
-            style={{ height: "50px", cursor: "pointer" }}
-            alt="랭킹"
-            onClick={() => navigateTo("/ranking")}
-          />
-          <span style={{ fontSize: "14px" }}>랭킹</span>
-        </div>
-        <div className="columnCenter">
-          <img
-            src={tradeIcon}
-            style={{ cursor: "pointer", marginTop: "-6px" }}
-            alt="매수매도"
-            onClick={() => navigateTo("/stock")}
-          />
-          <span style={{ fontSize: "14px", marginTop: "-6px" }}>매수매도</span>
-        </div>
-        <div className="columnCenter">
-          <img
-            src={quizIcon}
-            alt="퀴즈"
-            style={{ height: "50px", cursor: "pointer" }}
-            onClick={() => navigateTo("/quiz")}
-          />
-          <span style={{ fontSize: "14px" }}>퀴즈</span>
-        </div>
-        <div className="columnCenter">
-          <img
-            src={messageIcon}
-            style={{ height: "50px", cursor: "pointer" }}
-            alt="커뮤니티"
-            onClick={() => navigateTo("/community")}
-          />
-          <span style={{ fontSize: "14px" }}>커뮤니티</span>
-        </div>
-        <div className="columnCenter">
-          <img
-            src={encyclopediaIcon}
-            style={{ cursor: "pointer" }}
-            alt="주식도감"
-            onClick={() => navigateTo("/book")}
-          />
-          <span style={{ fontSize: "14px" }}>주식도감</span>
-        </div>
-      </div>
       <div className="clickme">
         <img
           src={clickmeIcon}
