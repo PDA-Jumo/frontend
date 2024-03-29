@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import Community from '../../assets/backgrounds/Community.png';
-import CommunityList from '../../components/community/CommunityList';
-import HotCommunityList from '../../components/community/HotCommunityList';
-import CommunityDetail from '../../components/community/CommunityDetail';
+import React, { useState } from "react";
+import Community from "../../assets/backgrounds/Community.png";
+import CommunityList from "../../components/community/CommunityList";
+import HotCommunityList from "../../components/community/HotCommunityList";
+import CommunityDetail from "../../components/community/CommunityDetail";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function CommunityLayout() {
@@ -12,8 +12,6 @@ export default function CommunityLayout() {
   const backToHotCommunity = () => {
     setSelectedCommunity(null);
   };
-
-
 
   console.log("메인", user);
   console.log(user.user_id);
@@ -36,13 +34,16 @@ export default function CommunityLayout() {
           left: 100,
         }}
       >
-        <div style={{ display: 'flex' }}> {/* 여기에 margin 추가 */}
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <div>
             <CommunityList onSelectCommunity={setSelectedCommunity} />
           </div>
           {selectedCommunity ? (
             <div>
-              <CommunityDetail community={selectedCommunity} onBack={backToHotCommunity} />
+              <CommunityDetail
+                community={selectedCommunity}
+                onBack={backToHotCommunity}
+              />
             </div>
           ) : (
             <div>
