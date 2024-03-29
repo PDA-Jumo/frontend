@@ -167,7 +167,6 @@ button:hover,
   height: 294px; /* 다른 버튼들의 총 높이에 해당하는 값으로 조정 */
 }
 .show-buttons {
-  margin-top: 24px;
   margin-right: 25px;
   font-size: 24px;
   border-radius: 15px;
