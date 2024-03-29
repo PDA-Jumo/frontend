@@ -52,14 +52,33 @@ function HomePage() {
       const resp = await getKoreaPortfolio(user.user_id);
       const resp1 = await kospiTop5();
       const resp2 = await kosdaqTop5();
-      const kospiTop5StockNames = resp1.map((item) => item.stock_name);
-      const kosdaqTop5StockNames = resp2.map((item) => item.stock_name);
+
+      // 코스피 상위 5종목 코드 및 이미지 매핑
+      const kospiTop5WithCodeAndImage = resp1.map((item) => ({
+        name: item.stock_name,
+        code: item.stock_code,
+        imageUrl: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
+      }));
+
+      // 코스닥 상위 5종목 코드 및 이미지 매핑
+      const kosdaqTop5WithCodeAndImage = resp2.map((item) => ({
+        name: item.stock_name,
+        code: item.stock_code,
+        imageUrl: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
+      }));
+
+      // 보유종목 이미지 매핑
+      const mystockimg = resp.myStock.slice(0, 5).map((stock, index) => ({
+        name: stock,
+        code: resp.myStockCode[index],
+        imageUrl: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${resp.myStockCode[index]}.png`,
+      }));
 
       setTabsData((prevTabsData) => ({
         ...prevTabsData,
-        보유종목: resp.myStock.slice(0, 5),
-        코스피200: kospiTop5StockNames,
-        코스닥: kosdaqTop5StockNames,
+        보유종목: mystockimg,
+        코스피200: kospiTop5WithCodeAndImage,
+        코스닥: kosdaqTop5WithCodeAndImage,
       }));
     };
     setData();
@@ -183,8 +202,24 @@ function HomePage() {
           <div className="tab-content">
             {tabsData[activeTab] &&
               tabsData[activeTab].map((item, index) => (
-                <div key={index}>{item}</div>
-                // 각각의 ITEM의 주가를 받아와서 달 수 있도록 코드를 수정해야 함.
+                <div
+                  key={index}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "10px",
+                  }}
+                >
+                  <img
+                    src={item.imageUrl}
+                    alt={`${item.name} logo`}
+                    style={{
+                      width: "36px",
+                      height: "36px",
+                    }}
+                  />
+                  <div>{item.name} </div>
+                </div>
               ))}
           </div>
         </div>
