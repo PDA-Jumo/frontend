@@ -37,6 +37,7 @@ export default function LiveStockRanking() {
     return () => clearInterval(intervalId);
   }, [selectedRankingTab]);
 
+  console.log("라이브랭킹!!!!", liveRanking);
   useEffect(() => {
     const setNewData = async () => {
       const liveRankingData = await getLiveRanking(selectedRankingTab);

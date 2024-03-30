@@ -50,6 +50,12 @@ export const getStockGraph = async (code) => {
   return resp.data;
 };
 
+//메인에서 최근 검색 종목 가격
+export const getStockPrice = async (code) => {
+  const resp = await instance.get(`/stock/initial/${code}`);
+  return resp.data;
+};
+
 //// 매수, 매도 주문 API
 // 1. 매수 주문
 export const postBuyStock = async (
@@ -65,6 +71,11 @@ export const postBuyStock = async (
     quantity,
     transaction_price,
   });
+  return resp.data;
+};
+
+export const getRecommend = async () => {
+  const resp = await instance.get(`/stock/recommend`);
   return resp.data;
 };
 
@@ -89,5 +100,14 @@ export const getSellQuantityStock = async (user_id, stock_code) => {
   const resp = await instance.get(
     `/stock/sellquantity/${user_id}/${stock_code}`
   );
+  return resp.data;
+};
+
+export const kospiTop5 = async () => {
+  const resp = await instance.get(`/stock/kospitop5`);
+  return resp.data;
+};
+export const kosdaqTop5 = async () => {
+  const resp = await instance.get(`/stock/kosdaqtop5`);
   return resp.data;
 };
