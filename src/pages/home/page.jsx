@@ -18,6 +18,7 @@ import levelData from "./levelData";
 import { getKoreaPortfolio } from "../../lib/apis/portfolio";
 import { kospiTop5, kosdaqTop5 } from "../../lib/apis/stock";
 import SocketEvents from "../../lib/socket/StockSocketEvents";
+import { logout } from "../../lib/apis/auth";
 
 // Swiper
 import "swiper/css";
@@ -106,6 +107,15 @@ function HomePage() {
     };
     setData();
   }, []);
+
+  const handleLogout = async () => {
+    const success = await logout();
+    if (success) {
+      navigate("/");
+    } else {
+      console.log("로그아웃 실패");
+    }
+  };
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -295,6 +305,15 @@ function HomePage() {
               }
             />
             <span style={{ fontSize: "14px" }}>커뮤니티</span>
+          </div>
+          <div className={`columnCenter items ${showItems ? "show" : ""}`}>
+            <img
+              src={quizIcon}
+              alt="로그아웃"
+              style={{ height: "50px", cursor: "pointer" }}
+              onClick={handleLogout}
+            />
+            <span style={{ fontSize: "14px" }}>로그아웃</span>
           </div>
         </div>
         <button
