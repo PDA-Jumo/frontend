@@ -62,7 +62,7 @@ export default function StockDetail() {
       const re = await getStockGraph(location.state.stock_code); // 종목 그래프(3개월)
       const response = await checkLikeStock(
         user.user_id,
-        location.state.stock_cod
+        location.state.stock_code
       ); // 관심종목 확인
       setStockD(resp);
       setStockNews(res);
@@ -72,7 +72,7 @@ export default function StockDetail() {
     setData();
   }, [isLike, location.state.stock_code]);
 
-  console.log(isLike);
+  console.log("관심종목!!!!", isLike);
   const maxYValue = Math.max(...graph.map((item) => item.close));
   const minYValue = Math.min(...graph.map((item) => item.close));
 
