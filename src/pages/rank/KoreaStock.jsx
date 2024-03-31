@@ -70,8 +70,9 @@ export default function KoreaStock({ level, nickname, userId }) {
         <div className="stockList" style={{ height: "100%" }}>
           {myStock.length > 0 ? (
             myStock.map((stock, id) => {
-              const isHovered = stock === hoverdata;
+              const isHovered = stock === hoverdata; // 해당 위치에서 조건부렌더링 했음! myStock.length = 0일시 나가리
               return (
+                // 주식이 하나라도 있을때는 기존처럼 출력
                 <div
                   key={id}
                   className={`stockItem ${isHovered ? "hovered" : ""}`}
@@ -91,6 +92,8 @@ export default function KoreaStock({ level, nickname, userId }) {
               );
             })
           ) : (
+            // 주식이 하나도 없으면 원래 표시되어야할 영역 정중앙에 텍스트 잡고,
+            // ㅇㅇㅇ님은 현재 보유한 주식이 없습니다. 라고 작성했음.
             <div
               style={{
                 display: "flex",
