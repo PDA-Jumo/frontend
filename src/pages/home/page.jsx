@@ -55,7 +55,7 @@ function HomePage() {
   const [myStock, setMyStock] = useState([]);
   const [tabsData, setTabsData] = useState({
     보유종목: [],
-    코스피200: [],
+    코스피: [],
     코스닥: [],
   });
   const user = useSelector((state) => state.user.user) || {};
@@ -102,7 +102,7 @@ function HomePage() {
       setTabsData((prevTabsData) => ({
         ...prevTabsData,
         보유종목: mystockimg,
-        코스피200: kospiTop5WithCodeAndImage,
+        코스피: kospiTop5WithCodeAndImage,
         코스닥: kosdaqTop5WithCodeAndImage,
       }));
     };
@@ -231,12 +231,12 @@ function HomePage() {
       <div className="navigation-container">
         <div className="new-area">
           <div className="tabs">
-            {Object.keys(tabsData).map((tabName) => (
+            {Object.keys(tabsData).map((tabName, index) => (
               <div
                 key={tabName}
                 onClick={() => setActiveTab(tabName)}
                 style={{
-                  backgroundColor: "white",
+                  backgroundColor: tabName === activeTab ? "#FFDE6B" : "white",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -246,6 +246,7 @@ function HomePage() {
                   marginInline: "10px",
                   cursor: "pointer",
                   fontSize: "13px",
+                  boxShadow: "3px 3px 2px 2px rgba(0,0,0,0.1)",
                 }}
               >
                 {tabName}
@@ -253,7 +254,7 @@ function HomePage() {
             ))}
           </div>
           <div className="tab-content">
-            {tabsData[activeTab].length > 0 ? (
+            {tabsData[activeTab] ? (
               tabsData[activeTab].map((item, index) => (
                 <StockList type="home" item={item} />
               ))
