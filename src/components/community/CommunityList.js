@@ -25,10 +25,8 @@ export default function CommunityList({ onSelectCommunity }) {
 
     if (searchkeyword !== "") {
       const setData = async (keyword) => {
-        //console.log(keyword);
         const resp = await getSearchRoom(keyword);
         setSearchList(resp);
-        console.log("얍");
       };
 
       setData(searchkeyword);
