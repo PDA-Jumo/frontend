@@ -674,7 +674,7 @@ export default function TradeModal(props) {
       </div>
     </div>
   );
-} //
+}
 
 const LivePrice = (props) => {
   return (
