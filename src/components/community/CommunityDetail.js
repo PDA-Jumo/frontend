@@ -89,8 +89,8 @@ export default function CommunityDetail({ community, onBack }) {
         className={`chatMessage ${isMyMessage ? "myMessage" : "otherMessage"}`}
       >
         <div className="messageInfo">
-          {!isMyMessage && <span className="nickname">{chat.nickname}</span>}
-          {user.nickname} 님
+          {!isMyMessage && <span className="nickname"></span>}
+          {chat.nickname}님
         </div>
         {isMyMessage ? (
           <div style={{ display: "flex" }}>

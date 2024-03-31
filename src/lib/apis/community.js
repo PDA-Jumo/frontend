@@ -11,6 +11,7 @@ export const createCommunity = async (stockcode, stockname) => {
 
   const resp = await instance.post(`/community/create/${stockcode}`, {
     user_id: 0,
+    nickname: "관리자",
     stock_name: stockname,
     content: "커뮤니티 생성",
     created_at: createdAt,
