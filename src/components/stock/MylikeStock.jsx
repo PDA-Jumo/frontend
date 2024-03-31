@@ -71,31 +71,48 @@ export default function MyLikeStock() {
         </div>
 
         <div style={{ height: "35%", overflow: "auto" }}>
-          {likestock.map((stock, id) => {
-            return (
-              <div key={id} className="likestock">
-                <div
-                  onClick={() => {
-                    navigate(
-                      `/stock/detail/${stock.stock_code}/${encodeURIComponent(
-                        stock.stock_name
-                      )}`
-                    );
-                  }}
-                >
-                  <img src={Folder} />
-                  {stock.stock_name}
+          {likestock.length === 0 ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                fontSize: "36px",
+              }}
+            >
+              {user.nickname} 님은 현재
+              <br />
+              등록한 관심 주식이 없습니다.
+            </div>
+          ) : (
+            likestock.map((stock, id) => {
+              return (
+                <div key={id} className="likestock">
+                  <div
+                    onClick={() => {
+                      navigate(
+                        `/stock/detail/${stock.stock_code}/${encodeURIComponent(
+                          stock.stock_name
+                        )}`
+                      );
+                    }}
+                  >
+                    <img src={Folder} />
+                    {stock.stock_name}
+                  </div>
+                  <img
+                    src={Arrow}
+                    style={{
+                      width: "8%",
+                      height: "4%",
+                    }}
+                  />
                 </div>
-                <img
-                  src={Arrow}
-                  style={{
-                    width: "8%",
-                    height: "4%",
-                  }}
-                />
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
     </div>

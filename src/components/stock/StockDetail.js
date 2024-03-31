@@ -77,16 +77,6 @@ export default function StockDetail() {
   const maxYValue = Math.max(...graph.map((item) => item.close));
   const minYValue = Math.min(...graph.map((item) => item.close));
 
-  function hour(date) {
-    const starttime = new Date(date);
-    starttime.setHours(9, 0, 0);
-
-    const endtime = new Date(date);
-    endtime = setHours(15, 30, 0);
-
-    return date >= starttime && date <= endtime;
-  }
-
   useEffect(() => {
     // 종목 상세 페이지 입장
     socketEvent.joinRoom(location.state.stock_code, user.user_id);
@@ -100,9 +90,10 @@ export default function StockDetail() {
       const seconds = now.getSeconds();
       const newDataPoint = {
         time: String(hours + ":" + minutes + ":" + seconds),
-        stock: stock_prpr,
+        stock: parseInt(stock_prpr),
       };
       setPrices((prevPrices) => [...prevPrices, newDataPoint]);
+
     });
 
     return () => {
@@ -187,7 +178,7 @@ export default function StockDetail() {
               }}
             />
           )}
-          {prices}
+    
           <span className="largeText">{location.state.stock_name}</span>
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
