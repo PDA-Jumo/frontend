@@ -66,7 +66,6 @@ export default function KoreaStock({ level, nickname, userId }) {
         </div>
 
         <div className="stockList">
-          a
           {myStock.map((stock, id) => {
             const isHovered = stock === hoverdata;
             return (
