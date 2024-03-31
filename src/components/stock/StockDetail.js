@@ -132,7 +132,6 @@ export default function StockDetail() {
         backgroundColor: "white",
       }}
     >
-      {isTrade ? <TradeModal setIsTrade={setIsTrade} /> : null}
       <div
         style={{
           // backgroundColor: "#FFDE6B",
@@ -178,8 +177,15 @@ export default function StockDetail() {
               }}
             />
           )}
+<<<<<<< HEAD
     
           <span className="largeText">{location.state.stock_name}</span>
+=======
+          {prices}
+          <span className="largeText">
+            {location.state.stock_name || location.state.stbd_nm}
+          </span>
+>>>>>>> 2e5a74782f6b2ca3faa4de0fd86dddb144f5aa9a
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
           >
@@ -187,190 +193,156 @@ export default function StockDetail() {
           </span>
         </div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          height: "300px",
-          padding: "16px",
-          boxSizing: "border-box",
-        }}
-      >
-        {/* 종목 차트 */}
-        <div
-        // style={{
-        //   width: "60%",
-        //   backgroundColor: "black",
-        //   borderRadius: "16px",
-        //   marginBlock: "16px",
-        // }}
-        >
-          <div style={{ display: "flex", gap: "20px", marginLeft: "8px" }}>
-            <div onClick={() => setDay("month")}>3개월</div>
-            <div onClick={() => setDay("day")}>1일</div>
-          </div>
-
-          {day === "month" ? (
-            <LineChart
-              width={750}
-              height={250}
-              data={graph}
-              margin={{
-                top: 30,
-                right: 0,
-                left: 10,
-                bottom: 30,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis domain={[minYValue, maxYValue + 10000]} />
-              <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="close"
-                stroke="#8884d8"
-                dot={{ r: 1 }}
-              />
-            </LineChart>
-          ) : (
-            <LineChart
-              width={750}
-              height={250}
-              data={prices}
-              margin={{
-                top: 30,
-                right: 0,
-                left: 10,
-                bottom: 30,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" />
-              <YAxis />
-              <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="stock"
-                stroke="#8884d8"
-                dot={{ r: 1 }}
-              />
-            </LineChart>
-          )}
-        </div>
+      <div style={{ width: "100%", display: "flex" }}>
         <div
           style={{
-            width: "40%",
-            display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
+            width: "50%",
+            height: "100%",
+            display: "flex",
+            padding: "16px",
+            boxSizing: "border-box",
           }}
         >
-          <img
-            src={character}
-            style={{
-              height: "100px",
-              alignSelf: "center",
-              marginBottom: "8px",
-            }}
-          />
-
-          <div style={{ display: "flex", gap: "8px" }}>
-            <div
-              className="stockDetailTradeButton"
-              onClick={handleCommunityClick}
-            >
-              커뮤니티
+          {/* 종목 차트 */}
+          <div>
+            <div style={{ display: "flex", gap: "20px", marginLeft: "8px" }}>
+              <div onClick={() => setDay("month")}>3개월</div>
+              <div onClick={() => setDay("day")}>1일</div>
             </div>
-            <div className="stockDetailTradeButton">소수점 거래하기</div>
+
+            {day === "month" ? (
+              <LineChart
+                width={680}
+                height={250}
+                data={graph}
+                margin={{
+                  top: 30,
+                  right: 0,
+                  left: 10,
+                  bottom: 30,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis domain={[minYValue, maxYValue + 10000]} />
+                <Tooltip />
+                <Line
+                  type="monotone"
+                  dataKey="close"
+                  stroke="#8884d8"
+                  dot={{ r: 1 }}
+                />
+              </LineChart>
+            ) : (
+              <LineChart
+                width={750}
+                height={250}
+                data={prices}
+                margin={{
+                  top: 30,
+                  right: 0,
+                  left: 10,
+                  bottom: 30,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="time" />
+                <YAxis />
+                <Tooltip />
+                <Line
+                  type="monotone"
+                  dataKey="stock"
+                  stroke="#8884d8"
+                  dot={{ r: 1 }}
+                />
+              </LineChart>
+            )}
+          </div>
+          <div style={{ display: "flex", marginLeft: "20px" }}>
             <div
-              className="stockDetailTradeButton"
-              onClick={() => {
-                setIsTrade(true);
-                handleRequestData();
-              }}
+              className={
+                "stockDetailTab" + (activeTab === "info" ? " active" : "")
+              }
+              style={{ marginLeft: "10px", cursor: "pointer" }}
+              onClick={() => setActiveTab("info")}
             >
-              주식 거래하기
+              종목 정보
+            </div>
+            <div
+              className={
+                "stockDetailTab" + (activeTab === "news" ? " active" : "")
+              }
+              style={{ cursor: "pointer" }}
+              onClick={() => setActiveTab("news")}
+            >
+              뉴스
             </div>
           </div>
-        </div>
-      </div>
-
-      <div style={{ display: "flex", marginLeft: "20px" }}>
-        <div
-          className={"stockDetailTab" + (activeTab === "info" ? " active" : "")}
-          style={{ marginLeft: "10px", cursor: "pointer" }}
-          onClick={() => setActiveTab("info")}
-        >
-          종목 정보
-        </div>
-        <div
-          className={"stockDetailTab" + (activeTab === "news" ? " active" : "")}
-          style={{ cursor: "pointer" }}
-          onClick={() => setActiveTab("news")}
-        >
-          뉴스
-        </div>
-      </div>
-      <div
-        style={{
-          border: "3px solid #ffde6b",
-          height: "200px",
-          borderRadius: "16px",
-          marginInline: "16px",
-          marginBottom: "16px",
-        }}
-      >
-        {activeTab === "info" && (
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "30vh",
-              gap: "5%",
+              border: "3px solid #ffde6b",
+              height: "200px",
+              borderRadius: "16px",
+              marginInline: "16px",
+              marginBottom: "16px",
             }}
           >
-            <div>
-              <div class="info">
-                시가 총액<div>{stockd.hts_avls}</div>
-              </div>
-              <hr />
-              <div class="info">
-                pbr <div>{stockd.pbr}</div>
-              </div>
-              <hr />
-            </div>
-
-            <div>
-              <div class="info">
-                per<div>{stockd.per}</div>
-              </div>
-              <hr />
-              <div class="info">
-                외국인 소진율<div>{stockd.hts_frgn_ehrt}</div>
-              </div>
-              <hr />
-            </div>
-          </div>
-        )}
-        {activeTab === "news" && (
-          <div style={{ height: "200px", overflowY: "scroll" }}>
-            <div style={{ margin: "2% 2%" }}>
-              {stocknews.map((item, id) => (
-                <div
-                  key={id}
-                  onClick={() => {
-                    window.location.href = item.url;
-                  }}
-                  style={{ cursor: "pointer", marginTop: "1%" }}
-                >
-                  {item.title}
+            {activeTab === "info" && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "30vh",
+                  gap: "5%",
+                }}
+              >
+                <div>
+                  <div class="info">
+                    시가 총액<div>{stockd.hts_avls}</div>
+                  </div>
+                  <hr />
+                  <div class="info">
+                    pbr <div>{stockd.pbr}</div>
+                  </div>
+                  <hr />
                 </div>
-              ))}
-            </div>
+
+                <div>
+                  <div class="info">
+                    per<div>{stockd.per}</div>
+                  </div>
+                  <hr />
+                  <div class="info">
+                    외국인 소진율<div>{stockd.hts_frgn_ehrt}</div>
+                  </div>
+                  <hr />
+                </div>
+              </div>
+            )}
+            {activeTab === "news" && (
+              <div style={{ height: "200px", overflowY: "scroll" }}>
+                <div style={{ margin: "2% 2%" }}>
+                  {stocknews.map((item, id) => (
+                    <div
+                      key={id}
+                      onClick={() => {
+                        window.location.href = item.url;
+                      }}
+                      style={{ cursor: "pointer", marginTop: "1%" }}
+                    >
+                      {item.title}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        )}
+        </div>
+        <div style={{ width: "50%", height: "100%" }}>
+          <TradeModal item={location.state} />
+        </div>
       </div>
     </div>
   );

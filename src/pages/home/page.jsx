@@ -17,6 +17,8 @@ import "./page.css";
 import levelData from "./levelData";
 import { getKoreaPortfolio } from "../../lib/apis/portfolio";
 import { kospiTop5, kosdaqTop5 } from "../../lib/apis/stock";
+import SocketEvents from "../../lib/socket/StockSocketEvents";
+import { logout } from "../../lib/apis/auth";
 
 // Swiper
 import "swiper/css";
@@ -32,6 +34,8 @@ import LevelUpModal from "../../components/home/LevelUpModal";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import { tipsdata } from "./tip";
+import StockList from "../../components/stock/StockList";
+import { current } from "@reduxjs/toolkit";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -56,32 +60,84 @@ function HomePage() {
     코스닥: [],
   });
   const user = useSelector((state) => state.user.user) || {};
+  const [stockPrices, setStockPrices] = useState({});
+
+
+  // socket evects
+  useEffect(() => {
+    const joinRoomsForStocks = () => {
+      // 모든 주식 방에 대해 입장
+      [...tabsData.코스피200, ...tabsData.코스닥, ...tabsData.보유종목].forEach(stock => {
+        SocketEvents.joinRoom(stock.stock_code, user.user_id);
+      });
+
+      // 주식 데이터 업데이트 리스너 설정
+      // 이 리스너는 서버로부터 주식 가격 정보를 받을 때마다 호출됩니다.
+      SocketEvents.getStockdata((currentprice) => {
+        const stockCode = currentprice.stockCode; // 서버로부터 받은 주식 코드
+        const stockPrice = currentprice.output2.stck_prpr; // 서버로부터 받은 주식 가격
+
+        // 상태 업데이트
+        setStockPrices(prevPrices => ({
+          ...prevPrices,
+          [stockCode]: stockPrice, // 특정 주식의 현재가 업데이트
+        }));
+      });
+    };
+
+    joinRoomsForStocks();
+
+    // 컴포넌트 언마운트 시, 이벤트 리스너 제거
+    return () => {
+      // 모든 주식 방에서 나가는 로직
+      [...tabsData.코스피200, ...tabsData.코스닥, ...tabsData.보유종목].forEach(stock => {
+        SocketEvents.leaveRoom(stock.stock_code, user.user_id);
+      });
+
+    };
+  }, [user.user_id, tabsData.코스피200, tabsData.코스닥, tabsData.보유종목]);
+
 
   useEffect(() => {
     const setData = async () => {
       const resp = await getKoreaPortfolio(user.user_id);
+
       const resp1 = await kospiTop5();
       const resp2 = await kosdaqTop5();
 
+      // 새로운 상태 객체 생성
+      let newStockPrices = {};
+
+      // 코스피와 코스닥 주식 가격을 newStockPrices 객체에 추가
+      [...resp1, ...resp2].forEach(item => {
+        newStockPrices[item.stock_code] = item.stock_price;
+      });
+
+      // 상태 업데이트
+      setStockPrices(newStockPrices);
+
       // 코스피 상위 5종목 코드 및 이미지 매핑
       const kospiTop5WithCodeAndImage = resp1.map((item) => ({
-        name: item.stock_name,
-        code: item.stock_code,
-        imageUrl: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
+
+        stock_name: item.stock_name,
+        stock_code: item.stock_code,
+        image: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
+        current_price: item.stock_price,
       }));
 
       // 코스닥 상위 5종목 코드 및 이미지 매핑
       const kosdaqTop5WithCodeAndImage = resp2.map((item) => ({
-        name: item.stock_name,
-        code: item.stock_code,
-        imageUrl: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
+        stock_name: item.stock_name,
+        stock_code: item.stock_code,
+        image: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
+        current_price: item.stock_price,
       }));
 
       // 보유종목 이미지 매핑
       const mystockimg = resp.myStock.slice(0, 5).map((stock, index) => ({
-        name: stock,
-        code: resp.myStockCode[index],
-        imageUrl: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${resp.myStockCode[index]}.png`,
+        stock_name: stock,
+        stock_code: resp.myStockCode[index],
+        image: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${resp.myStockCode[index]}.png`,
       }));
 
       setTabsData((prevTabsData) => ({
@@ -92,7 +148,18 @@ function HomePage() {
       }));
     };
     setData();
+
+
   }, []);
+
+  const handleLogout = async () => {
+    const success = await logout();
+    if (success) {
+      navigate("/");
+    } else {
+      console.log("로그아웃 실패");
+    }
+  };
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -166,25 +233,33 @@ function HomePage() {
                   className="profile-img"
                 />
                 <div className="info-text">
-                  <div className="user-info">
+                  <div className="info-text">
                     <div className="level-type">
                       <span>
                         {" "}
-                        Lv.{user?.level} {levelData[user?.level]}
+                        Lv{user?.level}. {levelData[user?.level]}
                       </span>
                       <span> {user?.type}</span>
                     </div>
-                    <div className="nickname">{user?.nickname}님</div>
-                    <div style={{ marginTop: "6px" }}>
+                    <div className="mainNickname">{user?.nickname}님</div>
+                    <div
+                      style={{
+                        // marginTop: "6px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "18px",
+                      }}
+                    >
                       <img
                         src={dollarIcon}
                         alt="달러 아이콘"
                         style={{
-                          width: "24px",
-                          height: "24px",
-                          marginRight: "10px",
-                          marginTop: "6px",
-                          verticalAlign: "top",
+                          width: "28px",
+                          // height: "28px",
+                          marginLeft: "-4px",
+                          // marginTop: "6px",
+                          // verticalAlign: "top",
                         }}
                       />
                       {user?.cash?.toLocaleString()}
@@ -200,37 +275,35 @@ function HomePage() {
         <div className="new-area">
           <div className="tabs">
             {Object.keys(tabsData).map((tabName) => (
-              <button
+              <div
                 key={tabName}
                 onClick={() => setActiveTab(tabName)}
-                className={activeTab === tabName ? "active" : ""}
+                style={{
+                  backgroundColor: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "300px",
+                  height: "40px",
+                  borderRadius: "16px",
+                  marginInline: "10px",
+                  cursor: "pointer",
+                  fontSize: "13px",
+                }}
               >
                 {tabName}
-              </button>
+              </div>
             ))}
           </div>
           <div className="tab-content">
-            {tabsData[activeTab] &&
+            {tabsData[activeTab].length > 0 ? (
               tabsData[activeTab].map((item, index) => (
-                <div
-                  key={index}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <img
-                    src={item.imageUrl}
-                    alt={`${item.name} logo`}
-                    style={{
-                      width: "36px",
-                      height: "36px",
-                    }}
-                  />
-                  <div>{item.name} </div>
-                </div>
-              ))}
+                <StockList type="home" item={{ ...item, current_price: stockPrices[item.stock_code] || '가격 정보 없음' }} />
+              ))
+            ) : (
+              <span>데이터가 없습니다.</span>
+            )}
+
           </div>
         </div>
         <div
@@ -282,15 +355,12 @@ function HomePage() {
             />
             <span style={{ fontSize: "14px" }}>커뮤니티</span>
           </div>
+          {/* */}
         </div>
-        <button
-          className="show-buttons"
-          onClick={() => setShowItems(!showItems)}
-        >
-          메뉴
-        </button>
       </div>
-
+      <div className="show-buttons" onClick={() => setShowItems(!showItems)}>
+        메뉴
+      </div>
       <div className="clickme">
         <img
           src={clickmeIcon}

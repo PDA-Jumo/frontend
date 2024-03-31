@@ -213,371 +213,365 @@ export default function TradeModal(props) {
   }
 
   return (
-    // <div
-    //   style={{
-    //     width: "100%",
-    //     height: "100%",
-    //     backgroundColor: "rgba(0,0,0,0.5)",
-    //     display: "flex",
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    //     position: "absolute",
-    //     top: 0,
-    //     left: 0,
-    //   }}
-    // >
     <div
       style={{
         width: "100%",
         height: "100%",
-        backgroundColor: "rgba(0,0,0,0.5)",
+        borderRadius: "16px",
+        backgroundColor: "white",
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "column",
         alignItems: "center",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        zIndex: 100,
       }}
     >
       <div
         style={{
-          width: "60%",
+          width: "93%",
           height: "90%",
-          borderRadius: "16px",
-          backgroundColor: "white",
-          padding: "16px",
           display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
         }}
       >
         <div
           style={{
-            width: "100%",
+            width: "40%",
+            height: "100%",
             display: "flex",
-            fontSize: "32px",
-            justifyContent: "flex-end",
+            flexDirection: "column",
+            boxShadow: "2px 0px 10px 0 rgba(0,0,0,0.2)",
           }}
         >
-          <span
-            style={{ marginRight: "8px", cursor: "pointer" }}
-            onClick={() => props.setIsTrade(false)}
-          >
-            X
-          </span>
+          <LivePrice color="white" price="호가" left="잔량" />
+          <LivePrice
+            color="#ECF2FF"
+            price={stockData.output1.askp[4]}
+            percentage="0.33"
+            left={stockData.output1.askp_rsqn[4]}
+            totalLeft={stockData.output1.total_askp_rsqn}
+            click={setPrice}
+          />
+          <LivePrice
+            color="#ECF2FF"
+            price={stockData.output1.askp[3]}
+            percentage="0.22"
+            left={stockData.output1.askp_rsqn[3]}
+            totalLeft={stockData.output1.total_askp_rsqn}
+            click={setPrice}
+          />
+          <LivePrice
+            color="#ECF2FF"
+            price={stockData.output1.askp[2]}
+            percentage="0.11"
+            left={stockData.output1.askp_rsqn[2]}
+            totalLeft={stockData.output1.total_askp_rsqn}
+            click={setPrice}
+          />
+          <LivePrice
+            color="#ECF2FF"
+            price={stockData.output1.askp[1]}
+            percentage="0.00"
+            left={stockData.output1.askp_rsqn[1]}
+            totalLeft={stockData.output1.total_askp_rsqn}
+            click={setPrice}
+          />
+          <LivePrice
+            color="#ECF2FF"
+            price={stockData.output1.askp[0]}
+            percentage="-0.11"
+            left={stockData.output1.askp_rsqn[0]}
+            totalLeft={stockData.output1.total_askp_rsqn}
+            click={setPrice}
+          />
+          <LivePrice
+            color="#FFEAE9"
+            price={stockData.output1.bidp[0]}
+            percentage="-0.22"
+            left={stockData.output1.bidp_rsqn[0]}
+            totalLeft={stockData.output1.total_bidp_rsqn}
+            click={setPrice}
+          />
+          <LivePrice
+            color="#FFEAE9"
+            price={stockData.output1.bidp[1]}
+            percentage="-0.33"
+            left={stockData.output1.bidp_rsqn[1]}
+            totalLeft={stockData.output1.total_bidp_rsqn}
+            click={setPrice}
+          />
+          <LivePrice
+            color="#FFEAE9"
+            price={stockData.output1.bidp[2]}
+            percentage="-0.44"
+            left={stockData.output1.bidp_rsqn[2]}
+            totalLeft={stockData.output1.total_bidp_rsqn}
+            click={setPrice}
+          />
+          <LivePrice
+            color="#FFEAE9"
+            price={stockData.output1.bidp[3]}
+            percentage="-0.54"
+            left={stockData.output1.bidp_rsqn[3]}
+            totalLeft={stockData.output1.total_bidp_rsqn}
+            click={setPrice}
+          />
+          <LivePrice
+            color="#FFEAE9"
+            price={stockData.output1.bidp[4]}
+            percentage="-0.65"
+            left={stockData.output1.bidp_rsqn[4]}
+            totalLeft={stockData.output1.total_bidp_rsqn}
+            click={setPrice}
+          />
         </div>
         <div
           style={{
-            width: "93%",
-            height: "90%",
+            width: "60%",
+            height: "100%",
             display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "8px",
+            boxSizing: "border-box",
           }}
         >
           <div
             style={{
-              width: "40%",
-              height: "100%",
+              width: "90%",
+              border: "3px solid black",
+              borderRadius: "16px",
               display: "flex",
-              flexDirection: "column",
-              boxShadow: "2px 0px 10px 0 rgba(0,0,0,0.2)",
+              padding: "8px",
+              boxSizing: "border-box",
+              justifyContent: "center",
+              alignItems: "flex-end",
+              marginBottom: "8px",
             }}
           >
-            <LivePrice color="white" price="호가" left="잔량" />
-            <LivePrice
-              color="#ECF2FF"
-              price={stockData.output1.askp[4]}
-              percentage="0.33"
-              left={stockData.output1.askp_rsqn[4]}
-              totalLeft={stockData.output1.total_askp_rsqn}
-              click={setPrice}
-            />
-            <LivePrice
-              color="#ECF2FF"
-              price={stockData.output1.askp[3]}
-              percentage="0.22"
-              left={stockData.output1.askp_rsqn[3]}
-              totalLeft={stockData.output1.total_askp_rsqn}
-              click={setPrice}
-            />
-            <LivePrice
-              color="#ECF2FF"
-              price={stockData.output1.askp[2]}
-              percentage="0.11"
-              left={stockData.output1.askp_rsqn[2]}
-              totalLeft={stockData.output1.total_askp_rsqn}
-              click={setPrice}
-            />
-            <LivePrice
-              color="#ECF2FF"
-              price={stockData.output1.askp[1]}
-              percentage="0.00"
-              left={stockData.output1.askp_rsqn[1]}
-              totalLeft={stockData.output1.total_askp_rsqn}
-              click={setPrice}
-            />
-            <LivePrice
-              color="#ECF2FF"
-              price={stockData.output1.askp[0]}
-              percentage="-0.11"
-              left={stockData.output1.askp_rsqn[0]}
-              totalLeft={stockData.output1.total_askp_rsqn}
-              click={setPrice}
-            />
-            <LivePrice
-              color="#FFEAE9"
-              price={stockData.output1.bidp[0]}
-              percentage="-0.22"
-              left={stockData.output1.bidp_rsqn[0]}
-              totalLeft={stockData.output1.total_bidp_rsqn}
-              click={setPrice}
-            />
-            <LivePrice
-              color="#FFEAE9"
-              price={stockData.output1.bidp[1]}
-              percentage="-0.33"
-              left={stockData.output1.bidp_rsqn[1]}
-              totalLeft={stockData.output1.total_bidp_rsqn}
-              click={setPrice}
-            />
-            <LivePrice
-              color="#FFEAE9"
-              price={stockData.output1.bidp[2]}
-              percentage="-0.44"
-              left={stockData.output1.bidp_rsqn[2]}
-              totalLeft={stockData.output1.total_bidp_rsqn}
-              click={setPrice}
-            />
-            <LivePrice
-              color="#FFEAE9"
-              price={stockData.output1.bidp[3]}
-              percentage="-0.54"
-              left={stockData.output1.bidp_rsqn[3]}
-              totalLeft={stockData.output1.total_bidp_rsqn}
-              click={setPrice}
-            />
-            <LivePrice
-              color="#FFEAE9"
-              price={stockData.output1.bidp[4]}
-              percentage="-0.65"
-              left={stockData.output1.bidp_rsqn[4]}
-              totalLeft={stockData.output1.total_bidp_rsqn}
-              click={setPrice}
-            />
+            <span style={{ fontSize: "24px" }}>{stockName}</span>
+            <span
+              style={{
+                fontSize: "12px",
+                marginLeft: "8px",
+                color: "#62616D",
+              }}
+            >
+              {stockId}
+            </span>
           </div>
           <div
             style={{
-              width: "60%",
-              height: "100%",
+              display: "flex",
+              width: "80%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              color: getColorBySign(stockData.output2.antc_cntg_vrss_sign),
+            }}
+          >
+            <span style={{ fontSize: "32px" }}>
+              {stockData.output2.stck_prpr}
+            </span>
+            <span style={{ fontSize: "12px" }}>
+              {stockData.output2.antc_cntg_vrss}{" "}
+              {stockData.output2.antc_cntg_prdy_ctrt}%
+            </span>
+          </div>
+          <div
+            style={{
+              width: "80%",
+              height: "60%",
+              marginTop: "8px",
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
-              padding: "8px",
-              boxSizing: "border-box",
+              justifyContent: "center",
             }}
           >
             <div
               style={{
-                width: "90%",
-                border: "3px solid black",
-                borderRadius: "16px",
+                width: "100%",
+                height: "50px",
                 display: "flex",
-                padding: "8px",
-                boxSizing: "border-box",
-                justifyContent: "center",
-                alignItems: "flex-end",
-                marginBottom: "8px",
-              }}
-            >
-              <span style={{ fontSize: "24px" }}>{stockName}</span>
-              <span
-                style={{
-                  fontSize: "12px",
-                  marginLeft: "8px",
-                  color: "#62616D",
-                }}
-              >
-                {stockId}
-              </span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                width: "80%",
                 justifyContent: "space-between",
                 alignItems: "center",
-                color: getColorBySign(stockData.output2.antc_cntg_vrss_sign),
+                marginBlock: "24px",
               }}
             >
-              <span style={{ fontSize: "32px" }}>
-                {stockData.output2.stck_prpr}
-              </span>
-              <span style={{ fontSize: "12px" }}>
-                {stockData.output2.antc_cntg_vrss}{" "}
-                {stockData.output2.antc_cntg_prdy_ctrt}%
-              </span>
+              <span style={{ fontSize: "20px" }}>수량</span>
+              <div
+                style={{
+                  width: "70%",
+                  height: "80%",
+                  border: "3px solid lightgray",
+                  borderRadius: "16px",
+                  display: "flex",
+                }}
+              >
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                  onClick={() =>
+                    quantity > 0 ? setQuantity((prev) => prev - 1) : null
+                  }
+                >
+                  -
+                </div>
+                <div
+                  style={{
+                    flex: 3,
+                    borderInline: "3px solid lightgray",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    padding: "8px",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <input
+                    type="text"
+                    value={quantity === 0 ? "" : quantity}
+                    onChange={(e) => setQuantity(parseInt(e.target.value))}
+                    style={{
+                      width: "90%",
+                      outline: "none",
+                      backgroundColor: "transparent",
+                      border: "none",
+                      direction: "rtl",
+                      fontFamily: "DNFBitBitv2",
+                    }}
+                  />
+                  <span style={{ color: "lightgray", fontSize: "12px" }}>
+                    주
+                  </span>
+                </div>
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setQuantity((prev) => prev + 1)}
+                >
+                  +
+                </div>
+              </div>
             </div>
             <div
               style={{
-                width: "80%",
-                height: "60%",
-                marginTop: "8px",
+                width: "100%",
+                height: "50px",
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBlock: "24px",
+              }}
+            >
+              <span style={{ fontSize: "20px" }}>가격</span>
+              <div
+                style={{
+                  width: "70%",
+                  height: "80%",
+                  border: "3px solid lightgray",
+                  borderRadius: "16px",
+                  display: "flex",
+                }}
+              >
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                  onClick={() =>
+                    price > 0 ? setPrice((prev) => prev - 1) : null
+                  }
+                >
+                  -
+                </div>
+                <div
+                  style={{
+                    flex: 3,
+                    borderInline: "3px solid lightgray",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    padding: "8px",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <input
+                    type="text"
+                    value={price === 0 ? "" : price}
+                    onChange={(e) => setPrice(parseInt(e.target.value))}
+                    style={{
+                      width: "90%",
+                      outline: "none",
+                      backgroundColor: "transparent",
+                      border: "none",
+                      direction: "rtl",
+                      fontFamily: "DNFBitBitv2",
+                    }}
+                  />
+                  <span style={{ color: "lightgray", fontSize: "12px" }}>
+                    원
+                  </span>
+                </div>
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setPrice((prev) => prev + 1)}
+                >
+                  +
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "space-around",
+            }}
+          >
+            <div
+              style={{
+                marginBottom: "10px", // 버튼과의 간격
+                color: "black",
+                fontSize: "16px",
               }}
             >
               <div
                 style={{
-                  width: "100%",
-                  height: "50px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBlock: "24px",
+                  marginBottom: "10px", // 버튼과의 간격
+                  color: "black",
+                  fontSize: "16px",
                 }}
               >
-                <span style={{ fontSize: "20px" }}>수량</span>
-                <div
-                  style={{
-                    width: "70%",
-                    height: "80%",
-                    border: "3px solid lightgray",
-                    borderRadius: "16px",
-                    display: "flex",
-                  }}
-                >
-                  <div
-                    style={{
-                      flex: 1,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                    }}
-                    onClick={() =>
-                      quantity > 0 ? setQuantity((prev) => prev - 1) : null
-                    }
-                  >
-                    -
-                  </div>
-                  <div
-                    style={{
-                      flex: 3,
-                      borderInline: "3px solid lightgray",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-end",
-                      padding: "8px",
-                      boxSizing: "border-box",
-                    }}
-                  >
-                    <input
-                      type="text"
-                      value={quantity === 0 ? "" : quantity}
-                      onChange={(e) => setQuantity(parseInt(e.target.value))}
-                      style={{
-                        width: "90%",
-                        outline: "none",
-                        backgroundColor: "transparent",
-                        border: "none",
-                        direction: "rtl",
-                        fontFamily: "DNFBitBitv2",
-                      }}
-                    />
-                    <span style={{ color: "lightgray", fontSize: "12px" }}>
-                      주
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      flex: 1,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => setQuantity((prev) => prev + 1)}
-                  >
-                    +
-                  </div>
-                </div>
+                매수 가능 수량: {buyQuantity}
               </div>
+
               <div
                 style={{
-                  width: "100%",
-                  height: "50px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBlock: "24px",
+                  marginBottom: "10px", // 버튼과의 간격
+                  color: "black",
+                  fontSize: "16px",
                 }}
               >
-                <span style={{ fontSize: "20px" }}>가격</span>
-                <div
-                  style={{
-                    width: "70%",
-                    height: "80%",
-                    border: "3px solid lightgray",
-                    borderRadius: "16px",
-                    display: "flex",
-                  }}
-                >
-                  <div
-                    style={{
-                      flex: 1,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                    }}
-                    onClick={() =>
-                      price > 0 ? setPrice((prev) => prev - 1) : null
-                    }
-                  >
-                    -
-                  </div>
-                  <div
-                    style={{
-                      flex: 3,
-                      borderInline: "3px solid lightgray",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-end",
-                      padding: "8px",
-                      boxSizing: "border-box",
-                    }}
-                  >
-                    <input
-                      type="text"
-                      value={price === 0 ? "" : price}
-                      onChange={(e) => setPrice(parseInt(e.target.value))}
-                      style={{
-                        width: "90%",
-                        outline: "none",
-                        backgroundColor: "transparent",
-                        border: "none",
-                        direction: "rtl",
-                        fontFamily: "DNFBitBitv2",
-                      }}
-                    />
-                    <span style={{ color: "lightgray", fontSize: "12px" }}>
-                      원
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      flex: 1,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => setPrice((prev) => prev + 1)}
-                  >
-                    +
-                  </div>
-                </div>
+                매도 가능 수량: {sellQuantity}
               </div>
             </div>
 
@@ -591,82 +585,43 @@ export default function TradeModal(props) {
             >
               <div
                 style={{
-                  marginBottom: "10px", // 버튼과의 간격
-                  color: "black",
-                  fontSize: "16px",
-                }}
-              >
-                <div
-                  style={{
-                    marginBottom: "10px", // 버튼과의 간격
-                    color: "black",
-                    fontSize: "16px",
-                  }}
-                >
-                  매수 가능 수량: {buyQuantity}
-                </div>
-
-                <div
-                  style={{
-                    marginBottom: "10px", // 버튼과의 간격
-                    color: "black",
-                    fontSize: "16px",
-                  }}
-                >
-                  매도 가능 수량: {sellQuantity}
-                </div>
-              </div>
-
-              <div
-                style={{
-                  width: "100%",
+                  width: "150px",
+                  height: "60px",
+                  borderRadius: "16px",
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "space-around",
+                  justifyContent: "center",
+                  backgroundColor: "#F3322C",
+                  color: "white",
+                  fontSize: "20px",
+                  padding: "8px",
+                  boxSizing: "border-box",
+                  cursor: "pointer",
                 }}
+                onClick={() => clickBuy(user.user_id, stockId, quantity, price)}
               >
-                <div
-                  style={{
-                    width: "150px",
-                    height: "60px",
-                    borderRadius: "16px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "#F3322C",
-                    color: "white",
-                    fontSize: "20px",
-                    padding: "8px",
-                    boxSizing: "border-box",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    clickBuy(user.user_id, stockId, quantity, price)
-                  }
-                >
-                  매수(살래요)
-                </div>
-                <div
-                  style={{
-                    width: "150px",
-                    height: "60px",
-                    borderRadius: "16px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "#254EFB",
-                    color: "white",
-                    fontSize: "20px",
-                    padding: "8px",
-                    boxSizing: "border-box",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    clickSell(user.user_id, stockId, quantity, price)
-                  }
-                >
-                  매도(팔래요)
-                </div>
+                매수(살래요)
+              </div>
+              <div
+                style={{
+                  width: "150px",
+                  height: "60px",
+                  borderRadius: "16px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "#254EFB",
+                  color: "white",
+                  fontSize: "20px",
+                  padding: "8px",
+                  boxSizing: "border-box",
+                  cursor: "pointer",
+                }}
+                onClick={() =>
+                  clickSell(user.user_id, stockId, quantity, price)
+                }
+              >
+                매도(팔래요)
               </div>
             </div>
           </div>
