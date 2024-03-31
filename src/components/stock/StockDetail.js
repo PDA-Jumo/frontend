@@ -59,7 +59,7 @@ export default function StockDetail() {
     const setData = async () => {
       const resp = await getStockDetail(location.state.stock_code); //종목 정보 (시가총액, per ...)
       const res = await getStockNews(location.state.stock_code); // 종목 뉴스
-      const re = await getStockGraph(location.state.stock_codd); // 종목 그래프(3개월)
+      const re = await getStockGraph(location.state.stock_code); // 종목 그래프(3개월)
       const response = await checkLikeStock(
         user.user_id,
         location.state.stock_cod
@@ -103,7 +103,6 @@ export default function StockDetail() {
         stock: stock_prpr,
       };
       setPrices((prevPrices) => [...prevPrices, newDataPoint]);
-
     });
 
     return () => {
