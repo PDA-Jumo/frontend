@@ -197,7 +197,7 @@ function HomePage() {
                       </span>
                       <span> {user?.type}</span>
                     </div>
-                    <div className="nickname">{user?.nickname}님</div>
+                    <div className="mainNickname">{user?.nickname}님</div>
                     <div style={{ marginTop: "6px" }}>
                       <img
                         src={dollarIcon}
@@ -249,10 +249,25 @@ function HomePage() {
                     style={{
                       width: "36px",
                       height: "36px",
+                      marginRight: "10px", // 이미지와 이름 사이 간격 조정
                     }}
                   />
-                  <div>{item.name} </div>
-                  <div>{item.price}</div>
+                  <div
+                    style={{
+                      marginRight: "auto", // 이름과 가격 사이의 모든 여백을 자동으로 설정하여 가격을 우측으로 정렬
+                    }}
+                  >
+                    {item.name.length > 6
+                      ? `${item.name.slice(0, 6)}..`
+                      : item.name}
+                  </div>
+                  <div
+                    style={{
+                      textAlign: "right", // 가격을 우측으로 정렬
+                    }}
+                  >
+                    {item.price}
+                  </div>
                 </div>
               ))}
           </div>
@@ -306,15 +321,7 @@ function HomePage() {
             />
             <span style={{ fontSize: "14px" }}>커뮤니티</span>
           </div>
-          <div className={`columnCenter items ${showItems ? "show" : ""}`}>
-            <img
-              src={quizIcon}
-              alt="로그아웃"
-              style={{ height: "50px", cursor: "pointer" }}
-              onClick={handleLogout}
-            />
-            <span style={{ fontSize: "14px" }}>로그아웃</span>
-          </div>
+          {/* */}
         </div>
         <button
           className="show-buttons"

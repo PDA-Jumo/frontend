@@ -67,7 +67,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-top: 30px;
+  margin-top: 120px;
 }
 
 .navigation-buttons.vertical img {
@@ -103,8 +103,8 @@ button:hover,
   justify-content: flex-start;
 }
 
-.nickname {
-  font-size: 36px;
+.mainNickname {
+  font-size: 28px;
 }
 
 .columnCenter {
@@ -228,7 +228,7 @@ button:hover,
 
 .tab-content div {
   margin: 7px 20px;
-  font-size: 24px;
+  font-size: 16px;
   text-align: start;
 }
 
