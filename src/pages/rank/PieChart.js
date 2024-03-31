@@ -11,7 +11,6 @@ function getRandomColor() {
 
 export function PieChartComponent({ codeRatioArray, onHover, hoverdata }) {
   const [colors, setColors] = useState([]);
-  console.log("차트!!!!!",codeRatioArray)
 
   useEffect(() => {
     const generatedColors = codeRatioArray.map(() => getRandomColor());
@@ -33,7 +32,7 @@ export function PieChartComponent({ codeRatioArray, onHover, hoverdata }) {
           {codeRatioArray.map((entry, index) => (
             <Cell
               key={`cell-${index}`}
-              fill={getRandomColor()}
+              fill={colors[index]} 
               onMouseOver={() => onHover(entry)}
             />
           ))}

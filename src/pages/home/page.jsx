@@ -17,6 +17,7 @@ import "./page.css";
 import levelData from "./levelData";
 import { getKoreaPortfolio } from "../../lib/apis/portfolio";
 import { kospiTop5, kosdaqTop5 } from "../../lib/apis/stock";
+import SocketEvents from "../../lib/socket/StockSocketEvents";
 
 // Swiper
 import "swiper/css";
@@ -56,6 +57,16 @@ function HomePage() {
     코스닥: [],
   });
   const user = useSelector((state) => state.user.user) || {};
+
+  // socket evects
+  useEffect(() => {
+    SocketEvents.joinRoom("main", user.user_id);
+
+    return () => {
+      SocketEvents.leaveRoom("main", user.user_id);
+    };
+
+  }, [user.user_id])
 
   useEffect(() => {
     const setData = async () => {
