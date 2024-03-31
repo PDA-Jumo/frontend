@@ -11,6 +11,7 @@ function getRandomColor() {
 
 export function PieChartComponent({ codeRatioArray, onHover, hoverdata }) {
   const [colors, setColors] = useState([]);
+  console.log("차트!!!!!",codeRatioArray)
 
   useEffect(() => {
     const generatedColors = codeRatioArray.map(() => getRandomColor());
@@ -18,7 +19,7 @@ export function PieChartComponent({ codeRatioArray, onHover, hoverdata }) {
   }, [codeRatioArray]);
 
   return (
-    <PieCharts.Container style={{ marginLeft: '50px', marginTop: '20px' }}>
+    <PieCharts.Container style={{ marginTop: '20px' }}>
       <PieChart width={200} height={200}>
         <Pie
           data={codeRatioArray}
@@ -26,17 +27,14 @@ export function PieChartComponent({ codeRatioArray, onHover, hoverdata }) {
           cy="50%"
           innerRadius={80}
           outerRadius={100}
-          dataKey="percent"
+          dataKey="stock_assets"
           isAnimationActive={false}
         >
           {codeRatioArray.map((entry, index) => (
             <Cell
               key={`cell-${index}`}
-              fill={colors[index] || getRandomColor()}
+              fill={getRandomColor()}
               onMouseOver={() => onHover(entry)}
-              style={{
-                animation: hoverdata === entry.stock_name ? "sparkle 1s infinite" : "none",
-              }}
             />
           ))}
         </Pie>
