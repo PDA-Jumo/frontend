@@ -65,12 +65,12 @@ function HomePage() {
     return () => {
       SocketEvents.leaveRoom("main", user.user_id);
     };
-
-  }, [user.user_id])
+  }, [user.user_id]);
 
   useEffect(() => {
     const setData = async () => {
       const resp = await getKoreaPortfolio(user.user_id);
+
       const resp1 = await kospiTop5();
       const resp2 = await kosdaqTop5();
 
@@ -79,6 +79,7 @@ function HomePage() {
         name: item.stock_name,
         code: item.stock_code,
         imageUrl: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
+        price: item.stock_price,
       }));
 
       // 코스닥 상위 5종목 코드 및 이미지 매핑
@@ -86,6 +87,7 @@ function HomePage() {
         name: item.stock_name,
         code: item.stock_code,
         imageUrl: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
+        price: item.stock_price,
       }));
 
       // 보유종목 이미지 매핑
@@ -240,6 +242,7 @@ function HomePage() {
                     }}
                   />
                   <div>{item.name} </div>
+                  <div>{item.price}</div>
                 </div>
               ))}
           </div>
