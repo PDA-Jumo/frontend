@@ -32,7 +32,9 @@ export default function KoreaStock({ level, nickname, userId }) {
   return (
     <div className="koreaStockContainer">
       <div className="leftSection">
-        <div style={{ textAlign: "left", marginLeft: "60px" }}>
+        <div
+          style={{ textAlign: "left", marginLeft: "60px", marginTop: "-18px" }}
+        >
           <div className="title">{levelData[level] || "알 수 없음"}</div>
           <div className="xLargeText text-white" style={{ marginTop: "-10px" }}>
             {nickname}
@@ -45,7 +47,7 @@ export default function KoreaStock({ level, nickname, userId }) {
             평가금액
           </div>
           <div className="mediumText text-white">{assets}원</div>
-          <div>
+          <div style={{ marginTop: "4px" }}>
             {chart && chart.length > 0 && (
               <PieChartComponent
                 codeRatioArray={chart}
@@ -65,28 +67,49 @@ export default function KoreaStock({ level, nickname, userId }) {
           </div>
         </div>
 
-        <div className="stockList">
-          {myStock.map((stock, id) => {
-            const isHovered = stock === hoverdata;
-            return (
-              <div
-                key={id}
-                className={`stockItem ${isHovered ? "hovered" : ""}`}
-                onMouseEnter={() => handleHover({ stock_name: stock })}
-                onMouseLeave={() => setHoverdata("")}
-              >
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <img
-                    src={Folder}
-                    alt="Folder"
-                    style={{ marginRight: "8px" }}
-                  />
-                  {stock}
+        <div className="stockList" style={{ height: "100%" }}>
+          {myStock.length > 0 ? (
+            myStock.map((stock, id) => {
+              const isHovered = stock === hoverdata; // 해당 위치에서 조건부렌더링 했음! myStock.length = 0일시 나가리
+              return (
+                // 주식이 하나라도 있을때는 기존처럼 출력
+                <div
+                  key={id}
+                  className={`stockItem ${isHovered ? "hovered" : ""}`}
+                  onMouseEnter={() => handleHover({ stock_name: stock })}
+                  onMouseLeave={() => setHoverdata("")}
+                >
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={Folder}
+                      alt="Folder"
+                      style={{ marginRight: "8px" }}
+                    />
+                    {stock}
+                  </div>
+                  <img src={Arrow} className="arrowIcon" alt="Arrow" />
                 </div>
-                <img src={Arrow} className="arrowIcon" alt="Arrow" />
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            // 주식이 하나도 없으면 원래 표시되어야할 영역 정중앙에 텍스트 잡고,
+            // ㅇㅇㅇ님은 현재 보유한 주식이 없습니다. 라고 작성했음.
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                color: "white",
+                fontSize: "36px",
+              }}
+            >
+              {nickname} 님은 현재
+              <br />
+              보유한 주식이 없습니다.
+            </div>
+          )}
         </div>
       </div>
     </div>

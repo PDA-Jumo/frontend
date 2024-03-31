@@ -66,6 +66,7 @@
   padding: 40px 20px;
   box-sizing: border-box;
   overflow: auto;
+  background-color: black;
 }
 
 .asset-container {
