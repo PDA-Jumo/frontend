@@ -60,7 +60,7 @@ const StockList = (props) => {
         {props && props.item && props.type === "theme"
           ? props.item.theme.name
           : props.type === "rank"
-          ? props.item.stbd_nm
+          ? props.item.stock_name
           : null}
       </span>
       <span style={{ flex: 1, display: "flex", justifyContent: "center" }}>
