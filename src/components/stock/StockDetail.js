@@ -93,7 +93,6 @@ export default function StockDetail() {
         stock: parseInt(stock_prpr),
       };
       setPrices((prevPrices) => [...prevPrices, newDataPoint]);
-
     });
 
     return () => {
@@ -177,15 +176,9 @@ export default function StockDetail() {
               }}
             />
           )}
-<<<<<<< HEAD
-    
-          <span className="largeText">{location.state.stock_name}</span>
-=======
-          {prices}
           <span className="largeText">
             {location.state.stock_name || location.state.stbd_nm}
           </span>
->>>>>>> 2e5a74782f6b2ca3faa4de0fd86dddb144f5aa9a
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
           >
