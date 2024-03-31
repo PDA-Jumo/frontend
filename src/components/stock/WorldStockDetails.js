@@ -37,6 +37,7 @@ export default function StockDetails() {
   //주가 그래프 관련 데이터
   useEffect(() => {
     const setData = async () => {
+
       const liveSise = await getLiveSise();
       const issueData = await getMarketIssue();
       setIssue(issueData.data);
@@ -45,6 +46,7 @@ export default function StockDetails() {
     };
     setData();
   }, []);
+
 
   return (
     <div

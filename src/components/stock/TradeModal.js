@@ -5,67 +5,80 @@ import {
   postBuyStock,
   postSellStock,
   getSellQuantityStock,
+  getBuyQuantityStock,
+  getInitialStock,
+  postBuyStockSuccessfully,
+  postSellStockSuccessfully,
 } from "../../lib/apis/stock";
 import { useParams } from "react-router-dom";
+import socketEvent from "../../lib/socket/StockSocketEvents";
 
 export default function TradeModal(props) {
+  // user 데이터 가져오기
   const user = useSelector((state) => state.user.user) || {};
-  const params = useParams();
+
 
   const stockId = props.item.stock_code;
   const stockName = props.item.stock_name || props.item.stbd_nm;
   console.log(stockId, stockName);
+  console.log(user);
 
   // Note
   // 1. 매수 가능 금액 필요 -> 성공시 DB, Redux store 수정
   //     1.1 매수, 매도 초기 주문 가격은 현재가로 설정
   // 2. 매도 가능 종목수 필요 -> 성공시 DB 수정, 처음에 get해서 가져오도록
-  console.log(user);
-
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
-  const [stockData, setStockData] = useState([
-    "6000",
-    "60",
-    "7000",
-    "70",
-    "8000",
-    "80",
-    "9000",
-    "90",
-    "10000",
-    "100",
-    "5000",
-    "50",
-    "4000",
-    "40",
-    "3000",
-    "30",
-    "2000",
-    "20",
-    "1000",
-    "10",
-    "0",
-    "0",
-  ]);
+  const [stockData, setStockData] = useState({
+    output1: {
+      askp: ["0", "0", "0", "0", "0"],
+      askp_rsqn: ["0", "0", "0", "0", "0"],
+      bidp: ["0", "0", "0", "0", "0"],
+      bidp_rsqn: ["0", "0", "0", "0", "0"],
+      total_askp_rsqn: 0,
+      total_bidp_rsqn: 0,
+    },
+    output2: {
+      antc_cntg_prdy_ctrt: "0",
+      antc_cntg_vrss: "0",
+      antc_cntg_vrss_sign: "1",
+      stck_oprc: "0",
+      stck_prpr: "0",
+    },
+  });
 
-  const [priceData, setPriceData] = useState(["0", "0", "0", "0"]);
+  // 매도 가능 수량, 매수 가능 수량
   const [sellQuantity, setSellQuantity] = useState(0);
-  const [buyPrice, setBuyPrice] = useState(0);
+  const [buyQuantity, setBuyQuantity] = useState(0);
 
   const clickBuy = async (user_id, stock_code, quantity, transaction_price) => {
     try {
-      const resp = await postBuyStock(
-        user_id,
-        stock_code,
-        quantity,
-        transaction_price
-      );
+      // 매수 가능 수량 - 주문 수량 >= 0 보다 크면
+      // 아니면, 매수 주문
 
-      console.log("매수쪽", resp);
+      // 매도 호가 1가격 이상으로 주문한 것인지 비교
+      if (stockData.output1.askp[0] <= transaction_price) {
+        const resp = await postBuyStockSuccessfully(
+          user_id,
+          stock_code,
+          quantity,
+          stockData.output1.askp[0]
+        );
+        console.log("매수 바로 체결", resp);
+        // 주문 가격으로 매수 가능 수량 변경
+        getBuyQuantity(user.user_id, stockId, stockData.output2.stck_prpr);
+      } else {
+        const resp = await postBuyStock(
+          user_id,
+          stock_code,
+          quantity,
+          transaction_price
+        );
 
-      if (resp === "성공") {
+        console.log("매수쪽", resp);
         console.log("매수 주문 성공");
+        // 주문 가격으로 매수 가능 수량 변경
+        getBuyQuantity(user.user_id, stockId, stockData.output2.stck_prpr);
       }
     } catch (error) {
       console.error(error);
@@ -79,24 +92,38 @@ export default function TradeModal(props) {
     transaction_price
   ) => {
     try {
-      const resp = await postSellStock(
-        user_id,
-        stock_code,
-        quantity,
-        transaction_price
-      );
+      // 매도 호가 1가격 이상으로 주문한 것인지 비교
+      if (transaction_price <= stockData.output1.bidp[0]) {
+        const resp = await postSellStockSuccessfully(
+          user_id,
+          stock_code,
+          quantity,
+          stockData.output1.bidp[0]
+        );
+        console.log("매도 바로 체결", resp);
+        // 주문 가격으로 매수 가능 수량 변경
+        getBuyQuantity(user.user_id, stockId, stockData.output2.stck_prpr);
+      } else {
+        const resp = await postSellStock(
+          user_id,
+          stock_code,
+          quantity,
+          transaction_price
+        );
 
-      console.log("매도쪽", resp);
+        console.log("매도쪽", resp);
 
-      if (resp === "성공") {
-        console.log("매도 주문 성공");
-        getSellQuantity(user.user_id, stockId);
+        if (resp === "성공") {
+          console.log("매도 주문 성공");
+          getSellQuantity(user.user_id, stockId);
+        }
       }
     } catch (error) {
       console.error(error);
     }
   };
 
+  // 매도 가능 수량 함수
   const getSellQuantity = async (user_id, stock_code) => {
     try {
       const resp = await getSellQuantityStock(user_id, stock_code);
@@ -107,37 +134,84 @@ export default function TradeModal(props) {
     }
   };
 
+  // 매수 가능 수량 함수
+  const getBuyQuantity = async (user_id, stock_code, stock_current_price) => {
+    try {
+      const resp = await getBuyQuantityStock(user_id, stock_code);
+      console.log("매수쪽 조회 수량", resp);
+      setBuyQuantity(Math.floor(resp / stock_current_price));
+      console.log("매수 가능 수량", buyQuantity);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const setIntialStock = async (stock_code) => {
+    try {
+      // Redis에서 초기 값 get
+      const resp = await getInitialStock(stock_code);
+
+      // 초기값 세팅
+      setStockData({ output1: resp.output1, output2: resp.output2 });
+      setPrice(resp.output2.stck_prpr);
+      // 매수 가능 수량 조회
+      await getBuyQuantity(user.user_id, stockId, resp.output2.stck_prpr);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    // 종목 상세 페이지 입장
+    socketEvent.joinRoom(stockId, user.user_id);
+    // 현재가 데이터 로드
+    socketEvent.getStockdata((currentprice) => {
+      console.log(currentprice);
+      setStockData(currentprice);
+    });
+    return () => {
+      socketEvent.leaveRoom(stockId, user.user_id);
+    };
+  }, [stockId, user.user_id]);
+
+  // 초기 페이지 세팅
   useEffect(() => {
     console.log(user.user_id, stockId, quantity, price);
-    const handleStockData = (data) => {
-      console.log(data);
-      setStockData(data);
-      // 데이터를 상태에 저장하거나 화면에 출력하는 로직 추가
-    };
+    // API로 Redis에서 초기 페이지 초기화
+    setIntialStock(stockId);
 
-    const handlePriceData = (data) => {
-      console.log(data);
-      setPriceData(data);
-      // 데이터를 상태에 저장하거나 화면에 출력하는 로직 추가
-    };
-
+    // 매도 가능 수량 설정
     getSellQuantity(user.user_id, stockId);
     console.log("user 캐시", user.cash);
     console.log("주문 가격", price);
-
-    setBuyPrice(parseInt(user.cash) % parseInt(price));
-
-    // 'stockData' 이벤트를 받을 때 실행될 핸들러 등록
-    stockSocket.on("stockData", handleStockData);
-    // 'stockData' 이벤트를 받을 때 실행될 핸들러 등록
-    stockSocket.on("priceData", handlePriceData);
-
-    // 컴포넌트가 언마운트될 때 이벤트 핸들러 해제
-    // return () => {
-    //   stockSocket.off("stockData", handleStockData);
-    //   stockSocket.off("priceData", handlePriceData);
-    // };
   }, []);
+
+  // 매수 가격 누를 때마다 가능 수량 조회
+  useEffect(() => {
+    // 매수 가능 수량 조회
+    getBuyQuantity(user.user_id, stockId, price);
+  }, [price]);
+
+  // 부호에 따라 색깔 바꾸기
+  // 1 : 상한
+  // 2 : 상승
+  // 3 : 보합
+  // 4 : 하한
+  // 5 : 하락
+  function getColorBySign(sign) {
+    switch (sign) {
+      case "1":
+      case "2":
+        return "red";
+      case "3":
+        return "black";
+      case "4":
+      case "5":
+        return "blue";
+      default:
+        return "black"; // 기본값으로 검은색 설정
+    }
+  }
 
   return (
     // <div
@@ -213,82 +287,82 @@ export default function TradeModal(props) {
             <LivePrice color="white" price="호가" left="잔량" />
             <LivePrice
               color="#ECF2FF"
-              price={stockData[8]}
+              price={stockData.output1.askp[4]}
               percentage="0.33"
-              left={stockData[9]}
-              totalLeft={stockData[20]}
+              left={stockData.output1.askp_rsqn[4]}
+              totalLeft={stockData.output1.total_askp_rsqn}
               click={setPrice}
             />
             <LivePrice
               color="#ECF2FF"
-              price={stockData[6]}
+              price={stockData.output1.askp[3]}
               percentage="0.22"
-              left={stockData[7]}
-              totalLeft={stockData[20]}
+              left={stockData.output1.askp_rsqn[3]}
+              totalLeft={stockData.output1.total_askp_rsqn}
               click={setPrice}
             />
             <LivePrice
               color="#ECF2FF"
-              price={stockData[4]}
+              price={stockData.output1.askp[2]}
               percentage="0.11"
-              left={stockData[5]}
-              totalLeft={stockData[20]}
+              left={stockData.output1.askp_rsqn[2]}
+              totalLeft={stockData.output1.total_askp_rsqn}
               click={setPrice}
             />
             <LivePrice
               color="#ECF2FF"
-              price={stockData[2]}
+              price={stockData.output1.askp[1]}
               percentage="0.00"
-              left={stockData[3]}
-              totalLeft={stockData[20]}
+              left={stockData.output1.askp_rsqn[1]}
+              totalLeft={stockData.output1.total_askp_rsqn}
               click={setPrice}
             />
             <LivePrice
               color="#ECF2FF"
-              price={stockData[0]}
+              price={stockData.output1.askp[0]}
               percentage="-0.11"
-              left={stockData[1]}
-              totalLeft={stockData[20]}
+              left={stockData.output1.askp_rsqn[0]}
+              totalLeft={stockData.output1.total_askp_rsqn}
               click={setPrice}
             />
             <LivePrice
               color="#FFEAE9"
-              price={stockData[10]}
+              price={stockData.output1.bidp[0]}
               percentage="-0.22"
-              left={stockData[11]}
-              totalLeft={stockData[21]}
+              left={stockData.output1.bidp_rsqn[0]}
+              totalLeft={stockData.output1.total_bidp_rsqn}
               click={setPrice}
             />
             <LivePrice
               color="#FFEAE9"
-              price={stockData[12]}
+              price={stockData.output1.bidp[1]}
               percentage="-0.33"
-              left={stockData[13]}
-              totalLeft={stockData[21]}
+              left={stockData.output1.bidp_rsqn[1]}
+              totalLeft={stockData.output1.total_bidp_rsqn}
               click={setPrice}
             />
             <LivePrice
               color="#FFEAE9"
-              price={stockData[14]}
+              price={stockData.output1.bidp[2]}
               percentage="-0.44"
-              left={stockData[15]}
-              totalLeft={stockData[21]}
+              left={stockData.output1.bidp_rsqn[2]}
+              totalLeft={stockData.output1.total_bidp_rsqn}
               click={setPrice}
             />
             <LivePrice
               color="#FFEAE9"
-              price={stockData[16]}
+              price={stockData.output1.bidp[3]}
               percentage="-0.54"
-              left={stockData[17]}
-              totalLeft={stockData[21]}
+              left={stockData.output1.bidp_rsqn[3]}
+              totalLeft={stockData.output1.total_bidp_rsqn}
               click={setPrice}
             />
             <LivePrice
               color="#FFEAE9"
-              price={stockData[18]}
+              price={stockData.output1.bidp[4]}
               percentage="-0.65"
-              left={stockData[19]}
-              totalLeft={stockData[21]}
+              left={stockData.output1.bidp_rsqn[4]}
+              totalLeft={stockData.output1.total_bidp_rsqn}
               click={setPrice}
             />
           </div>
@@ -333,11 +407,15 @@ export default function TradeModal(props) {
                 width: "80%",
                 justifyContent: "space-between",
                 alignItems: "center",
+                color: getColorBySign(stockData.output2.antc_cntg_vrss_sign),
               }}
             >
-              <span style={{ fontSize: "32px" }}>{priceData[0]}</span>
+              <span style={{ fontSize: "32px" }}>
+                {stockData.output2.stck_prpr}
+              </span>
               <span style={{ fontSize: "12px" }}>
-                {priceData[1]} {priceData[2]} {priceData[3]}%
+                {stockData.output2.antc_cntg_vrss}{" "}
+                {stockData.output2.antc_cntg_prdy_ctrt}%
               </span>
             </div>
             <div
@@ -519,8 +597,17 @@ export default function TradeModal(props) {
                 fontSize: "16px",
               }}
             >
-              매수 가능 수량: {buyPrice}
-            </div>
+
+              <div
+                style={{
+                  marginBottom: "10px", // 버튼과의 간격
+                  color: "black",
+                  fontSize: "16px",
+                }}
+              >
+                매수 가능 수량: {buyQuantity}
+              </div>
+
 
             <div
               style={{
