@@ -37,7 +37,6 @@ export default function SignUpPage() {
     },
     [navigate]
   );
-
   return (
     <div className="centered-container">
       <div className="rounded-rectangle2">
@@ -50,7 +49,6 @@ export default function SignUpPage() {
               className="profile-image-selector"
               onClick={() => setShowImages(true)}
             >
-              {/* userImage가 비어있으면 텍스트를 보여주고, 그렇지 않으면 이미지를 보여줌 */}
               {userImage === "" ? (
                 <div
                   className="selected-image-placeholder"
@@ -72,44 +70,13 @@ export default function SignUpPage() {
               isOpen={showImages}
               onRequestClose={() => setShowImages(false)}
               contentLabel="프로필 사진 선택"
-              className="modal"
+              className="modal modalContent"
               overlayClassName="overlay"
-              style={{
-                content: {
-                  top: "50%",
-                  left: "50%",
-                  right: "auto",
-                  bottom: "auto",
-                  marginRight: "-50%",
-                  width: "60%",
-                  height: "50%",
-                  transform: "translate(-50%, -50%)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  backgroundColor: "white",
-                },
-                overlay: {
-                  backgroundColor: "rgba(0, 0, 0, 0.7)",
-                },
-              }}
             >
               <h2 style={{ marginBottom: "36px", fontSize: "36px" }}>
                 프로필 사진을 선택하세요
-              </h2>{" "}
-              {/* 하단 마진 추가 */}
-              <div
-                className="image-options"
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "24px",
-                  justifyContent: "center",
-                }}
-              >
-                {" "}
-                {/* 이미지 간격 조정 */}
+              </h2>
+              <div className="image-options">
                 {images.map((image, index) => (
                   <img
                     key={index}
@@ -120,11 +87,6 @@ export default function SignUpPage() {
                       setShowImages(false);
                     }}
                     className="selectable-image"
-                    style={{
-                      width: "144px",
-                      height: "144px",
-                      marginBottom: "36px",
-                    }}
                   />
                 ))}
               </div>
@@ -180,22 +142,23 @@ export default function SignUpPage() {
                   required
                 />
               </div>
-
-              <div
-                className="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onRegisterSubmit(
-                    userEmail,
-                    userPassword,
-                    userNickname,
-                    userImage
-                  );
-                }}
-              >
-                회원가입
-              </div>
             </div>
+          </div>
+        </div>
+        <div className="register-button-container">
+          <div
+            className="button"
+            onClick={(e) => {
+              e.preventDefault();
+              onRegisterSubmit(
+                userEmail,
+                userPassword,
+                userNickname,
+                userImage
+              );
+            }}
+          >
+            회원가입
           </div>
         </div>
       </div>

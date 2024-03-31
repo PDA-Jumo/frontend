@@ -13,7 +13,7 @@
 
 .ranking-content > div {
   position: relative;
-  margin-top: 48px;
+  margin-top: 36px;
 }
 
 .pp-title {
@@ -21,7 +21,7 @@
   font-weight: 400;
   font-size: 24px;
   color: #f9c93e;
-  position: absolute;
+  /*position: absolute; 위치 맘에안든다 하면 원복*/
   top: -23px;
   left: 430px;
 }
@@ -78,4 +78,18 @@
   margin-top: 42px;
   margin-left: 18px;
   justify-content: center;
+}
+@keyframes sparkle {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.sparkle {
+  animation: sparkle 1s infinite;
 }

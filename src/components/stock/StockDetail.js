@@ -1,40 +1,129 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 //css
 import "../../styles/stockDetails.css";
 
 //assets
 import character from "../../assets/character/shinhan_computer.png";
 import TradeModal from "./TradeModal";
+import Heart from "../../assets/icons/Heart.png";
+import EHeart from "../../assets/icons/emptyHeart.png";
 
-import { getStockDetail, getStockNews } from "../../lib/apis/stock";
-import { stockSocket } from "../../lib/socket/socket";
+import {
+  getStockDetail,
+  getStockNews,
+  getStockGraph,
+} from "../../lib/apis/stock";
+import {
+  checkLikeStock,
+  postLikeStock,
+  deleteLikeStock,
+} from "../../lib/apis/portfolio";
+import { createCommunity, checkCommunity } from "../../lib/apis/community";
+
+import socketEvent from "../../lib/socket/StockSocketEvents";
+import { setHours } from "date-fns";
 
 export default function StockDetail() {
   const [isTrade, setIsTrade] = useState(false);
   const [activeTab, setActiveTab] = useState("info");
   const [stockd, setStockD] = useState([]);
   const [stocknews, setStockNews] = useState([{}]);
-  const params = useParams();
+  const [isLike, setIsLike] = useState("empty");
+  const [graph, setGraph] = useState([]);
+  const [prices, setPrices] = useState([]);
+  const location = useLocation();
+  const user = useSelector((state) => state.user.user) || {};
+  const [day, setDay] = useState("month");
+
+  const navigate = useNavigate();
 
   // // 버튼 클릭 이벤트 핸들러
   const handleRequestData = () => {
     // 서버에 "requestData" 메시지를 보내 데이터 요청
     // stockSocket.emit("requestData", "005930");
-    stockSocket.emit("requestPrice", "199800");
+    //stockSocket.emit("requestPrice", "199800");
   };
 
   useEffect(() => {
     const setData = async () => {
-      const resp = await getStockDetail(params.stockId); //종목 정보 (시가총액, per ...)
-      const res = await getStockNews(params.stockId); // 종목 뉴스
+      const resp = await getStockDetail(location.state.stock_code); //종목 정보 (시가총액, per ...)
+      const res = await getStockNews(location.state.stock_code); // 종목 뉴스
+      const re = await getStockGraph(location.state.stock_code); // 종목 그래프(3개월)
+      const response = await checkLikeStock(
+        user.user_id,
+        location.state.stock_cod
+      ); // 관심종목 확인
       setStockD(resp);
       setStockNews(res);
+      setIsLike(response);
+      setGraph(re);
     };
-
     setData();
-  }, []);
+  }, [isLike, location.state.stock_code]);
+
+  console.log(isLike);
+  console.log(graph);
+  const maxYValue = Math.max(...graph.map((item) => item.close));
+  const minYValue = Math.min(...graph.map((item) => item.close));
+
+  function hour(date) {
+    const starttime = new Date(date);
+    starttime.setHours(9, 0, 0);
+
+    const endtime = new Date(date);
+    endtime = setHours(15, 30, 0);
+
+    return date >= starttime && date <= endtime;
+  }
+
+  useEffect(() => {
+    // 종목 상세 페이지 입장
+    socketEvent.joinRoom(location.state.stock_code, user.user_id);
+
+    // 현재가 데이터 로드
+    socketEvent.getStockdata((currentprice) => {
+      const stock_prpr = currentprice.output2.stck_prpr;
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+      const newDataPoint = {
+        time: String(hours + ":" + minutes + ":" + seconds),
+        stock: stock_prpr,
+      };
+      setPrices((prevPrices) => [...prevPrices, newDataPoint]);
+    });
+
+    return () => {
+      socketEvent.leaveRoom(location.state.stock_code, user.user_id);
+    };
+  }, [location.state.stock_code, user.user_id]);
+
+  const handleCommunityClick = async () => {
+    try {
+      const data = await checkCommunity(location.state.stock_code);
+      if (data.length === 0) {
+        await createCommunity(
+          location.state.stock_code,
+          location.state.stock_name
+        );
+      }
+      navigate(`/community/`);
+    } catch (error) {
+      console.error("커뮤니티 생성 중 오류 발생", error);
+    }
+  };
 
   console.log(stockd);
 
@@ -75,19 +164,37 @@ export default function StockDetail() {
             paddingInline: "8px",
           }}
         >
-          <span className="largeText">{params.stockName}</span>
+          {isLike === "in" ? (
+            <img
+              style={{ width: "60px" }}
+              src={Heart}
+              onClick={() => {
+                deleteLikeStock(user.user_id, location.state.stock_code);
+                setIsLike("empty");
+              }}
+            />
+          ) : (
+            <img
+              style={{ width: "60px" }}
+              src={EHeart}
+              onClick={() => {
+                postLikeStock(
+                  user.user_id,
+                  location.state.stock_code,
+                  location.state.stock_name
+                );
+                setIsLike("in");
+              }}
+            />
+          )}
+          {prices}
+          <span className="largeText">{location.state.stock_name}</span>
           <span
             style={{ marginBottom: "5px", color: "#B9B9B9", marginLeft: "8px" }}
           >
-            {params.stockId}
+            {location.state.stock_code}
           </span>
         </div>
-        <span
-          className="largeText"
-          style={{ color: "white", marginRight: "16px" }}
-        >
-          {stockd.prpr}
-        </span>
       </div>
       <div
         style={{
@@ -97,14 +204,68 @@ export default function StockDetail() {
           boxSizing: "border-box",
         }}
       >
+        {/* 종목 차트 */}
         <div
-          style={{
-            width: "60%",
-            backgroundColor: "black",
-            borderRadius: "16px",
-            marginBlock: "16px",
-          }}
-        />
+        // style={{
+        //   width: "60%",
+        //   backgroundColor: "black",
+        //   borderRadius: "16px",
+        //   marginBlock: "16px",
+        // }}
+        >
+          <div style={{ display: "flex", gap: "20px", marginLeft: "8px" }}>
+            <div onClick={() => setDay("month")}>3개월</div>
+            <div onClick={() => setDay("day")}>1일</div>
+          </div>
+
+          {day === "month" ? (
+            <LineChart
+              width={750}
+              height={250}
+              data={graph}
+              margin={{
+                top: 30,
+                right: 0,
+                left: 10,
+                bottom: 30,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis domain={[minYValue, maxYValue + 10000]} />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="close"
+                stroke="#8884d8"
+                dot={{ r: 1 }}
+              />
+            </LineChart>
+          ) : (
+            <LineChart
+              width={750}
+              height={250}
+              data={prices}
+              margin={{
+                top: 30,
+                right: 0,
+                left: 10,
+                bottom: 30,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="time" />
+              <YAxis />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="stock"
+                stroke="#8884d8"
+                dot={{ r: 1 }}
+              />
+            </LineChart>
+          )}
+        </div>
         <div
           style={{
             width: "40%",
@@ -124,7 +285,12 @@ export default function StockDetail() {
           />
 
           <div style={{ display: "flex", gap: "8px" }}>
-            <div className="stockDetailTradeButton">커뮤니티</div>
+            <div
+              className="stockDetailTradeButton"
+              onClick={handleCommunityClick}
+            >
+              커뮤니티
+            </div>
             <div className="stockDetailTradeButton">소수점 거래하기</div>
             <div
               className="stockDetailTradeButton"
