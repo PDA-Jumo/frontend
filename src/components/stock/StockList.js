@@ -15,7 +15,11 @@ const StockList = (props) => {
   return (
     <div
       className="stockListView"
-      style={{ cursor: props.type !== "theme" ? "pointer" : "" }}
+      style={{
+        backgroundColor: props.type === "home" ? "rgba(0,0,0,0.2)" : "",
+        cursor: props.type !== "theme" ? "pointer" : "",
+        width: props.type === "home" ? "" : "95%",
+      }}
       onClick={() =>
         props.type !== "theme"
           ? navigate(`/stock/detail/${props.item.stock_code}`, {
@@ -43,7 +47,7 @@ const StockList = (props) => {
           src={
             props.type === "theme"
               ? props.item.theme.image
-              : props.type === "rank"
+              : props.type === "rank" || "home"
               ? `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${props.item.stock_code}.png`
               : Document
           }
@@ -56,24 +60,40 @@ const StockList = (props) => {
         />
       </div>
 
-      <span style={{ flex: 3 }}>
+      <span
+        style={{
+          flex: 3,
+          width: "100%",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+        }}
+      >
         {props && props.item && props.type === "theme"
           ? props.item.theme.name
-          : props.type === "rank"
+          : props.type === "rank" || "home"
           ? props.item.stock_name
           : null}
       </span>
       <span style={{ flex: 1, display: "flex", justifyContent: "center" }}>
         {props && props.type === "theme"
-          ? `+${props.item.stats.returns}%`
-          : props.type === "rank"
-          ? `${props.item.stock_code}`
+          ? null
+          : props.type === "rank" || "home"
+          ? null
           : null}
       </span>
-      <span style={{ flex: 2, display: "flex", justifyContent: "center" }}>
+      <span
+        style={{
+          flex: props.type === "theme" ? "" : 2,
+          display: "flex",
+          justifyContent: "center",
+          fontSize: "12px",
+          marginRight: props.type === "theme" ? "16px" : 0,
+        }}
+      >
         {props && props.type === "theme"
           ? `+${props.item.stats.returns}%`
-          : props.type === "rank"
+          : props.type === "rank" || "home"
           ? `${props.item.current_price}`
           : null}
       </span>

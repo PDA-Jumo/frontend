@@ -34,6 +34,7 @@ import LevelUpModal from "../../components/home/LevelUpModal";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import { tipsdata } from "./tip";
+import StockList from "../../components/stock/StockList";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -77,25 +78,25 @@ function HomePage() {
 
       // 코스피 상위 5종목 코드 및 이미지 매핑
       const kospiTop5WithCodeAndImage = resp1.map((item) => ({
-        name: item.stock_name,
-        code: item.stock_code,
-        imageUrl: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
-        price: item.stock_price,
+        stock_name: item.stock_name,
+        stock_code: item.stock_code,
+        image: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
+        current_price: item.stock_price,
       }));
 
       // 코스닥 상위 5종목 코드 및 이미지 매핑
       const kosdaqTop5WithCodeAndImage = resp2.map((item) => ({
-        name: item.stock_name,
-        code: item.stock_code,
-        imageUrl: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
-        price: item.stock_price,
+        stock_name: item.stock_name,
+        stock_code: item.stock_code,
+        image: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
+        current_price: item.stock_price,
       }));
 
       // 보유종목 이미지 매핑
       const mystockimg = resp.myStock.slice(0, 5).map((stock, index) => ({
-        name: stock,
-        code: resp.myStockCode[index],
-        imageUrl: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${resp.myStockCode[index]}.png`,
+        stock_name: stock,
+        stock_code: resp.myStockCode[index],
+        image: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${resp.myStockCode[index]}.png`,
       }));
 
       setTabsData((prevTabsData) => ({
@@ -189,25 +190,33 @@ function HomePage() {
                   className="profile-img"
                 />
                 <div className="info-text">
-                  <div className="user-info">
+                  <div className="info-text">
                     <div className="level-type">
                       <span>
                         {" "}
-                        Lv.{user?.level} {levelData[user?.level]}
+                        Lv{user?.level}. {levelData[user?.level]}
                       </span>
                       <span> {user?.type}</span>
                     </div>
-                    <div className="nickname">{user?.nickname}님</div>
-                    <div style={{ marginTop: "6px" }}>
+                    <div className="mainNickname">{user?.nickname}님</div>
+                    <div
+                      style={{
+                        // marginTop: "6px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "18px",
+                      }}
+                    >
                       <img
                         src={dollarIcon}
                         alt="달러 아이콘"
                         style={{
-                          width: "24px",
-                          height: "24px",
-                          marginRight: "10px",
-                          marginTop: "6px",
-                          verticalAlign: "top",
+                          width: "28px",
+                          // height: "28px",
+                          marginLeft: "-4px",
+                          // marginTop: "6px",
+                          // verticalAlign: "top",
                         }}
                       />
                       {user?.cash?.toLocaleString()}
@@ -223,38 +232,34 @@ function HomePage() {
         <div className="new-area">
           <div className="tabs">
             {Object.keys(tabsData).map((tabName) => (
-              <button
+              <div
                 key={tabName}
                 onClick={() => setActiveTab(tabName)}
-                className={activeTab === tabName ? "active" : ""}
+                style={{
+                  backgroundColor: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "300px",
+                  height: "40px",
+                  borderRadius: "16px",
+                  marginInline: "10px",
+                  cursor: "pointer",
+                  fontSize: "13px",
+                }}
               >
                 {tabName}
-              </button>
+              </div>
             ))}
           </div>
           <div className="tab-content">
-            {tabsData[activeTab] &&
+            {tabsData[activeTab].length > 0 ? (
               tabsData[activeTab].map((item, index) => (
-                <div
-                  key={index}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <img
-                    src={item.imageUrl}
-                    alt={`${item.name} logo`}
-                    style={{
-                      width: "36px",
-                      height: "36px",
-                    }}
-                  />
-                  <div>{item.name} </div>
-                  <div>{item.price}</div>
-                </div>
-              ))}
+                <StockList type="home" item={item} />
+              ))
+            ) : (
+              <span>데이터가 없습니다.</span>
+            )}
           </div>
         </div>
         <div
@@ -306,24 +311,12 @@ function HomePage() {
             />
             <span style={{ fontSize: "14px" }}>커뮤니티</span>
           </div>
-          <div className={`columnCenter items ${showItems ? "show" : ""}`}>
-            <img
-              src={quizIcon}
-              alt="로그아웃"
-              style={{ height: "50px", cursor: "pointer" }}
-              onClick={handleLogout}
-            />
-            <span style={{ fontSize: "14px" }}>로그아웃</span>
-          </div>
+          {/* */}
         </div>
-        <button
-          className="show-buttons"
-          onClick={() => setShowItems(!showItems)}
-        >
-          메뉴
-        </button>
       </div>
-
+      <div className="show-buttons" onClick={() => setShowItems(!showItems)}>
+        메뉴
+      </div>
       <div className="clickme">
         <img
           src={clickmeIcon}

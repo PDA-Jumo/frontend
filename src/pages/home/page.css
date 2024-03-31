@@ -1,8 +1,10 @@
 .profile-and-info {
   display: flex;
-  width: 300px;
-  font-size: 24px;
-  padding: 10px 10px;
+  align-items: center;
+  justify-content: center;
+  /* width: 300px; */
+  /* font-size: 24px; */
+  /* padding: 10px 10px; */
 }
 
 .profile-img {
@@ -11,7 +13,7 @@
   border-radius: 50%;
   margin-right: 20px;
   border: 1px solid black;
-  margin-top: 5px;
+  /* margin-top: 5px; */
 }
 
 .info-text {
@@ -43,8 +45,12 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
   font-size: 24px;
+  box-sizing: border-box;
+  width: 320px;
+  height: 140px;
 }
 
 .white-rounded-box-row {
@@ -67,7 +73,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-top: 30px;
+  margin-top: 120px;
 }
 
 .navigation-buttons.vertical img {
@@ -103,8 +109,12 @@ button:hover,
   justify-content: flex-start;
 }
 
-.nickname {
-  font-size: 36px;
+.mainNickname {
+  font-size: 28px;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .columnCenter {
@@ -131,6 +141,7 @@ button:hover,
   padding: 16px;
   color: white;
   overflow: hidden;
+  margin-top: 10px;
 }
 .swiper-container {
   font-size: 16px;
@@ -175,14 +186,25 @@ button:hover,
   margin-right: 25px;
   font-size: 24px;
   border-radius: 15px;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-inline: 12px;
+  position: absolute;
+  bottom: 10%;
+  right: 0;
+  width: 80px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 32px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 3px solid black; */
 }
 .new-area {
   position: absolute;
-  top: 0;
+  top: -16px;
   right: 0;
-  width: 360px;
+  width: 400px;
   margin-right: 26px;
   background-color: #f0f0f0; /* 배경색 예시 */
   text-align: center;
@@ -203,8 +225,8 @@ button:hover,
   background-color: #ddd;
 }
 
-.tab-content div {
-  margin: 5px 0;
+.tab-content {
+  margin-top: 20px;
 }
 .tabs {
   display: flex;
@@ -212,23 +234,26 @@ button:hover,
   padding: 0 10px;
 }
 
-.tabs button {
+.tabs-button {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 40px;
+  border-radius: 16px;
+  margin-inline: 10px;
   cursor: pointer;
-  padding: 10px;
-  border: none;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  width: 100px;
-  margin-bottom: 10px;
+  font-size: 12px;
 }
 
-.tabs button.active {
+.tabs-button:hover {
   background-color: #ddd;
 }
 
 .tab-content div {
   margin: 7px 20px;
-  font-size: 24px;
+  font-size: 16px;
   text-align: start;
 }
 
