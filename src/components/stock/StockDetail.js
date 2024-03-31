@@ -59,7 +59,7 @@ export default function StockDetail() {
     const setData = async () => {
       const resp = await getStockDetail(location.state.stock_code); //종목 정보 (시가총액, per ...)
       const res = await getStockNews(location.state.stock_code); // 종목 뉴스
-      const re = await getStockGraph(location.state.stock_codd); // 종목 그래프(3개월)
+      const re = await getStockGraph(location.state.stock_code); // 종목 그래프(3개월)
       const response = await checkLikeStock(
         user.user_id,
         location.state.stock_cod
@@ -73,19 +73,8 @@ export default function StockDetail() {
   }, [isLike, location.state.stock_code]);
 
   console.log(isLike);
-  console.log(graph);
   const maxYValue = Math.max(...graph.map((item) => item.close));
   const minYValue = Math.min(...graph.map((item) => item.close));
-
-  function hour(date) {
-    const starttime = new Date(date);
-    starttime.setHours(9, 0, 0);
-
-    const endtime = new Date(date);
-    endtime = setHours(15, 30, 0);
-
-    return date >= starttime && date <= endtime;
-  }
 
   useEffect(() => {
     // 종목 상세 페이지 입장
@@ -103,7 +92,6 @@ export default function StockDetail() {
         stock: stock_prpr,
       };
       setPrices((prevPrices) => [...prevPrices, newDataPoint]);
-
     });
 
     return () => {
