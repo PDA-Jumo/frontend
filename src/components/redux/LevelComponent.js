@@ -4,6 +4,7 @@ import { getMyStockList, levelUp } from "../../lib/apis/level";
 import {
   updateFinancialsAction,
   updateLevelAction,
+  updateLevelName,
 } from "../../store/reducers/user";
 import LevelUpModal from "../home/LevelUpModal";
 
@@ -11,16 +12,32 @@ export default function LevelComponent() {
   const user = useSelector((state) => state.user.user);
   const [isLevelUp, setIsLevelUp] = useState(false);
   const [myStockLen, setMyStockLen] = useState(0);
+  const levelNameArray = [
+    "주탄생",
+    "주얼딩",
+    "주린이",
+    "주초딩",
+    "주중딩",
+    "주고딩",
+    "주대딩",
+    "주졸부",
+    "주대주주",
+  ];
   const dispatch = useDispatch();
 
   const openByLevel = async (bonus, newLevel) => {
     try {
-      const resp = await levelUp(bonus, user.user_id);
+      const resp = await levelUp(
+        bonus,
+        user.user_id,
+        levelNameArray[user.level]
+      );
       const data = resp.data;
 
       if (data === "성공") {
         dispatch(updateFinancialsAction(bonus));
         dispatch(updateLevelAction(newLevel));
+        dispatch(updateLevelName(levelNameArray[newLevel]));
         setIsLevelUp(true);
       }
     } catch (error) {

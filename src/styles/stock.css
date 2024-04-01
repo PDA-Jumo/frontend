@@ -67,9 +67,8 @@
   cursor: pointer;
 }
 
-.korea:hover {
+.korea.active {
   background-color: #ffe27a;
-  /* color: white; */
 }
 
 .likestock {
@@ -85,5 +84,23 @@
 }
 
 .likestock:hover {
-  border: 5px solid #f5c6aa;
+  background-color: #fcd8d4;
+}
+
+.koreastock {
+  padding: 2% 5%;
+  border: 5px solid #fcd8d4;
+  border-radius: 30px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 32px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.koreastock:hover,
+.koreastock.hovered {
+  background-color: #fcd8d4;
 }

@@ -14,11 +14,10 @@ export default function MyStock() {
   return (
     <div
       style={{
-        top: "190px",
         width: "100%",
-        height: "1000px",
+        height: "92vh",
         display: "flex",
-        //justifyContent: "center",
+        justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
       }}
@@ -27,16 +26,28 @@ export default function MyStock() {
         style={{
           display: "flex",
           width: "50%",
-          justifyContent: "space-between",
+          justifyContent: "center",
           padding: "4% 5%",
         }}
       >
-        <img src={Character}></img>
+        <img
+          src={user.profile_img}
+          style={{
+            borderRadius: "100px",
+            border: "1px solid black",
+            marginRight: "32px",
+            height: "200px",
+            width: "200px",
+            boxSizing: "border-box",
+            padding: "8px 8px",
+            objectFit: "contain",
+          }}
+        />
         <div>
           <div class="smallText" style={{ color: "#F9C93E" }}>
-            주대주주
+            Lv{user.level}. {user.level_name}
           </div>
-          <div class="xxxLargeText">{user.nickname}</div>
+          <div class="xxxLargeText">{user.nickname}님</div>
           <div
             style={{
               display: "flex",

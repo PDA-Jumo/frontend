@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/globalStyle.css";
+import "../../styles/stock.css";
 import Coin from "../../assets/stock/coin.png";
 import Chart from "../../assets/stock/Increase.png";
 import Folder from "../../assets/stock/folder.png";
@@ -8,6 +9,7 @@ import { getKoreaPortfolio } from "../../lib/apis/portfolio";
 import { PieChartComponent } from "./PieChart";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import character from "../../assets/stock/character.png";
 
 export default function MyKoreaStock() {
   const [assets, setAssets] = useState("0");
@@ -19,6 +21,7 @@ export default function MyKoreaStock() {
   const navigate = useNavigate();
 
   console.log(user.user_id);
+  console.log("chart!!!!", chart);
 
   useEffect(() => {
     const setData = async () => {
@@ -61,60 +64,76 @@ export default function MyKoreaStock() {
       >
         <div>
           <div style={{ fontSize: "18px", color: "#F9C93E" }}>
-            {user.level_name}
+            LV.{user.level} {user.level_name}
           </div>
-          <div class="mediumText">{user.nickname}</div>
+          <div class="mediumText">{user.nickname}님</div>
         </div>
 
-        <div
-          style={{
-            border: "3px solid #FFDE68",
-            borderRadius: "100px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <div class="smallText" style={{ display: "flex" }}>
-            <img src={Coin} style={{ height: "40px", width: "40px" }} />
-            보유자산
-          </div>
-          <div class="smallText" style={{ display: "flex" }}>
-            {assets}
-          </div>
-          <div>
-            {chart && chart.length > 0 && (
-              <PieChartComponent codeRatioArray={chart} onHover={handleHover} />
-            )}
-          </div>
-
+        {chart.length === 0 ? (
           <div
             style={{
-              width: "65%",
               display: "flex",
-              justifyContent: "space-between",
+              paddingTop: "7%",
+              justifyContent: "flex-end",
             }}
           >
-            <div
-              style={{
-                width: "43%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              전체 수익률<div style={{ color: "red" }}>{yieldrate}%</div>
+            <img src={character} />
+          </div>
+        ) : (
+          <div
+            style={{
+              border: "3px solid #FFDE68",
+              borderRadius: "100px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div class="smallText" style={{ display: "flex" }}>
+              <img src={Coin} style={{ height: "40px", width: "40px" }} />
+              보유자산
             </div>
+            <div class="smallText" style={{ display: "flex" }}>
+              {assets}
+            </div>
+            <div>
+              {chart && chart.length > 0 && (
+                <PieChartComponent
+                  codeRatioArray={chart}
+                  onHover={handleHover}
+                  onMouseOut={() => setHoverdata(null)}
+                />
+              )}
+            </div>
+
             <div
               style={{
-                width: "55%",
+                width: "65%",
                 display: "flex",
                 justifyContent: "space-between",
               }}
             >
-              평가 수익 금액 <div style={{ color: "red" }}>{yieldmoney}</div>
+              <div
+                style={{
+                  width: "43%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                전체 수익률<div style={{ color: "red" }}>{yieldrate}%</div>
+              </div>
+              <div
+                style={{
+                  width: "55%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                평가 수익 금액 <div style={{ color: "red" }}>{yieldmoney}</div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div
@@ -134,45 +153,53 @@ export default function MyKoreaStock() {
         </div>
 
         <div style={{ height: "35%", overflow: "auto" }}>
-          {chart.map((stock, id) => {
-            const isHovered = stock.stock_name === hoverdata;
-            return (
-              <div
-                key={id}
-                className="mediumText"
-                style={{
-                  padding: "2% 5%",
-                  border: `5px solid #FCD8D4`,
-                  borderRadius: "30px",
-                  margin: "10px 0",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  backgroundColor: isHovered ? "#FCD8D4" : "white",
-                }}
-              >
+          {chart.length === 0 ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                fontSize: "36px",
+              }}
+            >
+              {user.nickname} 님은 현재
+              <br />
+              보유한 주식이 없습니다.
+            </div>
+          ) : (
+            chart.map((stock, id) => {
+              const isHovered = stock.stock_name === hoverdata;
+              return (
                 <div
-                  onClick={() => {
-                    navigate(
-                      `/stock/detail/${stock.stock_code}/${encodeURIComponent(
-                        stock.stock_name
-                      )}`
-                    );
-                  }}
+                  key={id}
+                  className={`koreastock ${isHovered ? "hovered" : ""}`}
                 >
-                  <img src={Folder} />
-                  {stock.stock_name}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                    onClick={() => {
+                      navigate(`/stock/detail/${stock.stock_code}`);
+                    }}
+                  >
+                    <img src={Folder} />
+                    {stock.stock_name}
+                  </div>
+                  <img
+                    src={Arrow}
+                    style={{
+                      width: "8%",
+                      height: "4%",
+                    }}
+                  />
                 </div>
-                <img
-                  src={Arrow}
-                  style={{
-                    width: "8%",
-                    height: "4%",
-                  }}
-                />
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
     </div>

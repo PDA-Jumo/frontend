@@ -35,8 +35,9 @@ export const getLiveRanking = async (type) => {
   return liveRanking;
 };
 
-export const getStockDetail = async (code, name) => {
+export const getStockDetail = async (code) => {
   const resp = await instance.get(`/stock/detail/${code}`);
+  console.log("여기!!!!", resp.data);
   return resp.data;
 };
 

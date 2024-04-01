@@ -28,7 +28,7 @@
 .tab-button {
   padding: 10px 20px;
   background-color: white;
-  border: 5px solid #ffde68;
+  border: 5px solid #ffde6b;
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -36,7 +36,8 @@
 }
 
 .tab-button:hover {
-  background-color: #6899fe;
+  background-color: #ffde68;
+  border: 5px solid white;
 }
 
 .text-white {
@@ -66,6 +67,7 @@
   padding: 40px 20px;
   box-sizing: border-box;
   overflow: auto;
+  background-color: black;
 }
 
 .asset-container {

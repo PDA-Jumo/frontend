@@ -25,10 +25,8 @@ export default function CommunityList({ onSelectCommunity }) {
 
     if (searchkeyword !== "") {
       const setData = async (keyword) => {
-        //console.log(keyword);
         const resp = await getSearchRoom(keyword);
         setSearchList(resp);
-        console.log("얍");
       };
 
       setData(searchkeyword);
@@ -39,15 +37,15 @@ export default function CommunityList({ onSelectCommunity }) {
 
   useEffect(() => {});
 
-  console.log(searchkeyword);
-  console.log(searchlist);
+  // console.log(searchkeyword);
+  // console.log(searchlist);
 
   return (
     <>
       <div className="communityBox">
         <div style={{ margin: "10% 10%" }}>
           <div className="communityName" style={{ fontSize: "48px" }}>
-            졸부 게시판
+            종목 토론방
           </div>
           <div className="searchbarbox">
             <input

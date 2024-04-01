@@ -4,10 +4,10 @@ import hat from "../../assets/backgrounds/hat.png";
 
 export default function MainLayout() {
   const redirectToQuiz = () => {
-    window.location.href = "http://localhost:3000/quiz";
+    window.location.href = "/quiz";
   };
   const redirectToTest = () => {
-    window.location.href = "http://localhost:3000/test";
+    window.location.href = "/test";
   };
 
   return (

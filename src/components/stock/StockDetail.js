@@ -35,7 +35,6 @@ import socketEvent from "../../lib/socket/StockSocketEvents";
 import { setHours } from "date-fns";
 
 export default function StockDetail() {
-  const [isTrade, setIsTrade] = useState(false);
   const [activeTab, setActiveTab] = useState("info");
   const [stockd, setStockD] = useState([]);
   const [stocknews, setStockNews] = useState([{}]);
@@ -72,20 +71,8 @@ export default function StockDetail() {
     setData();
   }, [isLike, location.state.stock_code]);
 
-  console.log(isLike);
-  console.log(graph);
   const maxYValue = Math.max(...graph.map((item) => item.close));
   const minYValue = Math.min(...graph.map((item) => item.close));
-
-  function hour(date) {
-    const starttime = new Date(date);
-    starttime.setHours(9, 0, 0);
-
-    const endtime = new Date(date);
-    endtime = setHours(15, 30, 0);
-
-    return date >= starttime && date <= endtime;
-  }
 
   useEffect(() => {
     // 종목 상세 페이지 입장
@@ -100,7 +87,7 @@ export default function StockDetail() {
       const seconds = now.getSeconds();
       const newDataPoint = {
         time: String(hours + ":" + minutes + ":" + seconds),
-        stock: stock_prpr,
+        stock: parseInt(stock_prpr),
       };
       setPrices((prevPrices) => [...prevPrices, newDataPoint]);
     });
@@ -125,9 +112,7 @@ export default function StockDetail() {
     }
   };
 
-  console.log(stockd);
-
-  console.log(stocknews);
+  console.log("스탁디테일", stockd);
 
   return (
     <div
@@ -239,7 +224,7 @@ export default function StockDetail() {
               </LineChart>
             ) : (
               <LineChart
-                width={750}
+                width={680}
                 height={250}
                 data={prices}
                 margin={{

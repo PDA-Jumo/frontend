@@ -14,21 +14,6 @@ export default function CommunityDetail({ community, onBack }) {
 
   const user = useSelector((state) => state.user.user) || {};
 
-  // console.log("디테일", user);
-  // console.log(user.user_id);
-  // console.log(user.nickname);
-
-  // const user = {
-  //   user_id: 8,
-  //   nickname: "가람",
-  //   profile_img: "",
-  //   password: "",
-  //   cash: "",
-  //   total_assets: "",
-  //   level: "",
-  //   type: "",
-  // };
-
   // socket
   useEffect(() => {
     // 종목 커뮤니티 입장
@@ -49,6 +34,11 @@ export default function CommunityDetail({ community, onBack }) {
       socketEvent.leaveRoom(stock_code, user.user_id);
     };
   }, [stock_code, user.user_id]);
+
+  useEffect(() => {
+    const chatBox = document.querySelector(".chatBox");
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }, [messages]);
 
   // 메시지 발신
   const sendMessages = () => {
@@ -95,7 +85,10 @@ export default function CommunityDetail({ community, onBack }) {
         {isMyMessage ? (
           <div style={{ display: "flex" }}>
             <span className="createdAt" style={{ marginRight: "5px" }}>
-              {new Date(chat.created_at).toLocaleTimeString()}
+              {new Date(chat.created_at).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </span>
             <div className="messageContent">{chat.content}</div>
           </div>
