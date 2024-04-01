@@ -2,8 +2,8 @@ import React from "react";
 import { PieChart, Pie, Cell } from "recharts";
 import * as PieCharts from "../../styles/PieCharts";
 
-export function PieChartComponent({ codeRatioArray, onHover }) {
-  console.log(codeRatioArray);
+export function PieChartComponent({ codeRatioArray, onHover, onMouseOut }) {
+  console.log("차트!!!!", codeRatioArray);
   const COLORS = ["#D2E0FB", "#F9F3CC", "#D7E5CA", "#8EACCD"]; // 직접 설정한 색상
 
   return (
@@ -23,6 +23,7 @@ export function PieChartComponent({ codeRatioArray, onHover }) {
               key={`cell-${index}`}
               fill={COLORS[index % COLORS.length]}
               onMouseOver={() => onHover(entry)}
+              onMouseOut={onMouseOut}
             />
           ))}
         </Pie>

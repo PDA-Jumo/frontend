@@ -14,6 +14,7 @@ export const MyStockPageContext = React.createContext();
 
 export default function StockPage() {
   const [mystockPage, setMyStockPage] = useState("1");
+  const [active, setActive] = useState("korea");
   const navigate = useNavigate();
 
   return (
@@ -63,17 +64,30 @@ export default function StockPage() {
               left: 30,
             }}
           >
-            <div class="korea" onClick={() => navigate("")}>
+            <div
+              className={`korea ${active === "korea" ? "active" : ""}`}
+              onClick={() => {
+                navigate("");
+                setActive("korea");
+              }}
+            >
               <img src={Folder} style={{ width: "24px", marginRight: "4px" }} />
               국내 주식
             </div>
-            <div class="korea" onClick={() => navigate("worldstock")}>
+            <div
+              className={`korea ${active === "world" ? "active" : ""}`}
+              onClick={() => {
+                navigate("worldstock");
+                setActive("world");
+              }}
+            >
               <img src={Folder} style={{ width: "24px", marginRight: "4px" }} />
               해외 주식
             </div>
             <div
-              class="korea"
+              className={`korea ${active === "myStock" ? "active" : ""}`}
               onClick={() => {
+                setActive("myStock");
                 setMyStockPage("1");
                 navigate("myportfolio");
               }}
