@@ -23,3 +23,21 @@ export const getSearchRoom = async (keyword) => {
   console.log(res.data);
   return res.data;
 };
+
+export const getCommunity = async () => {
+  try {
+    const response = await instance.get("/community/");
+    return response;
+  } catch (error) {
+    throw new Error("랭킹 정보를 불러오는 중 에러가 발생했습니다.");
+  }
+};
+
+export const getHotCommunity = async () => {
+  try {
+    const response = await instance.get("/community/hot");
+    return response;
+  } catch (error) {
+    throw new Error("랭킹 정보를 불러오는 중 에러가 발생했습니다.");
+  }
+};

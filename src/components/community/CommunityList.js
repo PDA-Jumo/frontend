@@ -3,7 +3,7 @@ import axios from "axios"; // axios를 import 합니다.
 import "../../styles/community.css";
 import "../../styles/globalStyle.css";
 import Search from "../../assets/icons/Search.png";
-import { getSearchRoom } from "../../lib/apis/community";
+import { getSearchRoom, getCommunity } from "../../lib/apis/community";
 
 export default function CommunityList({ onSelectCommunity }) {
   const [communities, setCommunities] = useState([]);
@@ -13,7 +13,7 @@ export default function CommunityList({ onSelectCommunity }) {
   useEffect(() => {
     const fetchCommunities = async () => {
       try {
-        const response = await axios.get("/community/");
+        const response = await getCommunity();
         setCommunities(response.data);
       } catch (error) {
         console.error(

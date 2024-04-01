@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios"; // axios를 import 합니다.
 import "../../styles/community.css";
 import "../../styles/globalStyle.css";
+import { getHotCommunity } from "../../lib/apis/community";
 
 export default function HotCommunityList({ onSelectCommunity }) {
   const [communities, setCommunities] = useState([]);
@@ -9,7 +10,7 @@ export default function HotCommunityList({ onSelectCommunity }) {
   useEffect(() => {
     const fetchCommunities = async () => {
       try {
-        const response = await axios.get("/community/hot");
+        const response = await getHotCommunity();
         setCommunities(response.data);
       } catch (error) {
         console.error(
@@ -25,7 +26,7 @@ export default function HotCommunityList({ onSelectCommunity }) {
   return (
     <>
       <div className="communityBox">
-      <div style={{margin:"10% 10%"}}>
+        <div style={{ margin: "10% 10%" }}>
           <div className="xLargeText communityName">지금 Hot한 종목!</div>
           <div className="communityList">
             {communities.map((community, index) => (
@@ -34,7 +35,12 @@ export default function HotCommunityList({ onSelectCommunity }) {
                 onClick={() => onSelectCommunity(community)}
                 className="communityButton"
               >
-                <span className="communityName" style={{fontSize:"24px", marginRight:"2%"}}>{index + 1} </span>
+                <span
+                  className="communityName"
+                  style={{ fontSize: "24px", marginRight: "2%" }}
+                >
+                  {index + 1}{" "}
+                </span>
                 {community.stock_name}
               </div>
             ))}
