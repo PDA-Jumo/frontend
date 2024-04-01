@@ -12,11 +12,12 @@ import {
 } from "../../lib/apis/stock";
 import { useParams } from "react-router-dom";
 import socketEvent from "../../lib/socket/StockSocketEvents";
+import { useNavigate } from "react-router-dom";
 
 export default function TradeModal(props) {
   // user 데이터 가져오기
   const user = useSelector((state) => state.user.user) || {};
-
+  const navigate = useNavigate;
   const stockId = props.item.stock_code;
   const stockName = props.item.stock_name || props.item.stbd_nm;
   console.log("TradeModal 페이지", stockId, stockName);
@@ -63,6 +64,17 @@ export default function TradeModal(props) {
 
   const clickBuy = async (user_id, stock_code, quantity, transaction_price) => {
     try {
+      // 가장 최선의 조건인 stockData.output1.askp[0] < 100 일 때 '아직 개장 전이에요' 메시지를 모달로 표시
+      if (stockData.output1.askp[0] < 100) {
+        setModalMessage(`아직 개장 전이에요`);
+        setIsModalOpen(true);
+        setTimeout(() => {
+          setIsModalOpen(false);
+        }, 3000);
+        // 이 경우 추가적인 처리 없이 함수를 종료합니다.
+        return;
+      }
+
       // 매수 가능 수량 - 주문 수량 >= 0 보다 크면
       // 아니면, 매수 주문
 
@@ -81,7 +93,7 @@ export default function TradeModal(props) {
           getBuyQuantity(user.user_id, stockId, stockData.output1.askp[0]);
           // API 호출 및 성공 응답 가정
           setModalMessage(
-            `${stockName}종목 ${quantity}주 ${stockData.output1.askp[0]}원 매수 주문이 체결되었습니다.`
+            `${stockName}종목 ${quantity}주 ${stockData.output1.askp[0]}원 \n 매수 주문이 체결되었습니다.`
           );
           setIsModalOpen(true);
           setTimeout(() => {
@@ -109,7 +121,7 @@ export default function TradeModal(props) {
           getBuyQuantity(user.user_id, stockId, stockData.output2.stck_prpr);
           // API 호출 및 성공 응답 가정
           setModalMessage(
-            `${stockName}종목 ${quantity}주 ${transaction_price}원 매수 주문이 접수되었습니다.`
+            `${stockName}종목 ${quantity}주 ${stockData.output1.askp[0]}원 \n 매수 주문이 접수되었습니다.`
           );
           setIsModalOpen(true);
           setTimeout(() => {
@@ -127,7 +139,9 @@ export default function TradeModal(props) {
         }, 3000);
       }
     } catch (error) {
-      console.error(error);
+      // 오류 처리 로직
+      alert("준비중입니다."); // 사용자에게 알림
+      navigate("/stock"); // 이전 페이지로 돌아가기
     }
   };
 
@@ -138,6 +152,15 @@ export default function TradeModal(props) {
     transaction_price
   ) => {
     try {
+      if (stockData.output1.bidp[0] < 100) {
+        setModalMessage("아직 개장 전이에요");
+        setIsModalOpen(true);
+        setTimeout(() => {
+          setIsModalOpen(false);
+        }, 3000);
+        // 이 경우 추가적인 처리 없이 함수를 종료합니다.
+        return;
+      }
       // 매도
       // 0 < 주문 수량 < 주문 가능 수량
       //   매수호가 0보다 같거나 낮은 가격으로 매도주문 넣을 시 매도호가 0으로 체결.
@@ -154,7 +177,7 @@ export default function TradeModal(props) {
           getBuyQuantity(user.user_id, stockId, stockData.output1.bidp[0]);
           // API 호출 및 성공 응답 가정
           setModalMessage(
-            `${stockName}종목 ${quantity}주 ${stockData.output1.bidp[0]}원 매도 주문이 체결되었습니다.`
+            `${stockName}종목 ${quantity}주 ${stockData.output1.bidp[0]}원 \n 매도 주문이 체결되었습니다.`
           );
           setIsModalOpen(true);
           setTimeout(() => {
@@ -172,7 +195,7 @@ export default function TradeModal(props) {
           getSellQuantity(user.user_id, stockId);
           // API 호출 및 성공 응답 가정
           setModalMessage(
-            `${stockName}종목 ${quantity}주 ${transaction_price}원 매도 주문이 접수되었습니다.`
+            `${stockName}종목 ${quantity}주 \n ${transaction_price}원 \n 매도 주문이 접수되었습니다.`
           );
           setIsModalOpen(true);
           setTimeout(() => {
@@ -197,7 +220,9 @@ export default function TradeModal(props) {
         }, 3000);
       }
     } catch (error) {
-      console.error(error);
+      // 오류 처리 로직
+      alert("준비중입니다."); // 사용자에게 알림
+      navigate("/stock"); // 이전 페이지로 돌아가기
     }
   };
 
@@ -208,7 +233,9 @@ export default function TradeModal(props) {
       console.log("매도쪽", resp);
       setSellQuantity(resp);
     } catch (error) {
-      console.error(error);
+      // 오류 처리 로직
+      alert("준비중입니다."); // 사용자에게 알림
+      navigate("/stock"); // 이전 페이지로 돌아가기
     }
   };
 
@@ -220,7 +247,9 @@ export default function TradeModal(props) {
       setBuyQuantity(Math.floor(resp / stock_current_price));
       console.log("매수 가능 수량", buyQuantity);
     } catch (error) {
-      console.error(error);
+      // 오류 처리 로직
+      alert("준비중입니다."); // 사용자에게 알림
+      navigate("/stock"); // 이전 페이지로 돌아가기
     }
   };
 
@@ -236,7 +265,9 @@ export default function TradeModal(props) {
       // 매수 가능 수량 조회
       await getBuyQuantity(user.user_id, stockId, resp.output2.stck_prpr);
     } catch (error) {
-      console.error(error);
+      // 오류 처리 로직
+      alert("준비중입니다."); // 사용자에게 알림
+      navigate("/stock"); // 이전 페이지로 돌아가기
     }
   };
 
@@ -314,15 +345,21 @@ export default function TradeModal(props) {
         style={{
           position: "fixed",
           top: "50%",
-          left: "50%",
+          left: "73%",
+          width: "35%",
+          height: "10%",
           transform: "translate(-50%, -50%)",
           backgroundColor: "white",
-          padding: "20px",
-          borderRadius: "16px",
-          // 모달의 크기, 여백 등 추가 스타일링
+          padding: "30px",
+          borderRadius: "32px",
+          fontSize: "24px",
+          textAlign: "center",
+          display: "flex", // flexbox 레이아웃 사용
+          alignItems: "center", // 세로 방향에서 가운데 정렬
+          justifyContent: "center", // 가로 방향에서 가운데 정렬
         }}
       >
-        {message}
+        <p style={{ whiteSpace: "pre-line" }}>{message}</p>
       </div>
     );
   }
