@@ -1,0 +1,18 @@
+.block {
+  display: none;
+  position: absolute;
+  top: 40px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.dropdown:hover .block {
+  display: block;
+}
+
+.searchbox {
+  height: 300px;
+  overflow-y: scroll;
+}

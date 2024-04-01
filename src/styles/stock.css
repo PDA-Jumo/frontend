@@ -1,0 +1,89 @@
+.background-style {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../assets/backgrounds/Stock.png");
+  background-size: contain;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+}
+
+.input-style {
+  /* width: 425px;
+  height: 60px; */
+  /* padding-right: 50px;
+  padding-left: 15px; */
+  /* background-image: url("../assets/stock/searchbar.png"); */
+  /* background-size: cover; */
+  /* position: absolute; */
+  /* left: 8vw;
+  top: 100px; */
+  /* width: 83%; */
+  flex: 1;
+  height: 100%;
+  font-size: 16px;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+  font-family: "DNFBitBitv2";
+  appearance: none;
+  outline: none;
+  background: none;
+  padding-left: 16px;
+}
+
+.input-style::placeholder {
+  color: rgb(230, 230, 230);
+}
+
+.searchbutton-style {
+  /* background-image: url("../assets/stock/searchbar.png"); */
+  /* height: 60px;
+  width: 60px; */
+  /* width: 12%; */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: #1f409a; */
+  color: white;
+  cursor: pointer;
+
+  /* background-position: right center; */
+}
+
+.korea {
+  padding-block: 8px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #d9d9d9; */
+  background-color: white;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.korea:hover {
+  background-color: #ffe27a;
+  /* color: white; */
+}
+
+.likestock {
+  padding: 2% 5%;
+  border: 5px solid #fcd8d4;
+  border-radius: 30px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.likestock:hover {
+  border: 5px solid #f5c6aa;
+}
