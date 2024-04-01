@@ -147,7 +147,7 @@ export default function TradeModal(props) {
 
       if (quantity > 0 && quantity <= sellQuantity) {
         if (
-          transaction_price <= stockData.output1.bidp[1] ||
+          transaction_price <= stockData.output1.bidp[0] ||
           isPriceVisible === false
         ) {
           // 주문 가격으로 매수 가능 수량 변경
