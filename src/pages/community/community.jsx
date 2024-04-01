@@ -5,7 +5,7 @@ import HotCommunityList from "../../components/community/HotCommunityList";
 import CommunityDetail from "../../components/community/CommunityDetail";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import "../../styles/community.css"
 
 export default function CommunityLayout() {
   const user = useSelector((state) => state.user.user) || {};
@@ -37,12 +37,12 @@ export default function CommunityLayout() {
       <div
         style={{
           position: "absolute",
-          top: 30,
+          top: 10,
           left: 100,
         }}
       >
-        <button onClick={navigateHome}>뒤로 가기</button> {/* 뒤로가기 버튼 추가 */}
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <button onClick={navigateHome} className="backButton">뒤로 가기</button>
+        <div style={{ display: "flex", justifyContent: "center", gap: "10%", marginLeft: "20%" }}>
 
           <div>
             <CommunityList onSelectCommunity={setSelectedCommunity} />

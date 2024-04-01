@@ -40,7 +40,9 @@ export default function PortfolioList() {
           <>
             <div className="ranking-content">
               <div>
-                <div className="pp-title">{levelData[userInfo?.level]} </div>
+                <div className="pp-title">
+                  {`LV.${userInfo?.level} ${levelData[userInfo?.level]}`}
+                </div>
                 <div className="text-white text-bigtitle">
                   {userInfo?.nickname || "로딩 중..."}
                 </div>

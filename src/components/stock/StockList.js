@@ -91,11 +91,41 @@ const StockList = (props) => {
           marginRight: props.type === "theme" ? "16px" : 0,
         }}
       >
-        {props && props.type === "theme"
-          ? `+${props.item.stats.returns}%`
-          : props.type === "rank" || "home"
-          ? `${props.item.current_price}`
-          : null}
+        {props && props.type === "theme" ? (
+          `+${props.item.stats.returns}%`
+        ) : props.type === "rank" ? (
+          `${props.item.current_price}`
+        ) : props.type === "home" ? (
+          <span
+            style={{
+              color:
+                props.item.current_price.antc_cntg_vrss_sign === "1" ||
+                props.item.current_price.antc_cntg_vrss_sign === "2"
+                  ? "red"
+                  : props.item.current_price.antc_cntg_vrss_sign === "3"
+                  ? "black"
+                  : props.item.current_price.antc_cntg_vrss_sign === "4" ||
+                    props.item.current_price.antc_cntg_vrss_sign === "5"
+                  ? "blue"
+                  : "inherit", // 기본값, antc_cntg_vrss_sign 값이 주어진 조건 외의 경우에는 상속받은 색상을 사용
+              textShadow:
+                "0 0 3px white, 0 0 3px white, 0 0 3px white, 0 0 3px white", // 글자 테두리 하얀색 설정
+            }}
+          >
+            {props.item.current_price.antc_cntg_vrss_sign === "1" ||
+            props.item.current_price.antc_cntg_vrss_sign === "2"
+              ? "▲ "
+              : props.item.current_price.antc_cntg_vrss_sign === "3"
+              ? "- "
+              : props.item.current_price.antc_cntg_vrss_sign === "4" ||
+                props.item.current_price.antc_cntg_vrss_sign === "5"
+              ? "▼ "
+              : ""}
+            {props.item.current_price.stck_prpr
+              ? props.item.current_price.stck_prpr
+              : props.item.current_price}
+          </span>
+        ) : null}
       </span>
     </div>
   );
