@@ -72,8 +72,6 @@ export default function StockDetail() {
     setData();
   }, [isLike, location.state.stock_code]);
 
-  console.log(isLike);
-  console.log(graph);
   const maxYValue = Math.max(...graph.map((item) => item.close));
   const minYValue = Math.min(...graph.map((item) => item.close));
 
@@ -115,9 +113,7 @@ export default function StockDetail() {
     }
   };
 
-  console.log(stockd);
-
-  console.log(stocknews);
+  console.log("스탁디테일", stockd);
 
   return (
     <div
