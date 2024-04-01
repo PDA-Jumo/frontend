@@ -35,7 +35,6 @@ import socketEvent from "../../lib/socket/StockSocketEvents";
 import { setHours } from "date-fns";
 
 export default function StockDetail() {
-  const [isTrade, setIsTrade] = useState(false);
   const [activeTab, setActiveTab] = useState("info");
   const [stockd, setStockD] = useState([]);
   const [stocknews, setStockNews] = useState([{}]);
@@ -225,7 +224,7 @@ export default function StockDetail() {
               </LineChart>
             ) : (
               <LineChart
-                width={750}
+                width={680}
                 height={250}
                 data={prices}
                 margin={{

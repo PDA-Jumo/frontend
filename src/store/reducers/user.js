@@ -12,6 +12,7 @@ export const UPDATE_TYPE = "UPDATE_TYPE";
 export const UP_CASH_BY_WORK = "UP_CASH_BY_WORK";
 export const UPDATE_LEVEL = "UPDATE_LEVEL";
 export const INIT_LEVEL_CHECK = "INIT_LEVEL_CHECK";
+export const UPDATE_LEVEL_NAME = "UPDATE_LEVEL_NAME";
 
 //Action Creator
 export const loginAction = (user) => {
@@ -28,6 +29,15 @@ export const logoutAction = (user) => {
     type: LOGOUT,
     payload: {
       user: null,
+    },
+  };
+};
+
+export const updateLevelName = (levelName) => {
+  return {
+    type: UPDATE_LEVEL_NAME,
+    payload: {
+      levelName: levelName,
     },
   };
 };
@@ -135,6 +145,14 @@ export default function UserReducer(state = initialState, action) {
         user: {
           ...state.user,
           level: action.payload.level,
+        },
+      };
+    case UPDATE_LEVEL_NAME:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          level_name: action.payload.levelName,
         },
       };
     default:

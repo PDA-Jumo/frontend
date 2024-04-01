@@ -16,7 +16,7 @@ const StockList = (props) => {
     <div
       className="stockListView"
       style={{
-        backgroundColor: props.type === "home" ? "rgba(0,0,0,0.2)" : "",
+        backgroundColor: props.type === "home" ? "rgba(255,255,255,0.8)" : "",
         cursor: props.type !== "theme" ? "pointer" : "",
         width: props.type === "home" ? "" : "95%",
       }}

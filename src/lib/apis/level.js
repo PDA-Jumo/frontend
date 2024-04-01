@@ -1,7 +1,11 @@
 import instance from "./base";
 
-export const levelUp = (bonus, user_id) => {
-  const response = instance.put("/users/levelUp", { bonus, user_id });
+export const levelUp = (bonus, user_id, level_name) => {
+  const response = instance.put("/users/levelUp", {
+    bonus,
+    user_id,
+    level_name,
+  });
   return response;
 };
 
