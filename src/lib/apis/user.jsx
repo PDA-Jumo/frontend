@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const letsGetUserInfo = async (userId) => {
   try {
-    const response = await axios.get(`/users//${userId}`);
+    const response = await axios.get(`/users/updateUsers/${userId}`);
     const userInfo = {
       level: response.data[0].level,
       nickname: response.data[0].nickname,
