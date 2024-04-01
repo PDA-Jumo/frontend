@@ -113,7 +113,7 @@ export const getBuyQuantityStock = async (user_id, stock_code) => {
 
 // 5. 종목 상세 페이지 초기값 조회
 export const getInitialStock = async (stock_code) => {
-  const resp = await instance.get(`/initial/${stock_code}`);
+  const resp = await instance.get(`/stock/initial/${stock_code}`);
   console.log("API", resp.data);
   return resp.data;
 };
