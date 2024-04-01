@@ -42,8 +42,10 @@ export default function MyLikeStock() {
         }}
       >
         <div>
-          <div style={{ fontSize: "18px", color: "#F9C93E" }}>주대주주</div>
-          <div class="mediumText">{user.nickname}</div>
+          <div style={{ fontSize: "18px", color: "#F9C93E" }}>
+          LV.{user.level} {user.level_name}
+          </div>
+          <div class="mediumText">{user.nickname}님</div>
         </div>
 
         <div style={{ display: "flex", justifyContent: "center" }}>

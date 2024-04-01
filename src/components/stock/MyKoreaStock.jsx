@@ -64,9 +64,9 @@ export default function MyKoreaStock() {
       >
         <div>
           <div style={{ fontSize: "18px", color: "#F9C93E" }}>
-            {user.level_name}
+            LV.{user.level} {user.level_name}
           </div>
-          <div class="mediumText">{user.nickname}</div>
+          <div class="mediumText">{user.nickname}님</div>
         </div>
 
         {chart.length === 0 ? (
