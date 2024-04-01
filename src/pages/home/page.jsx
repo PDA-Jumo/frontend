@@ -74,7 +74,9 @@ function HomePage() {
       // 주식 데이터 업데이트 리스너 설정
       // 이 리스너는 서버로부터 주식 가격 정보를 받을 때마다 호출됩니다.
       SocketEvents.getStockdata((currentprice) => {
-        const stockCode = currentprice.stockCode; // 서버로부터 받은 주식 코드
+        console.log(currentprice)
+        console.log(currentprice.code, "::::", currentprice.output2.stck_prpr)
+        const stockCode = currentprice.code; // 서버로부터 받은 주식 코드
         const stockPrice = currentprice.output2.stck_prpr; // 서버로부터 받은 주식 가격
 
         // 상태 업데이트
