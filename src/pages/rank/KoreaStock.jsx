@@ -7,23 +7,34 @@ import Arrow from "../../assets/stock/arrow.png";
 import { PieChartComponent } from "./PieChart.js";
 import { getKoreaPortfolio } from "../../lib/apis/portfolio";
 import levelData from "../home/levelData.js";
+import { useNavigate } from "react-router-dom";
 
 export default function KoreaStock({ level, nickname, userId }) {
   const [myStock, setMyStock] = useState([]);
+  const [stockCodes, setStockCodes] = useState([]);
   const [assets, setAssets] = useState("0");
   const [chart, setChart] = useState([]);
   const [hoverdata, setHoverdata] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const setData = async () => {
       const resp = await getKoreaPortfolio(userId);
       setMyStock(resp.myStock);
+      setStockCodes(resp.myStockCode);
       setAssets(resp.assets);
       setChart(resp.mystock_percent);
     };
 
     setData();
   }, [userId]);
+
+  const handleArrowClick = (id) => {
+    navigate(`/stock/detail/${stockCodes[id]}`, {
+      state: { stock_code: stockCodes[id], stock_name: myStock[id] },
+    });
+  };
 
   function handleHover(data) {
     setHoverdata(data.stock_name);
@@ -35,7 +46,9 @@ export default function KoreaStock({ level, nickname, userId }) {
         <div
           style={{ textAlign: "left", marginLeft: "60px", marginTop: "-18px" }}
         >
-          <div className="title">{levelData[level] || "알 수 없음"}</div>
+          <div className="title">
+            Lv.{level} {levelData[level] || "알 수 없음"}
+          </div>
           <div className="xLargeText text-white" style={{ marginTop: "-10px" }}>
             {nickname}
           </div>
@@ -70,7 +83,7 @@ export default function KoreaStock({ level, nickname, userId }) {
         <div className="stockList" style={{ height: "100%" }}>
           {myStock.length > 0 ? (
             myStock.map((stock, id) => {
-              const isHovered = stock === hoverdata; // 해당 위치에서 조건부렌더링 했음! myStock.length = 0일시 나가리
+              const isHovered = stock === hoverdata;
               return (
                 // 주식이 하나라도 있을때는 기존처럼 출력
                 <div
@@ -87,7 +100,12 @@ export default function KoreaStock({ level, nickname, userId }) {
                     />
                     {stock}
                   </div>
-                  <img src={Arrow} className="arrowIcon" alt="Arrow" />
+                  <img
+                    src={Arrow}
+                    className="arrowIcon"
+                    alt="Arrow"
+                    onClick={() => handleArrowClick(id)}
+                  />
                 </div>
               );
             })

@@ -336,7 +336,7 @@ function HomePage() {
               onClick={() => (user.level >= 1 ? navigateTo("/stock") : null)}
             />
             <span style={{ fontSize: "14px", marginTop: "-6px" }}>
-              매수매도
+              주식거래
             </span>
           </div>
           <div className={`columnCenter items ${showItems ? "show" : ""}`}>
@@ -372,7 +372,7 @@ function HomePage() {
         <img
           src={clickmeIcon}
           alt="노가다"
-          onClick={() => upCashByWork(user.user_id, 1000)}
+          onClick={() => upCashByWork(user.user_id, 1)}
         />
       </div>
       <ReactTooltip

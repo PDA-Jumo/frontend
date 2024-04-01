@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/globalStyle.css";
+import "../../styles/stock.css";
 import Coin from "../../assets/stock/coin.png";
 import Chart from "../../assets/stock/Increase.png";
 import Folder from "../../assets/stock/folder.png";
@@ -63,21 +64,21 @@ export default function MyKoreaStock() {
       >
         <div>
           <div style={{ fontSize: "18px", color: "#F9C93E" }}>
-            {user.level_name}
+            LV.{user.level} {user.level_name}
           </div>
-          <div class="mediumText">{user.nickname}</div>
+          <div class="mediumText">{user.nickname}님</div>
         </div>
 
         {chart.length === 0 ? (
-         <div
-         style={{
-           display: "flex",
-           paddingTop:"7%",
-           justifyContent: "flex-end",
-         }}
-       >
-         <img src={character} />
-       </div>
+          <div
+            style={{
+              display: "flex",
+              paddingTop: "7%",
+              justifyContent: "flex-end",
+            }}
+          >
+            <img src={character} />
+          </div>
         ) : (
           <div
             style={{
@@ -100,6 +101,7 @@ export default function MyKoreaStock() {
                 <PieChartComponent
                   codeRatioArray={chart}
                   onHover={handleHover}
+                  onMouseOut={() => setHoverdata(null)}
                 />
               )}
             </div>
@@ -172,25 +174,16 @@ export default function MyKoreaStock() {
               return (
                 <div
                   key={id}
-                  className="mediumText"
-                  style={{
-                    padding: "2% 5%",
-                    border: `5px solid #FCD8D4`,
-                    borderRadius: "30px",
-                    margin: "10px 0",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    backgroundColor: isHovered ? "#FCD8D4" : "white",
-                  }}
+                  className={`koreastock ${isHovered ? "hovered" : ""}`}
                 >
                   <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
                     onClick={() => {
-                      navigate(
-                        `/stock/detail/${stock.stock_code}/${encodeURIComponent(
-                          stock.stock_name
-                        )}`
-                      );
+                      navigate(`/stock/detail/${stock.stock_code}`);
                     }}
                   >
                     <img src={Folder} />

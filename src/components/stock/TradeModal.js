@@ -19,9 +19,13 @@ export default function TradeModal(props) {
 
   const stockId = props.item.stock_code;
   const stockName = props.item.stock_name || props.item.stbd_nm;
-  console.log(stockId, stockName);
+  console.log("TradeModal 페이지", stockId, stockName);
   console.log(user);
-
+  const [isPriceVisible, setIsPriceVisible] = useState(true);
+  const togglePriceVisibility = () => {
+    setIsPriceVisible(!isPriceVisible);
+    console.log("toggled");
+  };
   // Note
   // 1. 매수 가능 금액 필요 -> 성공시 DB, Redux store 수정
   //     1.1 매수, 매도 초기 주문 가격은 현재가로 설정
@@ -50,34 +54,77 @@ export default function TradeModal(props) {
   const [sellQuantity, setSellQuantity] = useState(0);
   const [buyQuantity, setBuyQuantity] = useState(0);
 
+  // 매수, 매도 주문
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
+  // 부호
+  const [characterSign, setCharacterSign] = useState("-");
+
   const clickBuy = async (user_id, stock_code, quantity, transaction_price) => {
     try {
       // 매수 가능 수량 - 주문 수량 >= 0 보다 크면
       // 아니면, 매수 주문
 
       // 매도 호가 1가격 이상으로 주문한 것인지 비교
-      if (stockData.output1.askp[0] <= transaction_price) {
-        const resp = await postBuyStockSuccessfully(
-          user_id,
-          stock_code,
-          quantity,
-          stockData.output1.askp[0]
-        );
-        console.log("매수 바로 체결", resp);
-        // 주문 가격으로 매수 가능 수량 변경
-        getBuyQuantity(user.user_id, stockId, stockData.output2.stck_prpr);
-      } else {
-        const resp = await postBuyStock(
-          user_id,
-          stock_code,
-          quantity,
-          transaction_price
-        );
+      // 매수
+      // 0 < 주문 수량 <= 주문 가능 수량
+      //   매도호가 0보다 같거나 높은 가격으로 주문 넣을시 매도호가 0으로 체결, 아닐시 해당 가격으로 주문만 남겨두기
+      // 0이거나 주문 가능 수량 초과면 주문 실패
+      if (quantity > 0 && quantity <= buyQuantity) {
+        if (
+          transaction_price >= stockData.output1.askp[0] ||
+          isPriceVisible === false
+        ) {
+          console.log("매수 바로 체결");
+          // 주문 가격으로 매수 가능 수량 변경
+          getBuyQuantity(user.user_id, stockId, stockData.output1.askp[0]);
+          // API 호출 및 성공 응답 가정
+          setModalMessage(
+            `${stockName}종목 ${quantity}주 ${stockData.output1.askp[0]}원 매수 주문이 체결되었습니다.`
+          );
+          setIsModalOpen(true);
+          setTimeout(() => {
+            setIsModalOpen(false);
+            window.location.reload();
+          }, 3000);
+          // 체결 로직 (실제 구현 필요)
+          const resp = await postBuyStockSuccessfully(
+            user_id,
+            stock_code,
+            quantity,
+            stockData.output1.askp[0]
+          );
+        } else {
+          const resp = await postBuyStock(
+            user_id,
+            stock_code,
+            quantity,
+            transaction_price
+          );
 
-        console.log("매수쪽", resp);
-        console.log("매수 주문 성공");
-        // 주문 가격으로 매수 가능 수량 변경
-        getBuyQuantity(user.user_id, stockId, stockData.output2.stck_prpr);
+          console.log("매수쪽", resp);
+          console.log("매수 주문 성공");
+          // 주문 가격으로 매수 가능 수량 변경
+          getBuyQuantity(user.user_id, stockId, stockData.output2.stck_prpr);
+          // API 호출 및 성공 응답 가정
+          setModalMessage(
+            `${stockName}종목 ${quantity}주 ${transaction_price}원 매수 주문이 접수되었습니다.`
+          );
+          setIsModalOpen(true);
+          setTimeout(() => {
+            setIsModalOpen(false);
+            window.location.reload();
+          }, 3000);
+        }
+      } else {
+        // API 호출 및 성공 응답 가정
+        setModalMessage(`주문 가능 수량을 다시 확인하세요.`);
+        setIsModalOpen(true);
+        setTimeout(() => {
+          setIsModalOpen(false);
+          window.location.reload();
+        }, 3000);
       }
     } catch (error) {
       console.error(error);
@@ -91,31 +138,63 @@ export default function TradeModal(props) {
     transaction_price
   ) => {
     try {
-      // 매도 호가 1가격 이상으로 주문한 것인지 비교
-      if (transaction_price <= stockData.output1.bidp[0]) {
-        const resp = await postSellStockSuccessfully(
-          user_id,
-          stock_code,
-          quantity,
-          stockData.output1.bidp[0]
-        );
-        console.log("매도 바로 체결", resp);
-        // 주문 가격으로 매수 가능 수량 변경
-        getBuyQuantity(user.user_id, stockId, stockData.output2.stck_prpr);
-      } else {
-        const resp = await postSellStock(
-          user_id,
-          stock_code,
-          quantity,
-          transaction_price
-        );
+      // 매도
+      // 0 < 주문 수량 < 주문 가능 수량
+      //   매수호가 0보다 같거나 낮은 가격으로 매도주문 넣을 시 매도호가 0으로 체결.
+      // 시장가로 판매시 매도호가 0으로 체결.
+      //   주문가격이 현재가보다 같거나 크면 주문 가격으로 주문
+      // 0이거나 주문 가능 수량 초과면 주문 실패
 
-        console.log("매도쪽", resp);
-
-        if (resp === "성공") {
-          console.log("매도 주문 성공");
+      if (quantity > 0 && quantity <= sellQuantity) {
+        if (
+          transaction_price <= stockData.output1.bidp[0] ||
+          isPriceVisible === false
+        ) {
+          // 주문 가격으로 매수 가능 수량 변경
+          getBuyQuantity(user.user_id, stockId, stockData.output1.bidp[0]);
+          // API 호출 및 성공 응답 가정
+          setModalMessage(
+            `${stockName}종목 ${quantity}주 ${stockData.output1.bidp[0]}원 매도 주문이 체결되었습니다.`
+          );
+          setIsModalOpen(true);
+          setTimeout(() => {
+            setIsModalOpen(false);
+            window.location.reload();
+          }, 3000);
+          // 체결 로직 (실제 구현 필요)
+          const resp = await postSellStockSuccessfully(
+            user_id,
+            stock_code,
+            quantity,
+            stockData.output1.bidp[0]
+          );
+        } else {
           getSellQuantity(user.user_id, stockId);
+          // API 호출 및 성공 응답 가정
+          setModalMessage(
+            `${stockName}종목 ${quantity}주 ${transaction_price}원 매도 주문이 접수되었습니다.`
+          );
+          setIsModalOpen(true);
+          setTimeout(() => {
+            setIsModalOpen(false);
+            window.location.reload();
+          }, 3000);
+          // 주문 등록 로직 (실제 구현 필요)
+          const resp = await postSellStock(
+            user_id,
+            stock_code,
+            quantity,
+            transaction_price
+          );
         }
+      } else {
+        // API 호출 및 성공 응답 가정
+        setModalMessage(`주문 가능 수량을 다시 확인하세요.`);
+        setIsModalOpen(true);
+        setTimeout(() => {
+          setIsModalOpen(false);
+          window.location.reload();
+        }, 3000);
       }
     } catch (error) {
       console.error(error);
@@ -145,7 +224,7 @@ export default function TradeModal(props) {
     }
   };
 
-  const setIntialStock = async (stock_code) => {
+  const setInitialStock = async (stock_code) => {
     try {
       // Redis에서 초기 값 get
       const resp = await getInitialStock(stock_code);
@@ -153,6 +232,7 @@ export default function TradeModal(props) {
       // 초기값 세팅
       setStockData({ output1: resp.output1, output2: resp.output2 });
       setPrice(resp.output2.stck_prpr);
+      getCharacterBySign(resp.output2.antc_cntg_vrss_sign);
       // 매수 가능 수량 조회
       await getBuyQuantity(user.user_id, stockId, resp.output2.stck_prpr);
     } catch (error) {
@@ -167,6 +247,7 @@ export default function TradeModal(props) {
     socketEvent.getStockdata((currentprice) => {
       console.log(currentprice);
       setStockData(currentprice);
+      getCharacterBySign(currentprice.output2.antc_cntg_vrss_sign);
     });
     return () => {
       socketEvent.leaveRoom(stockId, user.user_id);
@@ -177,7 +258,7 @@ export default function TradeModal(props) {
   useEffect(() => {
     console.log(user.user_id, stockId, quantity, price);
     // API로 Redis에서 초기 페이지 초기화
-    setIntialStock(stockId);
+    setInitialStock(stockId);
 
     // 매도 가능 수량 설정
     getSellQuantity(user.user_id, stockId);
@@ -212,6 +293,40 @@ export default function TradeModal(props) {
     }
   }
 
+  function getCharacterBySign(sign) {
+    switch (sign) {
+      case "1":
+      case "2":
+        return setCharacterSign("▲");
+      case "3":
+        return setCharacterSign("-");
+      case "4":
+      case "5":
+        return setCharacterSign("▼");
+      default:
+        return setCharacterSign("-");
+    }
+  }
+
+  function Modal({ message }) {
+    return (
+      <div
+        style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          backgroundColor: "white",
+          padding: "20px",
+          borderRadius: "16px",
+          // 모달의 크기, 여백 등 추가 스타일링
+        }}
+      >
+        {message}
+      </div>
+    );
+  }
+
   return (
     <div
       style={{
@@ -224,6 +339,7 @@ export default function TradeModal(props) {
         alignItems: "center",
       }}
     >
+      {isModalOpen && <Modal message={modalMessage} />}
       <div
         style={{
           width: "93%",
@@ -370,9 +486,26 @@ export default function TradeModal(props) {
               {stockData.output2.stck_prpr}
             </span>
             <span style={{ fontSize: "12px" }}>
-              {stockData.output2.antc_cntg_vrss}{" "}
+              {characterSign} {stockData.output2.antc_cntg_vrss}{" "}
               {stockData.output2.antc_cntg_prdy_ctrt}%
             </span>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBlock: "24px",
+            }}
+          >
+            <input
+              type="checkbox"
+              id="marketPriceCheck"
+              onClick={() => togglePriceVisibility()}
+            />
+            <label for="marketPriceCheck" style={{ marginLeft: "8px" }}>
+              시장가
+            </label>
           </div>
           <div
             style={{
@@ -460,82 +593,85 @@ export default function TradeModal(props) {
                 </div>
               </div>
             </div>
-            <div
-              style={{
-                width: "100%",
-                height: "50px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBlock: "24px",
-              }}
-            >
-              <span style={{ fontSize: "20px" }}>가격</span>
+            {isPriceVisible && (
               <div
+                id="priceDiv"
                 style={{
-                  width: "70%",
-                  height: "80%",
-                  border: "3px solid lightgray",
-                  borderRadius: "16px",
+                  width: "100%",
+                  height: "50px",
                   display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBlock: "24px",
                 }}
               >
+                <span style={{ fontSize: "20px" }}>가격</span>
                 <div
                   style={{
-                    flex: 1,
+                    width: "70%",
+                    height: "80%",
+                    border: "3px solid lightgray",
+                    borderRadius: "16px",
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    price > 0 ? setPrice((prev) => prev - 1) : null
-                  }
-                >
-                  -
-                </div>
-                <div
-                  style={{
-                    flex: 3,
-                    borderInline: "3px solid lightgray",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-end",
-                    padding: "8px",
-                    boxSizing: "border-box",
                   }}
                 >
-                  <input
-                    type="text"
-                    value={price === 0 ? "" : price}
-                    onChange={(e) => setPrice(parseInt(e.target.value))}
+                  <div
                     style={{
-                      width: "90%",
-                      outline: "none",
-                      backgroundColor: "transparent",
-                      border: "none",
-                      direction: "rtl",
-                      fontFamily: "DNFBitBitv2",
+                      flex: 1,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
                     }}
-                  />
-                  <span style={{ color: "lightgray", fontSize: "12px" }}>
-                    원
-                  </span>
-                </div>
-                <div
-                  style={{
-                    flex: 1,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => setPrice((prev) => prev + 1)}
-                >
-                  +
+                    onClick={() =>
+                      price > 0 ? setPrice((prev) => prev - 1) : null
+                    }
+                  >
+                    -
+                  </div>
+                  <div
+                    style={{
+                      flex: 3,
+                      borderInline: "3px solid lightgray",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-end",
+                      padding: "8px",
+                      boxSizing: "border-box",
+                    }}
+                  >
+                    <input
+                      type="text"
+                      value={price === 0 ? "" : price}
+                      onChange={(e) => setPrice(parseInt(e.target.value))}
+                      style={{
+                        width: "90%",
+                        outline: "none",
+                        backgroundColor: "transparent",
+                        border: "none",
+                        direction: "rtl",
+                        fontFamily: "DNFBitBitv2",
+                      }}
+                    />
+                    <span style={{ color: "lightgray", fontSize: "12px" }}>
+                      원
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setPrice((prev) => prev + 1)}
+                  >
+                    +
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
 
           <div

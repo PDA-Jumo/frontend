@@ -236,7 +236,7 @@ export default function StockDetail() {
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="time" />
-                <YAxis />
+                <YAxis style={{ fontSize: "12px" }} />
                 <Tooltip />
                 <Line
                   type="monotone"
@@ -247,7 +247,14 @@ export default function StockDetail() {
               </LineChart>
             )}
           </div>
-          <div style={{ display: "flex", marginLeft: "20px" }}>
+          <div
+            style={{
+              display: "flex",
+              marginLeft: "20px",
+              marginTop: "-20px",
+              gap: "20px",
+            }}
+          >
             <div
               className={
                 "stockDetailTab" + (activeTab === "info" ? " active" : "")

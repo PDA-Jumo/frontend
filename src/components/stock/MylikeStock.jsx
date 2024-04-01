@@ -42,8 +42,10 @@ export default function MyLikeStock() {
         }}
       >
         <div>
-          <div style={{ fontSize: "18px", color: "#F9C93E" }}>주대주주</div>
-          <div class="mediumText">{user.nickname}</div>
+          <div style={{ fontSize: "18px", color: "#F9C93E" }}>
+          LV.{user.level} {user.level_name}
+          </div>
+          <div class="mediumText">{user.nickname}님</div>
         </div>
 
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -70,7 +72,7 @@ export default function MyLikeStock() {
           </div>
         </div>
 
-        <div style={{ height: "35%", overflow: "auto" }}>
+        <div style={{ height: "45%", overflow: "auto" }}>
           {likestock.length === 0 ? (
             <div
               style={{
@@ -91,12 +93,13 @@ export default function MyLikeStock() {
               return (
                 <div key={id} className="likestock">
                   <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
                     onClick={() => {
-                      navigate(
-                        `/stock/detail/${stock.stock_code}/${encodeURIComponent(
-                          stock.stock_name
-                        )}`
-                      );
+                      navigate(`/stock/detail/${stock.stock_code}`);
                     }}
                   >
                     <img src={Folder} />
