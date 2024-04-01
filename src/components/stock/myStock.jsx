@@ -1,15 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/globalStyle.css";
 import Character from "../../assets/stock/character.png";
 import Coin from "../../assets/stock/coin.png";
 import { MyStockPageContext } from "../../pages/Stock/Stock";
 import "../../styles/myStock.css";
 import { useSelector } from "react-redux";
+import { getKoreaPortfolio } from "../../lib/apis/portfolio";
 
 export default function MyStock() {
   const { setMyStockPage } = useContext(MyStockPageContext);
   const user = useSelector((state) => state.user.user) || {};
+  const [assets, setAssets] = useState("0");
+  useEffect(() => {
+    const setData = async () => {
+      const resp = await getKoreaPortfolio(user.user_id);
+      setAssets(resp.assets);
+    };
 
+    setData();
+  }, []);
   console.log(user);
   return (
     <div
@@ -59,7 +68,7 @@ export default function MyStock() {
               <img src={Coin} style={{ height: "56px", width: "56px" }} />총
               보유자산
             </div>
-            <div class="largeText">{user.total_assets}</div>
+            <div class="largeText">{assets + user.cash}</div>
           </div>
         </div>
       </div>
