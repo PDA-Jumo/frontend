@@ -82,15 +82,17 @@ export default function StockPrice() {
           >
             나의 종목 시세
           </div>
-          <div
-            className="myStockTab"
-            style={{
-              backgroundColor: selectedTab === 1 ? "#ffe27a" : "white",
-            }}
-            onClick={() => setSelectedTab(1)}
-          >
-            추천 종목
-          </div>
+          {user.level >= 5 ? (
+            <div
+              className="myStockTab"
+              style={{
+                backgroundColor: selectedTab === 1 ? "#ffe27a" : "white",
+              }}
+              onClick={() => setSelectedTab(1)}
+            >
+              추천 종목
+            </div>
+          ) : null}
         </div>
 
         <div
