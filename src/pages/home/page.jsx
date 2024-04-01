@@ -62,25 +62,26 @@ function HomePage() {
   const user = useSelector((state) => state.user.user) || {};
   const [stockPrices, setStockPrices] = useState({});
 
-
   // socket evects
   useEffect(() => {
     const joinRoomsForStocks = () => {
       // 모든 주식 방에 대해 입장
-      [...tabsData.코스피200, ...tabsData.코스닥, ...tabsData.보유종목].forEach(stock => {
-        SocketEvents.joinRoom(stock.stock_code, user.user_id);
-      });
+      [...tabsData.코스피, ...tabsData.코스닥, ...tabsData.보유종목].forEach(
+        (stock) => {
+          SocketEvents.joinRoom(stock.stock_code, user.user_id);
+        }
+      );
 
       // 주식 데이터 업데이트 리스너 설정
       // 이 리스너는 서버로부터 주식 가격 정보를 받을 때마다 호출됩니다.
       SocketEvents.getStockdata((currentprice) => {
-        console.log(currentprice)
-        console.log(currentprice.code, "::::", currentprice.output2.stck_prpr)
+        console.log(currentprice);
+        console.log(currentprice.code, "::::", currentprice.output2.stck_prpr);
         const stockCode = currentprice.code; // 서버로부터 받은 주식 코드
         const stockPrice = currentprice.output2.stck_prpr; // 서버로부터 받은 주식 가격
 
         // 상태 업데이트
-        setStockPrices(prevPrices => ({
+        setStockPrices((prevPrices) => ({
           ...prevPrices,
           [stockCode]: stockPrice, // 특정 주식의 현재가 업데이트
         }));
@@ -92,13 +93,13 @@ function HomePage() {
     // 컴포넌트 언마운트 시, 이벤트 리스너 제거
     return () => {
       // 모든 주식 방에서 나가는 로직
-      [...tabsData.코스피200, ...tabsData.코스닥, ...tabsData.보유종목].forEach(stock => {
-        SocketEvents.leaveRoom(stock.stock_code, user.user_id);
-      });
-
+      [...tabsData.코스피, ...tabsData.코스닥, ...tabsData.보유종목].forEach(
+        (stock) => {
+          SocketEvents.leaveRoom(stock.stock_code, user.user_id);
+        }
+      );
     };
-  }, [user.user_id, tabsData.코스피200, tabsData.코스닥, tabsData.보유종목]);
-
+  }, [user.user_id, tabsData.코스피, tabsData.코스닥, tabsData.보유종목]);
 
   useEffect(() => {
     const setData = async () => {
@@ -111,7 +112,7 @@ function HomePage() {
       let newStockPrices = {};
 
       // 코스피와 코스닥 주식 가격을 newStockPrices 객체에 추가
-      [...resp1, ...resp2].forEach(item => {
+      [...resp1, ...resp2].forEach((item) => {
         newStockPrices[item.stock_code] = item.stock_price;
       });
 
@@ -120,7 +121,6 @@ function HomePage() {
 
       // 코스피 상위 5종목 코드 및 이미지 매핑
       const kospiTop5WithCodeAndImage = resp1.map((item) => ({
-
         stock_name: item.stock_name,
         stock_code: item.stock_code,
         image: `https://file.alphasquare.co.kr/media/images/stock_logo/kr/${item.stock_code}.png`,
@@ -150,8 +150,6 @@ function HomePage() {
       }));
     };
     setData();
-
-
   }, []);
 
   const handleLogout = async () => {
@@ -301,12 +299,18 @@ function HomePage() {
           <div className="tab-content">
             {tabsData[activeTab] ? (
               tabsData[activeTab].map((item, index) => (
-                <StockList type="home" item={{ ...item, current_price: stockPrices[item.stock_code] || '가격 정보 없음' }} />
+                <StockList
+                  type="home"
+                  item={{
+                    ...item,
+                    current_price:
+                      stockPrices[item.stock_code] || "가격 정보 없음",
+                  }}
+                />
               ))
             ) : (
               <span>데이터가 없습니다.</span>
             )}
-
           </div>
         </div>
         <div
