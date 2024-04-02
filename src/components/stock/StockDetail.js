@@ -77,21 +77,25 @@ export default function StockDetail() {
   useEffect(() => {
     // 종목 상세 페이지 입장
     socketEvent.joinRoom(location.state.stock_code, user.user_id);
-
     // 현재가 데이터 로드
-    socketEvent.getStockdata((currentprice) => {
-      const stock_prpr = currentprice.output2.stck_prpr;
-      const now = new Date();
-      const hours = now.getHours();
-      const minutes = now.getMinutes();
-      const seconds = now.getSeconds();
-      const newDataPoint = {
-        time: String(hours + ":" + minutes + ":" + seconds),
-        stock: parseInt(stock_prpr),
-      };
-      setPrices((prevPrices) => [...prevPrices, newDataPoint]);
-    });
-
+    try {
+      socketEvent.getStockdata((currentprice) => {
+        const stock_prpr = currentprice.output2.stck_prpr;
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        const newDataPoint = {
+          time: String(hours + ":" + minutes + ":" + seconds),
+          stock: parseInt(stock_prpr),
+        };
+        setPrices((prevPrices) => [...prevPrices, newDataPoint]);
+      });
+    } catch (error) {
+      // 오류 처리 로직
+      alert("준비중입니다."); // 사용자에게 알림
+      navigate("/stock"); // 이전 페이지로 돌아가기
+    }
     return () => {
       socketEvent.leaveRoom(location.state.stock_code, user.user_id);
     };
