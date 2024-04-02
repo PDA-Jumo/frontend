@@ -79,7 +79,7 @@ function HomePage() {
         console.log(currentprice.code, "::::", currentprice.output2.stck_prpr);
         const stockCode = currentprice.code; // 서버로부터 받은 주식 코드
         const stockPrice = currentprice.output2; // 서버로부터 받은 주식 가격
-        console.log(stockPrice)
+        console.log(stockPrice);
         // 상태 업데이트
         setStockPrices((prevPrices) => ({
           ...prevPrices,
