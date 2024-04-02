@@ -14,6 +14,18 @@ export default function SignInPage() {
   const [userPassword, setUserPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false); // 모달 표시 상태
+  const [modalMessage, setModalMessage] = useState(""); // 모달 메시지 상태
+
+  useEffect(() => {
+    if (showModal) {
+      const timer = setTimeout(() => {
+        setShowModal(false);
+      }, 3000); // 3초 후 모달 닫기
+
+      return () => clearTimeout(timer); // 컴포넌트가 언마운트될 때 타이머 제거
+    }
+  }, [showModal]);
 
   const onInputChange = useCallback((inputText, setFn) => {
     setFn(inputText);
@@ -34,6 +46,8 @@ export default function SignInPage() {
         }
       } catch (error) {
         console.error(error);
+        // 모달 관련 코드 대신 크롬의 alert를 사용
+        alert("로그인에 실패하였습니다. 이메일과 패스워드를 다시 입력하세요.");
       }
     },
     [dispatch, navigate, clientLogin]
@@ -44,6 +58,12 @@ export default function SignInPage() {
   };
   return (
     <div className="centered-container">
+      {showModal && (
+        <div className="modal signinModal" overlayClassName="overlay">
+          {/* 여기에 모달 스타일을 정의하거나 별도의 컴포넌트로 분리할 수 있습니다. */}
+          {modalMessage}
+        </div>
+      )}
       <div className="rounded-rectangle">
         <div className="hat-section" style={{ height: "128px" }}>
           {" "}
