@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 export default function TradeModal(props) {
   // user 데이터 가져오기
   const user = useSelector((state) => state.user.user) || {};
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const stockId = props.item.stock_code;
   const stockName = props.item.stock_name || props.item.stbd_nm;
   console.log("TradeModal 페이지", stockId, stockName);
